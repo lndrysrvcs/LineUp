@@ -1,0 +1,6 @@
+@LineUp.Backend_HostAddress = http://localhost:5071
+
+GET {{LineUp.Backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
