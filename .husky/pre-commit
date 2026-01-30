@@ -1,0 +1,3 @@
+#!/bin/sh
+cd lineup-client
+pnpx lint-staged

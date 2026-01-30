@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -11,9 +10,13 @@
     <OpenApiGenerateDocumentsOptions>--file-name api-spec</OpenApiGenerateDocumentsOptions>
   </PropertyGroup>
 
-  <Target Name="GenerateSpec" AfterTargets="Build" Condition="$(Configuration)=='Gen' Or $(GEN)=='true'">
+  <Target
+    Name="GenerateSpec"
+    AfterTargets="Build"
+    Condition="$(Configuration)=='Gen' Or $(GEN)=='true'"
+  >
     <Message Text="Generating OpenAPI schema file." Importance="high" />
-    
+
     <Exec Command="pnpm gen" WorkingDirectory="../lineup-client" />
   </Target>
 
@@ -23,6 +26,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="CSharpier.MsBuild" Version="1.2.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
-
 </Project>
