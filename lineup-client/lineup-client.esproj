@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.SDK">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+      
+    <BuildCommand>pnpm run build</BuildCommand>
+    <StartupCommand>pnpm run dev</StartupCommand>
+    <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
+    
+    <ShouldRunPnpmInstall Condition="'$(ShouldRunPnpmInstall)'==''">true</ShouldRunPnpmInstall>
+    <PnpmCommand Condition="'$(PnpmCommand)'==''">pnpm</PnpmCommand>
+    <PnpmInstallArgs Condition="'$(PnpmInstallArgs)'==''">install --frozen-lockfile</PnpmInstallArgs>
+
+    <RestoreProjectStyle>None</RestoreProjectStyle>
+    <RestorePackages>false</RestorePackages>
+  </PropertyGroup>
+
+  <Target Name="PnpmInstall"
+          BeforeTargets="BeforeRestore"
+          Condition="'$(ShouldRunPnpmInstall)'=='true'">
+
+    <Message Text="Running pnpm install in '$(MSBuildProjectDirectory)' ..." Importance="high" />
+
+    <Exec Command="&quot;$(PnpmCommand)&quot; $(PnpmInstallArgs)"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+</Project>

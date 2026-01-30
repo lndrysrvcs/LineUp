@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="LineUp.Backend/LineUp.Backend.csproj" />
+  <Project Path="lineup-client/lineup-client.esproj" />
 </Solution>
