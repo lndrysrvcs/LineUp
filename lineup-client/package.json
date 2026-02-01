@@ -13,10 +13,10 @@
     "prepare": "cd .. && husky"
   },
   "dependencies": {
-    "@auth0/auth0-react": "~2.11.0",
     "@tanstack/react-query": "^5.90.20",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "@auth0/auth0-react": "^2.12.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

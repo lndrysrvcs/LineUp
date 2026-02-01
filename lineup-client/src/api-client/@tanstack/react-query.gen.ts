@@ -3,10 +3,18 @@
 import { type DefaultError, queryOptions } from "@tanstack/react-query";
 
 import { client } from "../client.gen";
-import { getWeatherForecast, type Options } from "../sdk.gen";
+import {
+  getApiClaims,
+  getApiPrivate,
+  getApiPrivateScoped,
+  getApiPublic,
+  type Options,
+} from "../sdk.gen";
 import type {
-  GetWeatherForecastData,
-  GetWeatherForecastResponse,
+  GetApiClaimsData,
+  GetApiPrivateData,
+  GetApiPrivateScopedData,
+  GetApiPublicData,
 } from "../types.gen";
 
 export type QueryKey<TOptions extends Options> = [
@@ -49,21 +57,18 @@ const createQueryKey = <TOptions extends Options>(
   return [params];
 };
 
-export const getWeatherForecastQueryKey = (
-  options?: Options<GetWeatherForecastData>,
-) => createQueryKey("getWeatherForecast", options);
+export const getApiPublicQueryKey = (options?: Options<GetApiPublicData>) =>
+  createQueryKey("getApiPublic", options);
 
-export const getWeatherForecastOptions = (
-  options?: Options<GetWeatherForecastData>,
-) =>
+export const getApiPublicOptions = (options?: Options<GetApiPublicData>) =>
   queryOptions<
-    GetWeatherForecastResponse,
+    unknown,
     DefaultError,
-    GetWeatherForecastResponse,
-    ReturnType<typeof getWeatherForecastQueryKey>
+    unknown,
+    ReturnType<typeof getApiPublicQueryKey>
   >({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getWeatherForecast({
+      const { data } = await getApiPublic({
         ...options,
         ...queryKey[0],
         signal,
@@ -71,5 +76,74 @@ export const getWeatherForecastOptions = (
       });
       return data;
     },
-    queryKey: getWeatherForecastQueryKey(options),
+    queryKey: getApiPublicQueryKey(options),
+  });
+
+export const getApiPrivateQueryKey = (options?: Options<GetApiPrivateData>) =>
+  createQueryKey("getApiPrivate", options);
+
+export const getApiPrivateOptions = (options?: Options<GetApiPrivateData>) =>
+  queryOptions<
+    unknown,
+    DefaultError,
+    unknown,
+    ReturnType<typeof getApiPrivateQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await getApiPrivate({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: getApiPrivateQueryKey(options),
+  });
+
+export const getApiPrivateScopedQueryKey = (
+  options?: Options<GetApiPrivateScopedData>,
+) => createQueryKey("getApiPrivateScoped", options);
+
+export const getApiPrivateScopedOptions = (
+  options?: Options<GetApiPrivateScopedData>,
+) =>
+  queryOptions<
+    unknown,
+    DefaultError,
+    unknown,
+    ReturnType<typeof getApiPrivateScopedQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await getApiPrivateScoped({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: getApiPrivateScopedQueryKey(options),
+  });
+
+export const getApiClaimsQueryKey = (options?: Options<GetApiClaimsData>) =>
+  createQueryKey("getApiClaims", options);
+
+export const getApiClaimsOptions = (options?: Options<GetApiClaimsData>) =>
+  queryOptions<
+    unknown,
+    DefaultError,
+    unknown,
+    ReturnType<typeof getApiClaimsQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await getApiClaims({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: getApiClaimsQueryKey(options),
   });

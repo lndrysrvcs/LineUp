@@ -4,26 +4,58 @@ export type ClientOptions = {
   baseUrl: `${string}://${string}` | (string & {});
 };
 
-export type WeatherForecast = {
-  date: Date;
-  temperatureC: number | string;
-  summary: null | string;
-  temperatureF?: number | string;
-};
-
-export type GetWeatherForecastData = {
+export type GetApiPublicData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/weatherforecast";
+  url: "/api/public";
 };
 
-export type GetWeatherForecastResponses = {
+export type GetApiPublicResponses = {
   /**
    * OK
    */
-  200: Array<WeatherForecast>;
+  200: unknown;
 };
 
-export type GetWeatherForecastResponse =
-  GetWeatherForecastResponses[keyof GetWeatherForecastResponses];
+export type GetApiPrivateData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/private";
+};
+
+export type GetApiPrivateResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiPrivateScopedData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/private-scoped";
+};
+
+export type GetApiPrivateScopedResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiClaimsData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/claims";
+};
+
+export type GetApiClaimsResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};

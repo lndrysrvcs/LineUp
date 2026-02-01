@@ -2,42 +2,26 @@
 
 import { z } from "zod";
 
-export const zWeatherForecast = z.object({
-  date: z.iso.date(),
-  temperatureC: z.union([
-    z
-      .int()
-      .min(-2147483648, {
-        error: "Invalid value: Expected int32 to be >= -2147483648",
-      })
-      .max(2147483647, {
-        error: "Invalid value: Expected int32 to be <= 2147483647",
-      }),
-    z.string().regex(/^-?(?:0|[1-9]\d*)$/),
-  ]),
-  summary: z.union([z.null(), z.string()]),
-  temperatureF: z.optional(
-    z.union([
-      z
-        .int()
-        .min(-2147483648, {
-          error: "Invalid value: Expected int32 to be >= -2147483648",
-        })
-        .max(2147483647, {
-          error: "Invalid value: Expected int32 to be <= 2147483647",
-        }),
-      z.string().regex(/^-?(?:0|[1-9]\d*)$/),
-    ]),
-  ),
-});
-
-export const zGetWeatherForecastData = z.object({
+export const zGetApiPublicData = z.object({
   body: z.optional(z.never()),
   path: z.optional(z.never()),
   query: z.optional(z.never()),
 });
 
-/**
- * OK
- */
-export const zGetWeatherForecastResponse = z.array(zWeatherForecast);
+export const zGetApiPrivateData = z.object({
+  body: z.optional(z.never()),
+  path: z.optional(z.never()),
+  query: z.optional(z.never()),
+});
+
+export const zGetApiPrivateScopedData = z.object({
+  body: z.optional(z.never()),
+  path: z.optional(z.never()),
+  query: z.optional(z.never()),
+});
+
+export const zGetApiClaimsData = z.object({
+  body: z.optional(z.never()),
+  path: z.optional(z.never()),
+  query: z.optional(z.never()),
+});

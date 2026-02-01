@@ -25,6 +25,7 @@ LineUp is a scheduling tool for when you need 100% coverage over a period of tim
 2. **Install frontend dependencies**
    ```bash
    cd lineup-client
+   cp .env.example .env # Make sure to populate .env!
    pnpm install
    ```
 

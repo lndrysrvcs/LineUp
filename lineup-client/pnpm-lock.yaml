@@ -11,8 +11,8 @@ importers:
   .:
     dependencies:
       "@auth0/auth0-react":
-        specifier: ~2.11.0
-        version: 2.11.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^2.12.0
+        version: 2.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       "@tanstack/react-query":
         specifier: ^5.90.20
         version: 5.90.20(react@19.2.4)
@@ -37,10 +37,10 @@ importers:
         version: 24.10.9
       "@types/react":
         specifier: ^19.2.5
-        version: 19.2.9
+        version: 19.2.10
       "@types/react-dom":
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.9)
+        version: 19.2.3(@types/react@19.2.10)
       "@vitejs/plugin-react":
         specifier: ^5.1.1
         version: 5.1.2(rolldown-vite@7.2.5(@types/node@24.10.9)(jiti@2.6.1)(yaml@2.8.2))
@@ -85,19 +85,19 @@ packages:
         integrity: sha512-ShA7KT4KvcBEtxsXZTcrmoNxai5q1JXhB2aEBFnZD1L6LNLzzmiUWiFTtGMsaaITCylr8TJ/onEQk6XZmUHXbg==,
       }
 
-  "@auth0/auth0-react@2.11.0":
+  "@auth0/auth0-react@2.12.0":
     resolution:
       {
-        integrity: sha512-UhUUNascMmzeSPEb+br7oL+StvXjSu9eEv7gT3+hwO2bAYWfOzY2wyDTwuMA7dmTW8JEfwSzhB7McFQLNHQEng==,
+        integrity: sha512-EPLe1OYYlnxoz7GR6hbe+eGCuzllWkq+O9FxZYrH9la9Rn98BhGu515LrK5AtWOhq2iE/RuHFcvb926yK0iNhw==,
       }
     peerDependencies:
       react: ^16.11.0 || ^17 || ^18 || ~19.0.1 || ~19.1.2 || ^19.2.1
       react-dom: ^16.11.0 || ^17 || ^18 || ~19.0.1 || ~19.1.2 || ^19.2.1
 
-  "@auth0/auth0-spa-js@2.12.0":
+  "@auth0/auth0-spa-js@2.13.0":
     resolution:
       {
-        integrity: sha512-Hwn46rz1fqX2Wi2ddhqgE6rymDjZdFYIUL1PDMANLMtvYmeWjBovxcrN7QakeQ7wvmIfDNMqVc/bcByjJoUoBQ==,
+        integrity: sha512-YGK4e8eTs7LUJKZLNl15V9RRydIDAKeq3CX0kuxCB5It1mw+tMOnPMatLmin2wH6ipt9d0C56JKu9bBK7by69A==,
       }
 
   "@babel/code-frame@7.28.6":
@@ -646,10 +646,10 @@ packages:
     peerDependencies:
       "@types/react": ^19.2.0
 
-  "@types/react@19.2.9":
+  "@types/react@19.2.10":
     resolution:
       {
-        integrity: sha512-Lpo8kgb/igvMIPeNV2rsYKTgaORYdO1XGVZ4Qz3akwOj0ySGYMPlQWa8BaLn0G63D1aSaAQ5ldR06wCpChQCjA==,
+        integrity: sha512-WPigyYuGhgZ/cTPRXB2EwUw+XvsRA3GqHlsP4qteqrnnjDrApbS7MxcGr/hke5iUoeB7E/gQtrs9I37zAJ0Vjw==,
       }
 
   "@typescript-eslint/eslint-plugin@8.54.0":
@@ -819,10 +819,10 @@ packages:
         integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==,
       }
 
-  baseline-browser-mapping@2.9.18:
+  baseline-browser-mapping@2.9.19:
     resolution:
       {
-        integrity: sha512-e23vBV1ZLfjb9apvfPk4rHVu2ry6RIr2Wfs+O324okSidrX7pTAnEJPCh/O5BtRlr7QtZI7ktOP3vsqr7Z5XoA==,
+        integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==,
       }
     hasBin: true
 
@@ -963,6 +963,13 @@ packages:
       }
     engines: { node: ">=20" }
 
+  commander@14.0.3:
+    resolution:
+      {
+        integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==,
+      }
+    engines: { node: ">=20" }
+
   concat-map@0.0.1:
     resolution:
       {
@@ -1072,10 +1079,10 @@ packages:
         integrity: sha512-J0Of2JTiM4h5si0tlbPQ/lkqfZ5wAEVkKYBhkwyyANnPJfWH4VsR5uIkZ+T+OSPIwDYUg1fbd5Mmodd25HjY1w==,
       }
 
-  electron-to-chromium@1.5.279:
+  electron-to-chromium@1.5.283:
     resolution:
       {
-        integrity: sha512-0bblUU5UNdOt5G7XqGiJtpZMONma6WAfq9vsFmtn9x1+joAObr6x1chfqyxFSDCAFwFhCQDrqeAr6MYdpwJ9Hg==,
+        integrity: sha512-3vifjt1HgrGW/h76UEeny+adYApveS9dH2h3p57JYzBSXJIKUJAvtmIytDKjcSCt9xHfrNCFJ7gts6vkhuq++w==,
       }
 
   emoji-regex@10.6.0:
@@ -2090,10 +2097,10 @@ packages:
       }
     engines: { node: ">=18" }
 
-  string-width@8.1.0:
+  string-width@8.1.1:
     resolution:
       {
-        integrity: sha512-Kxl3KJGb/gxkaUMOjRsQ8IrXiGW75O4E3RPjFIINOVH8AMl2SQ/yWdTzWwF3FevIX9LcMAjJW+GRwAlAbTSXdg==,
+        integrity: sha512-KpqHIdDL9KwYk22wEOg/VIqYbrnLeSApsKT/bSj6Ez7pn3CftUiLAv2Lccpq1ALcpLV9UX1Ppn92npZWu2w/aw==,
       }
     engines: { node: ">=20" }
 
@@ -2271,13 +2278,13 @@ snapshots:
       jose: 6.1.3
       openid-client: 6.8.1
 
-  "@auth0/auth0-react@2.11.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)":
+  "@auth0/auth0-react@2.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)":
     dependencies:
-      "@auth0/auth0-spa-js": 2.12.0
+      "@auth0/auth0-spa-js": 2.13.0
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  "@auth0/auth0-spa-js@2.12.0":
+  "@auth0/auth0-spa-js@2.13.0":
     dependencies:
       "@auth0/auth0-auth-js": 1.4.0
       browser-tabs-lock: 1.3.0
@@ -2623,11 +2630,11 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  "@types/react-dom@19.2.3(@types/react@19.2.9)":
+  "@types/react-dom@19.2.3(@types/react@19.2.10)":
     dependencies:
-      "@types/react": 19.2.9
+      "@types/react": 19.2.10
 
-  "@types/react@19.2.9":
+  "@types/react@19.2.10":
     dependencies:
       csstype: 3.2.3
 
@@ -2765,7 +2772,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  baseline-browser-mapping@2.9.18: {}
+  baseline-browser-mapping@2.9.19: {}
 
   brace-expansion@1.1.12:
     dependencies:
@@ -2786,9 +2793,9 @@ snapshots:
 
   browserslist@4.28.1:
     dependencies:
-      baseline-browser-mapping: 2.9.18
+      baseline-browser-mapping: 2.9.19
       caniuse-lite: 1.0.30001766
-      electron-to-chromium: 1.5.279
+      electron-to-chromium: 1.5.283
       node-releases: 2.0.27
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
 
@@ -2837,7 +2844,7 @@ snapshots:
   cli-truncate@5.1.1:
     dependencies:
       slice-ansi: 7.1.2
-      string-width: 8.1.0
+      string-width: 8.1.1
 
   color-convert@2.0.1:
     dependencies:
@@ -2850,6 +2857,8 @@ snapshots:
   colorette@2.0.20: {}
 
   commander@14.0.2: {}
+
+  commander@14.0.3: {}
 
   concat-map@0.0.1: {}
 
@@ -2892,7 +2901,7 @@ snapshots:
 
   dpop@2.1.1: {}
 
-  electron-to-chromium@1.5.279: {}
+  electron-to-chromium@1.5.283: {}
 
   emoji-regex@10.6.0: {}
 
@@ -3176,7 +3185,7 @@ snapshots:
 
   lint-staged@16.2.7:
     dependencies:
-      commander: 14.0.2
+      commander: 14.0.3
       listr2: 9.0.5
       micromatch: 4.0.8
       nano-spawn: 2.0.0
@@ -3416,7 +3425,7 @@ snapshots:
       get-east-asian-width: 1.4.0
       strip-ansi: 7.1.2
 
-  string-width@8.1.0:
+  string-width@8.1.1:
     dependencies:
       get-east-asian-width: 1.4.0
       strip-ansi: 7.1.2

@@ -2,10 +2,15 @@
 
 import type { Client, Options as Options2, TDataShape } from "./client";
 import { client } from "./client.gen";
-import { getWeatherForecastResponseTransformer } from "./transformers.gen";
 import type {
-  GetWeatherForecastData,
-  GetWeatherForecastResponses,
+  GetApiClaimsData,
+  GetApiClaimsResponses,
+  GetApiPrivateData,
+  GetApiPrivateResponses,
+  GetApiPrivateScopedData,
+  GetApiPrivateScopedResponses,
+  GetApiPublicData,
+  GetApiPublicResponses,
 } from "./types.gen";
 
 export type Options<
@@ -25,15 +30,34 @@ export type Options<
   meta?: Record<string, unknown>;
 };
 
-export const getWeatherForecast = <ThrowOnError extends boolean = false>(
-  options?: Options<GetWeatherForecastData, ThrowOnError>,
+export const getApiPublic = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiPublicData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<GetApiPublicResponses, unknown, ThrowOnError>(
+    { url: "/api/public", ...options },
+  );
+
+export const getApiPrivate = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiPrivateData, ThrowOnError>,
 ) =>
   (options?.client ?? client).get<
-    GetWeatherForecastResponses,
+    GetApiPrivateResponses,
     unknown,
     ThrowOnError
-  >({
-    responseTransformer: getWeatherForecastResponseTransformer,
-    url: "/weatherforecast",
-    ...options,
-  });
+  >({ url: "/api/private", ...options });
+
+export const getApiPrivateScoped = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiPrivateScopedData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<
+    GetApiPrivateScopedResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/private-scoped", ...options });
+
+export const getApiClaims = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiClaimsData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<GetApiClaimsResponses, unknown, ThrowOnError>(
+    { url: "/api/claims", ...options },
+  );
