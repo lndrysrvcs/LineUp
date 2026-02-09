@@ -34,6 +34,8 @@ const BaseCalendar = ({ Cell, minutesPerCell, weekdays, range }: CalendarProps) 
       output += " calendarTopBorder";
     } else if ((range.start.minute + minutesPerCell * row) % 30 === 0) {
       output += " calendarTopBorder dottedBorder";
+    } else if (minutesPerCell === 20) {
+      output += " calendarTopBorder dottedBorder";
     } else if (
       // that weird condition where 30 minutes are chosen but it starts at 15 minute increments
       minutesPerCell === 30 &&
@@ -126,7 +128,7 @@ const CalendarCell = ({
       onMouseDown={onMouseDown}
       onMouseUp={() => setIsMouseDown(false)}
       onMouseEnter={onMouseEnter}
-      className={"calendarInnerCell" + (clicked ? " clicked" : "")}
+      className={"unstyledButton calendarInnerCell" + (clicked ? " clicked" : "")}
       title={weekday + " " + formatTime(time)}
     ></button>
   );

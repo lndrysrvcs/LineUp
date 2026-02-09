@@ -37,8 +37,7 @@
 .scheduleBtn {
   padding: 2px;
   color: var(--primary);
-  border-color: var(--primary);
-  border: solid;
+  border-color: var(--primary) solid;
   border-radius: 5px;
   transition: all 0.25s;
 
