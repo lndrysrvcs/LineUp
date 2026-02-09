@@ -1,7 +1,7 @@
+import "@/App.css";
+import Topbar from "@/components/Topbar";
+import Home from "@/pages/Home";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import "./App.css";
-import Topbar from "./components/Topbar";
-import Home from "./pages/Home";
 
 function App() {
   return (

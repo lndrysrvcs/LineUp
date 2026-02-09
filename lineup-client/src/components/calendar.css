@@ -1,0 +1,50 @@
+.calendarWrapper {
+  display: grid;
+  font-family: sans-serif;
+  font-size: 0.75rem;
+}
+
+.calendarLabel {
+  text-align: center;
+  font-weight: bold;
+}
+
+.calendarRowLabel {
+  padding-right: 0.5rem;
+  transform: translateY(-0.7em);
+}
+
+.calendarRow {
+  display: grid;
+}
+
+.calendarCell {
+  cursor: pointer;
+  border-right: 1px solid var(--primary);
+}
+
+.calendarTopBorder {
+  border-top: 1px solid var(--primary);
+
+  &.dottedBorder {
+    border-top: 1px dotted var(--primary);
+  }
+}
+
+.calendarBottomBorder {
+  border-bottom: 1px solid var(--primary);
+}
+
+.calendarLeftBorder {
+  border-left: 1px solid var(--primary);
+}
+
+.calendarInnerCell {
+  width: 100%;
+  height: 100%;
+  padding-left: 1px;
+
+  &.clicked {
+    background-color: var(--primary-active-hover);
+  }
+}

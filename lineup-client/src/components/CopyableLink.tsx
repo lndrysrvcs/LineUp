@@ -17,13 +17,9 @@ const CopyableLink = ({ url }: CopyableLinkProps) => {
   };
 
   return (
-    <span
-      className="copyableLink"
-      onClick={handleCopy}
-      title="Click to copy link"
-    >
+    <button className="unstyledButton copyableLink" onClick={handleCopy} title="Click to copy link">
       {copied ? "Copied" : url}
-    </span>
+    </button>
   );
 };
 

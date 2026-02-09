@@ -1,6 +1,6 @@
+import CopyableLink from "@/components/CopyableLink";
+import Table from "@/components/Table";
 import { useAuth0 } from "@auth0/auth0-react";
-import CopyableLink from "../components/CopyableLink";
-import Table from "../components/Table";
 
 interface TableData {
   name: string;
@@ -60,12 +60,7 @@ const LoggedInHome = () => {
           New Schedule
         </button>{" "}
       </div>
-      <Table
-        headers={headers}
-        data={items}
-        renderRow={renderRow}
-        columnWidths={["25%", "25%", "30%", "20%"]}
-      />
+      <Table headers={headers} data={items} renderRow={renderRow} columnWidths={["25%", "25%", "30%", "20%"]} />
     </div>
   );
 };

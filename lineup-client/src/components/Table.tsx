@@ -7,12 +7,7 @@ interface TableProps<T> {
   columnWidths?: string[];
 }
 
-const Table = <T,>({
-  headers,
-  data,
-  renderRow,
-  columnWidths,
-}: TableProps<T>) => {
+const Table = <T,>({ headers, data, renderRow, columnWidths }: TableProps<T>) => {
   return (
     <table className="scheduleTable">
       <colgroup>
