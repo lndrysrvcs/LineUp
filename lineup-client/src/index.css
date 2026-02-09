@@ -2,7 +2,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 24px;
 
   color: var(--primary);
   background-color: var(--background);
@@ -12,10 +12,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --background: #fefbea;
+  --background: #343434;
   --primary: #b09cff;
   --primary-active: #bad8ff;
-  --primary-hover: #917ede;
+  --primary-hover: #907cdf;
+  --primary-active-hover: #9ab8df;
 
   overflow: hidden;
 }
@@ -39,7 +40,6 @@ body {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--background);

@@ -31,3 +31,33 @@
     color: var(--primary-hover);
   }
 }
+
+.rightButton {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  outline: none;
+  border: none;
+  text-decoration: underline;
+  transition: color 0.25s;
+
+  &:hover {
+    color: var(--primary-hover);
+  }
+}
+
+.copyableLink {
+  cursor: pointer;
+  color: var(--primary);
+  text-decoration: underline;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &:hover {
+    color: var(--primary-hover);
+  }
+}
