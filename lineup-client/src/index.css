@@ -16,8 +16,6 @@
   --primary: #b09cff;
   --primary-active: #bad8ff;
   --primary-hover: #917ede;
-
-  overflow: hidden;
 }
 
 ::selection {
