@@ -1,6 +1,6 @@
+import lineupLogo from "@/assets/lineup-full.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router";
-import lineupLogo from "../assets/lineup-full.png";
 
 interface Props {
   children: React.ReactNode;
