@@ -1,4 +1,4 @@
-import type { Time, ValidMinutes } from "@/types";
+import { WEEKDAYS, type DateDay, type Time, type ValidMinutes, type Weekday } from "@/types";
 
 function timesAreEqual(time1: Time, time2: Time): boolean {
   return time1.hour === time2.hour && time1.minute === time2.minute;
@@ -31,6 +31,10 @@ function formatTime(time: Time): string {
   );
 }
 
+function formatDate(date: DateDay, time: Time): string {
+  return `${date.day}, ${date.date} at ${formatTime(time)}`;
+}
+
 function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: ValidMinutes): string {
   const time = addMinutesToTime(rangeStart, (minutesPerCell * row) as ValidMinutes);
 
@@ -44,4 +48,8 @@ function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: Va
   return "";
 }
 
-export { addMinutesToTime, formatTime, getTimeIncrementLabel, timesAreEqual };
+function weekdayToNum(weekday: Weekday): number {
+  return WEEKDAYS.indexOf(weekday);
+}
+
+export { addMinutesToTime, formatDate, formatTime, getTimeIncrementLabel, timesAreEqual, weekdayToNum };

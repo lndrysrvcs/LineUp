@@ -16,3 +16,9 @@ export type TimeRange = {
   start: Time;
   end: Time;
 };
+
+// {date: "2/12", day: "Thursday"}
+export type DateDay = {
+  date: string;
+  day: Weekday;
+};
