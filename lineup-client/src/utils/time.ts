@@ -52,4 +52,9 @@ function weekdayToNum(weekday: Weekday): number {
   return WEEKDAYS.indexOf(weekday);
 }
 
-export { addMinutesToTime, formatDate, formatTime, getTimeIncrementLabel, timesAreEqual, weekdayToNum };
+// should return something like "2/12-14:30". This should be completely unique per date and time
+function formatDateTime(date: string, time: Time): string {
+  return `${date}-${time.hour.toString().padStart(2, "0")}:${time.minute.toString().padStart(2, "0")}`;
+}
+
+export { addMinutesToTime, formatDate, formatDateTime, formatTime, getTimeIncrementLabel, timesAreEqual, weekdayToNum };

@@ -1,4 +1,5 @@
-import { BaseCalendar, CalendarCell } from "@/components/Calendars";
+import { FillableCell } from "@/components/CalendarCells";
+import { BaseCalendar } from "@/components/Calendars";
 import type { DateDay } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react/";
 import LoggedInHome from "./LoggedInHome";
@@ -22,7 +23,7 @@ const Home = () => {
     <>
       {(!isLoading || error) && <>{isAuthenticated ? <LoggedInHome /> : <LoggedOutHome />}</>}
       <BaseCalendar
-        Cell={CalendarCell}
+        Cell={FillableCell}
         minutesPerCell={30}
         dates={testDates}
         range={{ start: { hour: 9, minute: 0 }, end: { hour: 17, minute: 0 } }}

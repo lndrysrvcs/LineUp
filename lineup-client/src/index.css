@@ -42,11 +42,14 @@ button {
   font-family: inherit;
   background-color: var(--background);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
   color: inherit;
 }
 button:hover {
   border-color: var(--primary-active);
+}
+button:active {
+  color: var(--primary-hover);
 }
 button:focus,
 button:focus-visible {

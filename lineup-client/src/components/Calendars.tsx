@@ -1,16 +1,9 @@
-import type { DateDay, Time, TimeRange, ValidMinutes } from "@/types";
-import { addMinutesToTime, formatDate, formatTime, getTimeIncrementLabel, weekdayToNum } from "@/utils/time";
-import React from "react";
+import type { DateDay, TimeRange, ValidMinutes } from "@/types";
+import { addMinutesToTime, formatTime, getTimeIncrementLabel, weekdayToNum } from "@/utils/time";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { Fragment, useEffect, useState } from "react";
 import "./calendar.css";
-
-interface CalendarCellProps {
-  time: Time;
-  date: DateDay;
-  isMouseDown: boolean;
-  setIsMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
-  isEnablingCells: boolean;
-  setIsEnablingCells: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import type { CalendarCellProps } from "./CalendarCells";
 
 interface CalendarProps {
   Cell: React.ComponentType<CalendarCellProps>;
@@ -21,12 +14,14 @@ interface CalendarProps {
 
 // Children are each cell of the calendar
 const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
-  const [isMouseDown, setIsMouseDown] = React.useState(false);
-  const [isEnablingCells, setIsEnablingCells] = React.useState(false);
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [selectedCells, setSelectedCells] = useState<string[]>([]);
+  const [isPointerDown, setIsPointerDown] = useState(false);
+  const [isEnablingCells, setIsEnablingCells] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
   const numRows =
     (range.end.hour - range.start.hour) * (60 / minutesPerCell) +
     Math.ceil((range.end.minute - range.start.minute) / minutesPerCell);
+  const pageDates = getPageDates(currentPage);
 
   function calculatePageStarts() {
     const pageStarts = [0];
@@ -85,10 +80,13 @@ const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => 
   }
 
   function needsSpaceAfterCol(col: number) {
-    return (
-      col < getPageDates().length - 1 &&
-      weekdayToNum(getPageDates()[col].day) + 1 !== weekdayToNum(getPageDates()[col + 1].day)
-    );
+    if (col >= pageDates.length - 1) return false;
+
+    if (pageDates[col].day === "Sunday") {
+      return pageDates[col + 1].day !== "Monday";
+    } else {
+      return weekdayToNum(pageDates[col].day) + 1 !== weekdayToNum(pageDates[col + 1].day);
+    }
   }
 
   function extraColMargin(col: number) {
@@ -102,19 +100,43 @@ const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => 
     return style;
   }
 
+  useEffect(() => {
+    globalThis.addEventListener("pointerup", () => setIsPointerDown(false));
+    return () => globalThis.removeEventListener("pointerup", () => setIsPointerDown(false));
+  });
+
   return (
     <div
       className="calendarWrapper"
       style={{
-        maxWidth: getPageDates().length * 200,
-        gridTemplateColumns: `auto repeat(${getPageDates().length}, 1fr)`,
+        maxWidth: pageDates.length * 200,
+        gridTemplateColumns: `auto repeat(${pageDates.length}, 1fr)`,
         gridTemplateRows:
-          minutesPerCell < 60 ? `auto repeat(${numRows + 1}, 1em) auto` : `auto repeat(${numRows + 1}, 1.5em)`,
+          minutesPerCell < 60
+            ? `auto auto repeat(${numRows + 1}, 1em) auto`
+            : `auto auto repeat(${numRows + 1}, 1.5em)`,
       }}
     >
+      <div className="pageButtonWrapper">
+        {currentPage > 0 ? (
+          <button className="pageButton pageLeft" onClick={() => setCurrentPage((currentPage) => currentPage - 1)}>
+            <ArrowLeftIcon className="pageIcon" />
+          </button>
+        ) : (
+          <div />
+        )}
+        {currentPage < calculatePageStarts().length - 1 ? (
+          <button className="pageButton pageRight" onClick={() => setCurrentPage((currentPage) => currentPage + 1)}>
+            <ArrowRightIcon className="pageIcon" />
+          </button>
+        ) : (
+          <div />
+        )}
+      </div>
+
       <div className="calendarBlankCell" />
-      {getPageDates().map((date, col) => (
-        <div key={date.day} className="calendarLabel" style={extraColMargin(col)}>
+      {pageDates.map((date, col) => (
+        <div key={date.date} className="calendarLabel" style={extraColMargin(col)}>
           {date.day}
           <br />
           {date.date}
@@ -122,65 +144,29 @@ const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => 
       ))}
 
       {Array.from({ length: numRows }).map((_, row) => (
-        <React.Fragment key={row}>
+        <Fragment key={row}>
           <div className="calendarLabel calendarRowLabel">
             {getTimeIncrementLabel(row, range.start, minutesPerCell)}
           </div>
-          {getPageDates().map((date, col) => (
+          {pageDates.map((date, col) => (
             <div key={date.date} className={calculateCellClasses(row, col)} style={extraColMargin(col)}>
               <Cell
                 time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
                 date={date}
-                isMouseDown={isMouseDown}
-                setIsMouseDown={setIsMouseDown}
+                selectedCells={selectedCells}
+                setSelectedCells={setSelectedCells}
+                isPointerDown={isPointerDown}
+                setIsPointerDown={setIsPointerDown}
                 isEnablingCells={isEnablingCells}
                 setIsEnablingCells={setIsEnablingCells}
               />
             </div>
           ))}
-        </React.Fragment>
+        </Fragment>
       ))}
       <div className="calendarLabel calendarRowLabel">{formatTime(range.end)}</div>
     </div>
   );
 };
 
-const CalendarCell = ({
-  time,
-  date,
-  isMouseDown,
-  setIsMouseDown,
-  isEnablingCells,
-  setIsEnablingCells,
-}: CalendarCellProps) => {
-  const [clicked, setClicked] = React.useState(false);
-
-  function updateCell() {
-    console.log(`Clicked on ${formatDate(date, time)}`);
-    setClicked((clicked) => !clicked);
-  }
-
-  function onMouseDown() {
-    setIsMouseDown(true);
-    setIsEnablingCells(!clicked);
-    updateCell();
-  }
-
-  function onMouseEnter() {
-    if (isMouseDown && clicked !== isEnablingCells) {
-      updateCell();
-    }
-  }
-
-  return (
-    <button
-      onMouseDown={onMouseDown}
-      onMouseUp={() => setIsMouseDown(false)}
-      onMouseEnter={onMouseEnter}
-      className={"unstyledButton calendarInnerCell" + (clicked ? " clicked" : "")}
-      title={date.day + " " + formatTime(time)}
-    ></button>
-  );
-};
-
-export { BaseCalendar, CalendarCell };
+export { BaseCalendar };

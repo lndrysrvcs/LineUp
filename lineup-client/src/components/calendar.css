@@ -17,6 +17,34 @@
   transform: translateY(-0.6em);
 }
 
+.pageButtonWrapper {
+  grid-column: 2 / -1;
+  display: flex;
+  justify-content: space-between;
+  height: 0;
+  overflow: visible;
+}
+
+.pageButton {
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  margin: 0;
+}
+
+.pageLeft {
+  transform: translate(-1em, 0.5em);
+}
+
+.pageRight {
+  transform: translate(1em, 0.5em);
+}
+
+.pageIcon {
+  width: 100%;
+  height: 100%;
+}
+
 .calendarRow {
   display: grid;
 }
@@ -46,6 +74,7 @@
   width: 100%;
   height: 100%;
   padding-left: 1px;
+  transition: none;
 
   &.clicked {
     background-color: var(--primary-active-hover);
