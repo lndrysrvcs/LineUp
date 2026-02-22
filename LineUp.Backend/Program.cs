@@ -1,7 +1,10 @@
+using LineUp.Backend;
 using LineUp.Backend.Support;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,12 +49,31 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
+builder.Services.AddDbContext<LineUpContext>(options =>
+{
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("LineUp")
+            ?? "Host=localhost;Username=postgres;Password=postgres;Database=my-database"
+    );
+});
+
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+        options
+            .AddPreferredSecuritySchemes("HttpBearer")
+            .AddHttpAuthentication(
+                "HttpBearer",
+                auth =>
+                {
+                    auth.Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+                }
+            )
+    );
 }
 else
 {
@@ -66,9 +88,6 @@ app.UseRouting();
 app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
 app.Run();

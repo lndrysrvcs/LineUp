@@ -4,6 +4,27 @@ export type ClientOptions = {
   baseUrl: `${string}://${string}` | (string & {});
 };
 
+export type ScheduleDto = {
+  id?: null | number | string;
+  guid?: null | string;
+  dateCoverage: Array<Date>;
+  startTime: string;
+  endTime: string;
+  shiftAssignments?: Array<ShiftAssignment>;
+  schedulePreferences: SchedulePreferences;
+};
+
+export type SchedulePreferences = {
+  id?: string;
+  minutesPerSlot?: number | string;
+};
+
+export type ShiftAssignment = {
+  id?: number | string;
+  startTime?: Date;
+  endTime?: Date;
+};
+
 export type GetApiPublicData = {
   body?: never;
   path?: never;
@@ -54,6 +75,140 @@ export type GetApiClaimsData = {
 };
 
 export type GetApiClaimsResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiAvailabilityPublicData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/availability/public";
+};
+
+export type GetApiAvailabilityPublicResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiAvailabilityByGuidExistsData = {
+  body?: never;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/availability/{guid}/exists";
+};
+
+export type GetApiAvailabilityByGuidExistsResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiSchedulePublicData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/schedule/public";
+};
+
+export type GetApiSchedulePublicResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiScheduleClaimsData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/api/schedule/claims";
+};
+
+export type GetApiScheduleClaimsResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type DeleteApiScheduleByGuidData = {
+  body?: never;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/schedule/{guid}";
+};
+
+export type DeleteApiScheduleByGuidResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiScheduleByGuidData = {
+  body?: never;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/schedule/{guid}";
+};
+
+export type GetApiScheduleByGuidResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type PutApiScheduleByGuidData = {
+  body: ScheduleDto;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/schedule/{guid}";
+};
+
+export type PutApiScheduleByGuidResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/";
+};
+
+export type GetResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type PostApiScheduleData = {
+  body: ScheduleDto;
+  path?: never;
+  query?: never;
+  url: "/api/schedule";
+};
+
+export type PostApiScheduleResponses = {
   /**
    * OK
    */

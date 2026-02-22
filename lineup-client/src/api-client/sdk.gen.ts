@@ -3,6 +3,12 @@
 import type { Client, Options as Options2, TDataShape } from "./client";
 import { client } from "./client.gen";
 import type {
+  DeleteApiScheduleByGuidData,
+  DeleteApiScheduleByGuidResponses,
+  GetApiAvailabilityByGuidExistsData,
+  GetApiAvailabilityByGuidExistsResponses,
+  GetApiAvailabilityPublicData,
+  GetApiAvailabilityPublicResponses,
   GetApiClaimsData,
   GetApiClaimsResponses,
   GetApiPrivateData,
@@ -11,6 +17,18 @@ import type {
   GetApiPrivateScopedResponses,
   GetApiPublicData,
   GetApiPublicResponses,
+  GetApiScheduleByGuidData,
+  GetApiScheduleByGuidResponses,
+  GetApiScheduleClaimsData,
+  GetApiScheduleClaimsResponses,
+  GetApiSchedulePublicData,
+  GetApiSchedulePublicResponses,
+  GetData,
+  GetResponses,
+  PostApiScheduleData,
+  PostApiScheduleResponses,
+  PutApiScheduleByGuidData,
+  PutApiScheduleByGuidResponses,
 } from "./types.gen";
 
 export type Options<
@@ -61,3 +79,99 @@ export const getApiClaims = <ThrowOnError extends boolean = false>(
   (options?.client ?? client).get<GetApiClaimsResponses, unknown, ThrowOnError>(
     { url: "/api/claims", ...options },
   );
+
+export const getApiAvailabilityPublic = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiAvailabilityPublicData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<
+    GetApiAvailabilityPublicResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/availability/public", ...options });
+
+export const getApiAvailabilityByGuidExists = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetApiAvailabilityByGuidExistsData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<
+    GetApiAvailabilityByGuidExistsResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/availability/{guid}/exists", ...options });
+
+export const getApiSchedulePublic = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiSchedulePublicData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<
+    GetApiSchedulePublicResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/schedule/public", ...options });
+
+export const getApiScheduleClaims = <ThrowOnError extends boolean = false>(
+  options?: Options<GetApiScheduleClaimsData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<
+    GetApiScheduleClaimsResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/schedule/claims", ...options });
+
+export const deleteApiScheduleByGuid = <ThrowOnError extends boolean = false>(
+  options: Options<DeleteApiScheduleByGuidData, ThrowOnError>,
+) =>
+  (options.client ?? client).delete<
+    DeleteApiScheduleByGuidResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/schedule/{guid}", ...options });
+
+export const getApiScheduleByGuid = <ThrowOnError extends boolean = false>(
+  options: Options<GetApiScheduleByGuidData, ThrowOnError>,
+) =>
+  (options.client ?? client).get<
+    GetApiScheduleByGuidResponses,
+    unknown,
+    ThrowOnError
+  >({ url: "/api/schedule/{guid}", ...options });
+
+export const putApiScheduleByGuid = <ThrowOnError extends boolean = false>(
+  options: Options<PutApiScheduleByGuidData, ThrowOnError>,
+) =>
+  (options.client ?? client).put<
+    PutApiScheduleByGuidResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/api/schedule/{guid}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+export const get = <ThrowOnError extends boolean = false>(
+  options?: Options<GetData, ThrowOnError>,
+) =>
+  (options?.client ?? client).get<GetResponses, unknown, ThrowOnError>({
+    url: "/",
+    ...options,
+  });
+
+export const postApiSchedule = <ThrowOnError extends boolean = false>(
+  options: Options<PostApiScheduleData, ThrowOnError>,
+) =>
+  (options.client ?? client).post<
+    PostApiScheduleResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/api/schedule",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });

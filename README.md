@@ -46,3 +46,6 @@ To regenerate the API client after backend changes:
 cd LineUp.Backend
 GEN=true dotnet build
 ```
+
+## Versions:
+Postrgess: 18.1

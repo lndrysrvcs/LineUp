@@ -1,6 +1,17 @@
-@LineUp.Backend_HostAddress = http://localhost:5071
+@LineUp.Backend_HostAddress = http://localhost:3010
 
-GET {{LineUp.Backend_HostAddress}}/weatherforecast/
+# GET {{LineUp.Backend_HostAddress}}/
+# Accept: application/json
+
+GET {{LineUp.Backend_HostAddress}}/api/availability/public
 Accept: application/json
+###
 
+POST {{LineUp.Backend_HostAddress}}/api/schedule/dateCoverage
+Accept: application/json
+###
+
+
+GET {{LineUp.Backend_HostAddress}}/api/schedule/dateCoverage
+Accept: application/json
 ###
