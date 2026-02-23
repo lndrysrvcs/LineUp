@@ -1,6 +1,7 @@
 import CopyableLink from "@/components/CopyableLink";
 import Table from "@/components/Table";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router";
 
 interface TableData {
   name: string;
@@ -46,6 +47,8 @@ const renderRow = (row: TableData) => (
 
 const LoggedInHome = () => {
   const { user } = useAuth0();
+  const navigate = useNavigate();
+
   return (
     <div className="home">
       Welcome back, <b>{user?.given_name}</b>!
@@ -54,7 +57,7 @@ const LoggedInHome = () => {
         <button
           className="rightButton"
           onClick={() => {
-            //TODO: make this button go to the NewSchedule screen
+            navigate("/newschedule");
           }}
         >
           New Schedule

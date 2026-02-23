@@ -35,11 +35,12 @@
 }
 
 .scheduleBtn {
-  padding: 2px;
+  padding: 0.5em;
   color: var(--primary);
   border-color: var(--primary) solid;
-  border-radius: 5px;
+  border-radius: 1em;
   transition: all 0.25s;
+  font-size: 0.75em;
 
   &:hover {
     background-color: var(--primary-active-hover);

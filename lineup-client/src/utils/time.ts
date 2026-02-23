@@ -1,4 +1,4 @@
-import { WEEKDAYS, type DateDay, type Time, type ValidMinutes, type Weekday } from "@/types";
+import { WEEKDAYS, type DateDay, type Time, type ValidMinutes, type Weekday, type ValidHours } from "@/types";
 
 function timesAreEqual(time1: Time, time2: Time): boolean {
   return time1.hour === time2.hour && time1.minute === time2.minute;
@@ -57,4 +57,73 @@ function formatDateTime(date: string, time: Time): string {
   return `${date}-${time.hour.toString().padStart(2, "0")}:${time.minute.toString().padStart(2, "0")}`;
 }
 
-export { addMinutesToTime, formatDate, formatDateTime, formatTime, getTimeIncrementLabel, timesAreEqual, weekdayToNum };
+// Takes a time string in 24H format (e.g. "23:59") and converts it to a Time object
+function parseTimeString(time: string): Time | null {
+  if (!time || !time.includes(":")) return null;
+
+  const [hourStr, minuteStr] = time.split(":");
+  const hour = Number(hourStr);
+  const minute = Number(minuteStr);
+
+  if (Number.isNaN(hour) || Number.isNaN(minute)) return null;
+
+  return {
+    hour: hour as ValidHours,
+    minute: minute as ValidMinutes,
+  };
+}
+
+// Reworked formatting just for time input (24H), which is incompatible with the above formatTime (12H)
+function formatTimeForInput(time: Time): string {
+  return `${time.hour.toString().padStart(2, "0")}:${time.minute.toString().padStart(2, "0")}`;
+}
+
+// Returns the valid minute values that can be chosen for the given cell size
+function getValidMinutesForInterval(interval: number): number[] {
+  switch (interval) {
+    case 15:
+    case 30:
+    case 45:
+      return [0, 15, 30, 45];
+    case 20:
+    case 40:
+      return [0, 20, 40];
+    case 60:
+    default:
+      return [0, 15, 20, 30, 40, 45];
+  }
+}
+
+// Used in validating start and end times on submission
+function toMinutes(time: Time, isEnd = false): number {
+  // Needed to allow midnight as end time
+  if (isEnd && time.hour === 0 && time.minute === 0) {
+    return 1440;
+  }
+  return time.hour * 60 + time.minute;
+}
+
+// Converts an array of Date objects to DateDays
+function convertToDateDays(dates: Date[]): DateDay[] {
+  return dates.map((jsDate) => ({
+    date: `${jsDate.getMonth() + 1}/${jsDate.getDate()}`,
+    day: jsDate.toLocaleDateString("en-US", {
+      weekday: "long",
+    }) as Weekday,
+  }));
+}
+
+export {
+  addMinutesToTime,
+  formatDate,
+  formatDateTime,
+  formatTime,
+  getTimeIncrementLabel,
+  timesAreEqual,
+  weekdayToNum,
+  parseTimeString,
+  formatTimeForInput,
+  getValidMinutesForInterval,
+  toMinutes,
+  convertToDateDays,
+};
