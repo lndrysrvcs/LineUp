@@ -8,12 +8,8 @@ export const zSchedulePreferences = z.object({
     z.union([
       z
         .int()
-        .min(-2147483648, {
-          error: "Invalid value: Expected int32 to be >= -2147483648",
-        })
-        .max(2147483647, {
-          error: "Invalid value: Expected int32 to be <= 2147483647",
-        }),
+        .min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
+        .max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
       z.string().regex(/^-?(?:0|[1-9]\d*)$/),
     ]),
   ),
@@ -24,12 +20,8 @@ export const zShiftAssignment = z.object({
     z.union([
       z
         .int()
-        .min(-2147483648, {
-          error: "Invalid value: Expected int32 to be >= -2147483648",
-        })
-        .max(2147483647, {
-          error: "Invalid value: Expected int32 to be <= 2147483647",
-        }),
+        .min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
+        .max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
       z.string().regex(/^-?(?:0|[1-9]\d*)$/),
     ]),
   ),
@@ -43,12 +35,8 @@ export const zScheduleDto = z.object({
       z.null(),
       z
         .int()
-        .min(-2147483648, {
-          error: "Invalid value: Expected int32 to be >= -2147483648",
-        })
-        .max(2147483647, {
-          error: "Invalid value: Expected int32 to be <= 2147483647",
-        }),
+        .min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
+        .max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
       z.string().regex(/^-?(?:0|[1-9]\d*)$/),
     ]),
   ),
@@ -91,6 +79,14 @@ export const zGetApiAvailabilityPublicData = z.object({
 });
 
 export const zGetApiAvailabilityByGuidExistsData = z.object({
+  body: z.optional(z.never()),
+  path: z.object({
+    guid: z.uuid(),
+  }),
+  query: z.optional(z.never()),
+});
+
+export const zGetApiAvailabilityByGuidGenerateLinkData = z.object({
   body: z.optional(z.never()),
   path: z.object({
     guid: z.uuid(),

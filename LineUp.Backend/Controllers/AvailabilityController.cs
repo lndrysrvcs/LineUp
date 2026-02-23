@@ -1,5 +1,7 @@
+using LineUp.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LineUp.Backend.Controllers;
 
@@ -27,5 +29,19 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         }
 
         return NotFound();
+    }
+
+    [HttpGet("{guid:guid}/generateLink")]
+    public IActionResult GenerateLink(Guid guid)
+    {
+        Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
+        if (schedule == null)
+        {
+            return NotFound();
+        }
+        Availability availability = new Availability { UserName = "", Schedule = schedule };
+        context.Availabilities.Add(availability);
+        context.SaveChanges();
+        return Ok(availability.Guid);
     }
 }

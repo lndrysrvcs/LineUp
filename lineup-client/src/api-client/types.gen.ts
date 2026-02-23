@@ -111,6 +111,22 @@ export type GetApiAvailabilityByGuidExistsResponses = {
   200: unknown;
 };
 
+export type GetApiAvailabilityByGuidGenerateLinkData = {
+  body?: never;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/availability/{guid}/generateLink";
+};
+
+export type GetApiAvailabilityByGuidGenerateLinkResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
 export type GetApiSchedulePublicData = {
   body?: never;
   path?: never;
