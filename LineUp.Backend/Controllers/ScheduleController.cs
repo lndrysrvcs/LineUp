@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using LineUp.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,20 +31,21 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     [HttpGet("{guid:guid}")]
     public async Task<IActionResult> GetSchedule(Guid guid)
     {
-        var result = await context.FindAsync<Schedule>(guid);
+        var result = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
         if (result != null)
             return Ok(result);
         return NotFound();
     }
 
-    [HttpGet("/")]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetSchedules()
     {
-        var userId = User.FindFirst("sub")!.Value;
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
         List<Schedule> result = await context
             .Schedules.Where(s => s.Auth0UserId == userId)
             .ToListAsync();
+
         return Ok(result);
     }
 
@@ -54,7 +56,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         var scheduleToDelete = await context.FindAsync<Schedule>(guid);
         if (scheduleToDelete == null)
             return NotFound();
-        if (scheduleToDelete.Auth0UserId != User.FindFirst("sub")!.Value)
+        if (scheduleToDelete.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
         context.Schedules.Remove(scheduleToDelete);
         await context.SaveChangesAsync();
@@ -68,7 +70,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         var scheduleToUpdate = await context.FindAsync<Schedule>(guid);
         if (scheduleToUpdate == null)
             return NotFound();
-        if (scheduleToUpdate.Auth0UserId != User.FindFirst("sub")!.Value)
+        if (scheduleToUpdate.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
         scheduleToUpdate.DateCoverage = schedule.DateCoverage;
         scheduleToUpdate.StartTime = schedule.StartTime;
@@ -84,12 +86,13 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     {
         var scheduleToInsert = new Schedule
         {
-            Auth0UserId = User.FindFirst("sub")!.Value,
+            Auth0UserId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
             Guid = Guid.NewGuid(),
             DateCoverage = schedule.DateCoverage,
             StartTime = schedule.StartTime,
             EndTime = schedule.EndTime,
             SchedulePreferences = schedule.SchedulePreferences,
+            Name = schedule.Name,
         };
 
         context.Schedules.Add(scheduleToInsert);

@@ -13,6 +13,9 @@ public class Schedule
     [MaxLength(256)]
     public required string Auth0UserId { get; set; }
 
+    [MaxLength(256)]
+    public required string Name { get; set; }
+
     public required DateOnly[] DateCoverage { get; set; }
 
     public required TimeOnly StartTime { get; set; }

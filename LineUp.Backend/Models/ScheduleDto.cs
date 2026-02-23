@@ -13,4 +13,5 @@ public class ScheduleDto
     public ICollection<ShiftAssignment> ShiftAssignments { get; set; } =
         new List<ShiftAssignment>();
     public required SchedulePreferences SchedulePreferences { get; set; } = new();
+    public required string Name { get; set; }
 }

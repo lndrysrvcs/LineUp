@@ -3,6 +3,7 @@ using System;
 using LineUp.Backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LineUp.Backend.Migrations
 {
     [DbContext(typeof(LineUpContext))]
-    partial class LineUpContextModelSnapshot : ModelSnapshot
+    [Migration("20260220145158_AddFormAnswersAndAnnotations")]
+    partial class AddFormAnswersAndAnnotations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,11 +198,6 @@ namespace LineUp.Backend.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
                     b.Property<Guid>("SchedulePreferencesId")
                         .HasColumnType("uuid");
 
@@ -224,19 +222,7 @@ namespace LineUp.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("MaximumShiftDurationMinutes")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MaximumShiftsPerWorker")
-                        .HasColumnType("integer");
-
                     b.Property<int>("MinutesPerSlot")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ShiftIntervals")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsersPerShift")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

@@ -1,53 +1,56 @@
 import CopyableLink from "@/components/CopyableLink";
 import Table from "@/components/Table";
+import { useApi } from "@/utils/api";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 
 interface TableData {
   name: string;
   respondents: number;
-  link: string;
+  guid: string;
 }
 
-// Example data for now, will need to reference user data for actual entries
-const items: TableData[] = [
-  {
-    name: "Club Tabling",
-    respondents: 18,
-    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  },
-  {
-    name: "Radio Shows",
-    respondents: 24,
-    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  },
-];
-
 const headers = ["Name", "Respondents", "Availability Link", "Schedule"];
-
-const renderRow = (row: TableData) => (
-  <>
-    <td>{row.name}</td>
-    <td>{row.respondents}</td>
-    <td>
-      <CopyableLink url={row.link} />
-    </td>
-    <td className="btnCol">
-      <button
-        className="scheduleBtn"
-        onClick={() => {
-          // TODO: make this actually go to the appropriate schedule
-        }}
-      >
-        View/Edit
-      </button>
-    </td>
-  </>
-);
 
 const LoggedInHome = () => {
   const { user } = useAuth0();
   const navigate = useNavigate();
+  const { fetchWithAuth } = useApi();
+
+  const { data: schedules = [] } = useQuery({
+    queryKey: ["schedules", "allSchedules"],
+    queryFn: () =>
+      fetchWithAuth("/api/schedule").then(async (res) => {
+        if (!res.ok) throw new Error("Failed to fetch schedules");
+        const resJson = await res.json();
+        return resJson.map((schedule: any) => ({
+          name: schedule.name,
+          respondents: schedule.respondents ?? 0,
+          guid: schedule.guid,
+        }));
+      }),
+  });
+
+  const renderRow = (row: TableData) => (
+    <>
+      <td>{row.name}</td>
+      <td>{row.respondents}</td>
+      <td>
+        <CopyableLink url={`${globalThis.location.origin}/schedule/${row.guid}`} />
+      </td>
+      <td className="btnCol">
+        <button
+          className="scheduleBtn"
+          onClick={() => {
+            navigate(`/schedule/${row.guid}/edit`);
+          }}
+        >
+          View/Edit
+        </button>
+      </td>
+    </>
+  );
 
   return (
     <div className="home">
@@ -63,7 +66,11 @@ const LoggedInHome = () => {
           New Schedule
         </button>{" "}
       </div>
-      <Table headers={headers} data={items} renderRow={renderRow} columnWidths={["25%", "25%", "30%", "20%"]} />
+      {schedules.length > 0 ? (
+        <Table headers={headers} data={schedules} renderRow={renderRow} columnWidths={["25%", "25%", "30%", "20%"]} />
+      ) : (
+        <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
+      )}
     </div>
   );
 };

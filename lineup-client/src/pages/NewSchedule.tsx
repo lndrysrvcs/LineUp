@@ -1,15 +1,17 @@
 import type { DateDay, Time, TimeRange, ValidMinutes } from "@/types";
 //import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router";
-import React from "react";
-import DatePickerModule, { DateObject } from "react-multi-date-picker";
+import { queryClient, useApi } from "@/utils/api";
 import {
-  parseTimeString,
+  convertToDateDays,
   formatTimeForInput,
   getValidMinutesForInterval,
+  parseTimeString,
   toMinutes,
-  convertToDateDays,
 } from "@/utils/time.ts";
+import { useMutation } from "@tanstack/react-query";
+import React from "react";
+import DatePickerModule, { DateObject } from "react-multi-date-picker";
+import { useNavigate } from "react-router";
 
 // This is because importing DatePicker directly didn't work with Vite for some reason
 // Trust me that this is somehow the most elegant solution I could find
@@ -31,6 +33,43 @@ interface ScheduleData {
 
 const NewSchedule = () => {
   const navigate = useNavigate();
+  const { fetchWithAuth } = useApi();
+
+  type CreateScheduleProps = {
+    name: string;
+    dateCoverage: string[];
+    startTime: string;
+    endTime: string;
+    schedulePreferences: {
+      minutesPerSlot: number;
+      shiftIntervals: number;
+      usersPerShift: number;
+      maximumShiftDurationMinutes: number;
+      maximumShiftsPerWorker: number;
+    };
+  };
+
+  const createScheduleMutation = useMutation({
+    mutationFn: async (newSchedule: CreateScheduleProps) => {
+      const res = await fetchWithAuth(`/api/schedule`, {
+        method: "POST",
+        body: JSON.stringify(newSchedule),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to add schedule");
+      }
+
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["schedules"] });
+      navigate("/home");
+    },
+  });
 
   const [scheduleData, setScheduleData] = React.useState<ScheduleData>({
     name: "",
@@ -78,29 +117,19 @@ const NewSchedule = () => {
       return;
     }
 
-    console.log(
-      "Submitted name:",
-      scheduleData.name,
-      "; Submitted avail. interval: ",
-      scheduleData.shiftTimes,
-      "; Submitted dates (Dates): ",
-      scheduleData.dates,
-      "; Submitted dates (DateDays): ",
-      scheduleData.dateDays,
-      "; Submitted duration: ",
-      scheduleData.hours.start,
-      " to ",
-      scheduleData.hours.end,
-      "; Submitted pplpershift: ",
-      scheduleData.pplPerShift,
-      "; Submitted maximum shift time: ",
-      scheduleData.maxShiftLength ?? 1440,
-      "; Submitted maximum shifts: ",
-      scheduleData.maxShifts ?? 99999,
-    );
-
-    //TODO: add to user's events
-    //TODO: send data to backend
+    createScheduleMutation.mutate({
+      name: scheduleData.name,
+      dateCoverage: scheduleData.dates?.map((d) => d.toISOString().split("T")[0]) || [],
+      startTime: formatTimeForInput(scheduleData.hours.start),
+      endTime: formatTimeForInput(scheduleData.hours.end),
+      schedulePreferences: {
+        minutesPerSlot: Number(scheduleData.shiftTimes),
+        shiftIntervals: Number(scheduleData.shiftTimes),
+        usersPerShift: Number(scheduleData.pplPerShift),
+        maximumShiftDurationMinutes: scheduleData.maxShiftLength ?? 1440,
+        maximumShiftsPerWorker: scheduleData.maxShifts ?? 99999,
+      },
+    });
   };
 
   const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

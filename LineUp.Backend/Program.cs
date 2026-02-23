@@ -93,7 +93,12 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LineUpContext>();
-    db.Database.Migrate();
+    //TODO DONT DO THIS IN PROD!!!!!!!!!!!!!! :(((((
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
+
+    DbSeeder seeder = new(db);
+    seeder.Seed();
 }
 
 app.Run();

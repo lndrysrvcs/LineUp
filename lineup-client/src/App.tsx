@@ -1,21 +1,72 @@
+// App.tsx
 import "@/App.css";
 import Topbar from "@/components/Topbar";
+import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import NewSchedule from "@/pages/NewSchedule";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import Schedule from "@/pages/Schedule";
+import { createBrowserRouter, Navigate, Outlet, RouterProvider, type LoaderFunctionArgs } from "react-router";
+
+// Wrap Topbar as a layout route so it wraps all pages
+function Layout() {
+  return (
+    <Topbar>
+      <Outlet />
+    </Topbar>
+  );
+}
+
+async function scheduleLoader({ params }: LoaderFunctionArgs) {
+  const res = await fetch(`/api/schedule/${params.guid}`, {
+    credentials: "include",
+  });
+
+  console.log(res);
+
+  if (!res.ok) {
+    throw new Response("Schedule not found", { status: 404 });
+  }
+
+  return res.json();
+}
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/newschedule",
+        element: <NewSchedule />,
+      },
+      {
+        path: "/schedule",
+        children: [
+          {
+            index: true, // matches exactly /schedule
+            element: <Navigate to="/" replace />,
+          },
+          {
+            path: ":guid", // matches /schedule/:guid
+            element: <Schedule />,
+            loader: scheduleLoader,
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" replace />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Topbar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/newschedule" element={<NewSchedule />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Topbar>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

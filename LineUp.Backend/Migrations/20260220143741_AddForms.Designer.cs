@@ -3,6 +3,7 @@ using System;
 using LineUp.Backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LineUp.Backend.Migrations
 {
     [DbContext(typeof(LineUpContext))]
-    partial class LineUpContextModelSnapshot : ModelSnapshot
+    [Migration("20260220143741_AddForms")]
+    partial class AddForms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +77,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("AvailabilityPreferences");
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.Form", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Form", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +90,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("Forms");
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestion", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.FormQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -100,8 +103,7 @@ namespace LineUp.Backend.Migrations
 
                     b.Property<string>("QuestionText")
                         .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -113,37 +115,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("FormQuestions");
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestionAnswer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("AnswerText")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("AvailabilityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FormQuestionId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AvailabilityId");
-
-                    b.HasIndex("FormQuestionId");
-
-                    b.ToTable("FormQuestionAnswers");
-                });
-
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.QuestionOptions", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.QuestionOptions", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -156,8 +128,7 @@ namespace LineUp.Backend.Migrations
 
                     b.Property<string>("OptionText")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("text");
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
@@ -195,11 +166,6 @@ namespace LineUp.Backend.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
                     b.Property<Guid>("SchedulePreferencesId")
                         .HasColumnType("uuid");
 
@@ -224,19 +190,7 @@ namespace LineUp.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("MaximumShiftDurationMinutes")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MaximumShiftsPerWorker")
-                        .HasColumnType("integer");
-
                     b.Property<int>("MinutesPerSlot")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ShiftIntervals")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsersPerShift")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -270,7 +224,7 @@ namespace LineUp.Backend.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("ShiftAssignments");
+                    b.ToTable("ShiftAssignment");
                 });
 
             modelBuilder.Entity("LineUp.Backend.Models.Availability", b =>
@@ -290,38 +244,23 @@ namespace LineUp.Backend.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestion", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.FormQuestion", b =>
                 {
-                    b.HasOne("LineUp.Backend.Models.Forms.Form", null)
+                    b.HasOne("LineUp.Backend.Models.Form", null)
                         .WithMany("Questions")
                         .HasForeignKey("FormId");
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestionAnswer", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.QuestionOptions", b =>
                 {
-                    b.HasOne("LineUp.Backend.Models.Availability", null)
-                        .WithMany("FormAnswers")
-                        .HasForeignKey("AvailabilityId");
-
-                    b.HasOne("LineUp.Backend.Models.Forms.FormQuestion", "Question")
-                        .WithMany()
-                        .HasForeignKey("FormQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.QuestionOptions", b =>
-                {
-                    b.HasOne("LineUp.Backend.Models.Forms.FormQuestion", null)
+                    b.HasOne("LineUp.Backend.Models.FormQuestion", null)
                         .WithMany("Options")
                         .HasForeignKey("FormQuestionId");
                 });
 
             modelBuilder.Entity("LineUp.Backend.Models.Schedule", b =>
                 {
-                    b.HasOne("LineUp.Backend.Models.Forms.Form", "Form")
+                    b.HasOne("LineUp.Backend.Models.Form", "Form")
                         .WithOne("Schedule")
                         .HasForeignKey("LineUp.Backend.Models.Schedule", "FormId");
 
@@ -355,12 +294,7 @@ namespace LineUp.Backend.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Availability", b =>
-                {
-                    b.Navigation("FormAnswers");
-                });
-
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.Form", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Form", b =>
                 {
                     b.Navigation("Questions");
 
@@ -368,7 +302,7 @@ namespace LineUp.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestion", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.FormQuestion", b =>
                 {
                     b.Navigation("Options");
                 });
