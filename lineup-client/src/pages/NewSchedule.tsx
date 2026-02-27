@@ -1,6 +1,7 @@
 import type { DateDay, Time, TimeRange, ValidMinutes } from "@/types";
 //import { useAuth0 } from "@auth0/auth0-react";
 import { queryClient, useApi } from "@/utils/api";
+import { addToasts } from "@/utils/db";
 import {
   convertToDateDays,
   formatTimeForInput,
@@ -67,7 +68,7 @@ const NewSchedule = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
-      navigate("/home");
+      navigate("/");
     },
   });
 
@@ -117,19 +118,21 @@ const NewSchedule = () => {
       return;
     }
 
-    createScheduleMutation.mutate({
-      name: scheduleData.name,
-      dateCoverage: scheduleData.dates?.map((d) => d.toISOString().split("T")[0]) || [],
-      startTime: formatTimeForInput(scheduleData.hours.start),
-      endTime: formatTimeForInput(scheduleData.hours.end),
-      schedulePreferences: {
-        minutesPerSlot: Number(scheduleData.shiftTimes),
-        shiftIntervals: Number(scheduleData.shiftTimes),
-        usersPerShift: Number(scheduleData.pplPerShift),
-        maximumShiftDurationMinutes: scheduleData.maxShiftLength ?? 1440,
-        maximumShiftsPerWorker: scheduleData.maxShifts ?? 99999,
-      },
-    });
+    addToasts(
+      createScheduleMutation.mutateAsync({
+        name: scheduleData.name,
+        dateCoverage: scheduleData.dates?.map((d) => d.toISOString().split("T")[0]) || [],
+        startTime: formatTimeForInput(scheduleData.hours.start),
+        endTime: formatTimeForInput(scheduleData.hours.end),
+        schedulePreferences: {
+          minutesPerSlot: Number(scheduleData.shiftTimes),
+          shiftIntervals: Number(scheduleData.shiftTimes),
+          usersPerShift: Number(scheduleData.pplPerShift),
+          maximumShiftDurationMinutes: scheduleData.maxShiftLength ?? 1440,
+          maximumShiftsPerWorker: scheduleData.maxShifts ?? 99999,
+        },
+      }),
+    );
   };
 
   const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

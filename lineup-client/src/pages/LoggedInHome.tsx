@@ -3,6 +3,7 @@ import Table from "@/components/Table";
 import { useApi } from "@/utils/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 interface TableData {
@@ -18,13 +19,22 @@ const LoggedInHome = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
 
-  const { data: schedules = [] } = useQuery({
+  const {
+    data: schedules = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["schedules", "allSchedules"],
     queryFn: () =>
       fetchWithAuth("/api/schedule").then(async (res) => {
-        if (!res.ok) throw new Error("Failed to fetch schedules");
+        if (!res.ok) {
+          toast.error(<b>Failed to fetch schedules</b>, { id: "fetch-schedules-error", duration: Infinity });
+          throw new Error("Failed to fetch schedules");
+        } else {
+          toast.dismiss("fetch-schedules-error");
+        }
         const resJson = await res.json();
-        return resJson.map((schedule: any) => ({
+        return resJson.map((schedule: { name: string; respondents: number; guid: string }) => ({
           name: schedule.name,
           respondents: schedule.respondents ?? 0,
           guid: schedule.guid,
@@ -55,21 +65,30 @@ const LoggedInHome = () => {
   return (
     <div className="home">
       Welcome back, <b>{user?.given_name}</b>!
-      <div className="tableHeader">
-        <b className="tableTitle">My Schedules </b>
-        <button
-          className="rightButton"
-          onClick={() => {
-            navigate("/newschedule");
-          }}
-        >
-          New Schedule
-        </button>{" "}
-      </div>
-      {schedules.length > 0 ? (
-        <Table headers={headers} data={schedules} renderRow={renderRow} columnWidths={["25%", "25%", "30%", "20%"]} />
-      ) : (
-        <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
+      {!isLoading && !isError && (
+        <>
+          <div className="tableHeader">
+            <b className="tableTitle">My Schedules </b>
+            <button
+              className="rightButton"
+              onClick={() => {
+                navigate("/newschedule");
+              }}
+            >
+              New Schedule
+            </button>{" "}
+          </div>
+          {schedules.length > 0 ? (
+            <Table
+              headers={headers}
+              data={schedules}
+              renderRow={renderRow}
+              columnWidths={["25%", "25%", "30%", "20%"]}
+            />
+          ) : (
+            <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
+          )}{" "}
+        </>
       )}
     </div>
   );

@@ -21,10 +21,8 @@ async function scheduleLoader({ params }: LoaderFunctionArgs) {
     credentials: "include",
   });
 
-  console.log(res);
-
   if (!res.ok) {
-    throw new Response("Schedule not found", { status: 404 });
+    throw new Response("Schedule not found", { status: res.status, statusText: res.statusText });
   }
 
   return res.json();
@@ -56,10 +54,6 @@ const router = createBrowserRouter([
             loader: scheduleLoader,
           },
         ],
-      },
-      {
-        path: "*",
-        element: <Navigate to="/" replace />,
       },
     ],
   },

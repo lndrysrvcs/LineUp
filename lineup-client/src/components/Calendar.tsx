@@ -13,14 +13,15 @@ interface CalendarProps {
 }
 
 // Children are each cell of the calendar
-const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
+const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isEnablingCells, setIsEnablingCells] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const numRows =
+  const numRows = Math.ceil(
     (range.end.hour - range.start.hour) * (60 / minutesPerCell) +
-    Math.ceil((range.end.minute - range.start.minute) / minutesPerCell);
+      (range.end.minute - range.start.minute) / minutesPerCell,
+  );
   const pageDates = getPageDates(currentPage);
 
   function calculatePageStarts() {
@@ -53,6 +54,10 @@ const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => 
       output += " calendarTopBorder";
     } else if (minutesPerCell === 60 || (range.start.minute + minutesPerCell * row) % 60 === 0) {
       output += " calendarTopBorder";
+    } else if (minutesPerCell === 45 && (range.start.minute + minutesPerCell * row) % 30 === 0) {
+      output += " calendarTopBorder";
+    } else if (minutesPerCell === 45 && (range.start.minute + minutesPerCell * row) % 15 === 0) {
+      output += " calendarTopBorder dottedBorder";
     } else if ((range.start.minute + minutesPerCell * row) % 30 === 0) {
       output += " calendarTopBorder dottedBorder";
     } else if (minutesPerCell % 20 === 0) {
@@ -112,7 +117,7 @@ const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => 
         maxWidth: pageDates.length * 200,
         gridTemplateColumns: `auto repeat(${pageDates.length}, 1fr)`,
         gridTemplateRows:
-          minutesPerCell < 60
+          minutesPerCell < 40
             ? `auto auto repeat(${numRows + 1}, 1em) auto`
             : `auto auto repeat(${numRows + 1}, 1.5em)`,
       }}
@@ -169,4 +174,4 @@ const BaseCalendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => 
   );
 };
 
-export { BaseCalendar };
+export { Calendar };

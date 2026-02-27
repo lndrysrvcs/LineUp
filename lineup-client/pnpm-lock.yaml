@@ -25,6 +25,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.4(react@19.2.4)
+      react-hot-toast:
+        specifier: ^2.6.0
+        version: 2.6.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-multi-date-picker:
         specifier: ^4.5.2
         version: 4.5.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1015,6 +1018,12 @@ packages:
       { integrity: sha512-c/c15i26VrJ4IRt5Z89DnIzCGDn9EcebibhAOjw5ibqEHsE1wLUgkPn9RDmNcUKyU87GeaL633nyJ+pplFR2ZQ== }
     engines: { node: ">=18" }
 
+  goober@2.1.18:
+    resolution:
+      { integrity: sha512-2vFqsaDVIT9Gz7N6kAL++pLpp41l3PfDuusHcjnGLfR6+huZkl6ziX+zgVC3ZxpqWhzH6pyDdGrCeDhMIvwaxw== }
+    peerDependencies:
+      csstype: ^3.0.10
+
   has-flag@4.0.0:
     resolution:
       { integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ== }
@@ -1452,6 +1461,14 @@ packages:
     peerDependencies:
       react: ">=16.8.0"
       react-dom: ">=16.8.0"
+
+  react-hot-toast@2.6.0:
+    resolution:
+      { integrity: sha512-bH+2EBMZ4sdyou/DPrfgIouFpcRLCJ+HoCA32UoAYHn6T3Ur5yfcDCeSr5mwldl6pFOsiocmrXMuoCJ1vV8bWg== }
+    engines: { node: ">=10" }
+    peerDependencies:
+      react: ">=16"
+      react-dom: ">=16"
 
   react-multi-date-picker@4.5.2:
     resolution:
@@ -2525,6 +2542,10 @@ snapshots:
 
   globals@16.5.0: {}
 
+  goober@2.1.18(csstype@3.2.3):
+    dependencies:
+      csstype: 3.2.3
+
   has-flag@4.0.0: {}
 
   hermes-estree@0.25.1: {}
@@ -2815,6 +2836,13 @@ snapshots:
 
   react-element-popper@2.1.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
+  react-hot-toast@2.6.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      csstype: 3.2.3
+      goober: 2.1.18(csstype@3.2.3)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 

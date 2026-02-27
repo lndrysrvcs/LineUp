@@ -1,4 +1,4 @@
-import { WEEKDAYS, type DateDay, type Time, type ValidMinutes, type Weekday, type ValidHours } from "@/types";
+import { WEEKDAYS, type DateDay, type Time, type ValidHours, type ValidMinutes, type Weekday } from "@/types";
 
 function timesAreEqual(time1: Time, time2: Time): boolean {
   return time1.hour === time2.hour && time1.minute === time2.minute;
@@ -41,6 +41,7 @@ function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: Va
   if (timesAreEqual(rangeStart, time)) return formatTime(time);
   if (time.minute === 0) return formatTime(time);
   if (minutesPerCell === 60) return formatTime(time);
+  if (minutesPerCell === 45 && time.minute % 30 === 0) return formatTime(time);
   // that weird condition where 30 minutes are chosen but it starts at 15 minute increments:
   if (minutesPerCell === 30 && rangeStart.minute % 30 !== 0 && time.minute === 15) return formatTime(time);
   if (minutesPerCell === 15 && time.minute === 30) return formatTime(time);
@@ -115,15 +116,15 @@ function convertToDateDays(dates: Date[]): DateDay[] {
 
 export {
   addMinutesToTime,
+  convertToDateDays,
   formatDate,
   formatDateTime,
   formatTime,
-  getTimeIncrementLabel,
-  timesAreEqual,
-  weekdayToNum,
-  parseTimeString,
   formatTimeForInput,
+  getTimeIncrementLabel,
   getValidMinutesForInterval,
+  parseTimeString,
+  timesAreEqual,
   toMinutes,
-  convertToDateDays,
+  weekdayToNum,
 };

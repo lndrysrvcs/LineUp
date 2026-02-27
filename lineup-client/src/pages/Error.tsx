@@ -3,13 +3,13 @@ import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 export default function ErrorPage() {
   const error = useRouteError();
 
-  console.log(error);
-
-  if (isRouteErrorResponse(error) && error.status === 404) {
+  if (isRouteErrorResponse(error)) {
     return (
       <div>
-        <h1>404 - Page Not Found</h1>
-        <p>The resource you're looking for doesn't exist.</p>
+        <h1>
+          {error.status} - {error.statusText ?? error.data}
+        </h1>
+        {error.status === 404 && <p>The resource you're looking for doesn't exist.</p>}
         <Link to="/">Go Home</Link>
       </div>
     );
