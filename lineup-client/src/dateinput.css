@@ -1,0 +1,71 @@
+.purple .rmdp-wrapper {
+  border: 1px solid var(--primary-hover);
+  box-shadow: 0 0 5px var(--primary-hover);
+}
+
+.purple .rmdp-panel-body li {
+  background-color: var(--primary);
+  box-shadow: 0 0 2px var(--primary-hover);
+}
+
+.purple .rmdp-week-day {
+  color: var(--primary-hover);
+}
+
+.purple .rmdp-day.rmdp-deactive {
+  color: var(--primary-hover);
+}
+
+.purple .rmdp-range {
+  background-color: var(--primary);
+  box-shadow: 0 0 3px var(--primary-hover);
+}
+
+.purple .rmdp-arrow {
+  border: solid var(--primary);
+  border-width: 0 2px 2px 0;
+}
+
+.purple .rmdp-arrow-container:hover {
+  background-color: var(--primary);
+  box-shadow: 0 0 3px var(--primary-hover);
+}
+
+.purple .rmdp-panel-body::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+
+.purple .rmdp-day.rmdp-today span {
+  background-color: var(--primary-active-hover);
+}
+
+.purple .rmdp-rtl .rmdp-panel {
+  border-left: unset;
+  border-right: 1px solid var(--primary-hover);
+}
+
+.purple .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: var(--primary);
+  box-shadow: 0 0 3px var(--primary-hover);
+}
+
+.purple .rmdp-day:not(.rmdp-day-hidden) span:hover {
+  background-color: var(--primary-active) !important;
+}
+
+.purple .b-deselect {
+  color: var(--primary-hover);
+  background-color: white;
+}
+
+.purple .rmdp-action-button {
+  color: var(--primary);
+}
+
+.purple .rmdp-button:not(.rmdp-action-button) {
+  background-color: var(--primary);
+}
+
+.purple .rmdp-button:not(.rmdp-action-button):hover {
+  background-color: var(--rmdp-deselect-purple);
+}

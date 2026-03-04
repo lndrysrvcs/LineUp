@@ -10,28 +10,12 @@ namespace LineUp.Backend.Controllers;
 [ApiController]
 public class ScheduleController(LineUpContext context) : ControllerBase
 {
-    [HttpGet("public")]
-    public IActionResult Public()
-    {
-        return Ok(
-            new
-            {
-                Message = "Hello from a public endpoint! You don't need to be authenticated to see this.",
-            }
-        );
-    }
-
-    // This is a helper action. It allows you to easily view all the claims of the token.
-    [HttpGet("claims")]
-    public IActionResult Claims()
-    {
-        return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
-    }
-
     [HttpGet("{guid:guid}")]
     public async Task<IActionResult> GetSchedule(Guid guid)
     {
-        var result = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
+        var result = await context
+            .Schedules.Include(s => s.SchedulePreferences)
+            .FirstOrDefaultAsync(s => s.Guid == guid);
         if (result != null)
             return Ok(result);
         return NotFound();
@@ -53,7 +37,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     [Authorize]
     public async Task<IActionResult> DeleteSchedule(Guid guid)
     {
-        var scheduleToDelete = await context.FindAsync<Schedule>(guid);
+        var scheduleToDelete = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
         if (scheduleToDelete == null)
             return NotFound();
         if (scheduleToDelete.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
@@ -63,19 +47,24 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("{guid:guid}")]
+    [HttpPatch("{guid:guid}")]
     [Authorize]
-    public async Task<IActionResult> UpdateSchedule(Guid guid, [FromBody] ScheduleDto schedule)
+    public async Task<IActionResult> UpdateSchedule(
+        Guid guid,
+        [FromBody] ScheduleUpdateDto schedule
+    )
     {
-        var scheduleToUpdate = await context.FindAsync<Schedule>(guid);
+        var scheduleToUpdate = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
         if (scheduleToUpdate == null)
             return NotFound();
         if (scheduleToUpdate.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
-        scheduleToUpdate.DateCoverage = schedule.DateCoverage;
-        scheduleToUpdate.StartTime = schedule.StartTime;
-        scheduleToUpdate.EndTime = schedule.EndTime;
-        scheduleToUpdate.SchedulePreferences = schedule.SchedulePreferences;
+        if (schedule.Name != null)
+            scheduleToUpdate.Name = schedule.Name;
+        if (schedule.SchedulePreferences != null)
+            scheduleToUpdate.SchedulePreferences = schedule.SchedulePreferences;
+        if (schedule.ShiftAssignments != null)
+            scheduleToUpdate.ShiftAssignments = schedule.ShiftAssignments;
         await context.SaveChangesAsync();
         return NoContent();
     }

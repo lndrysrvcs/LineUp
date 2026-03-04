@@ -62,15 +62,6 @@
   }
 }
 
-.newSchedule {
-  text-align: left;
-  margin: 2rem;
-}
-
-.requiredStar {
-  color: #ff6666;
-}
-
 .spinIcon {
   height: 1.25em;
   width: 1.25em;
@@ -80,4 +71,67 @@
   padding: 16px;
   height: 48px;
   width: 48px;
+}
+
+.pageHeader {
+  text-align: center;
+  font-size: 130%;
+  margin: 0.3em;
+}
+.pageSubHeader {
+  text-align: center;
+  font-size: 90%;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.returnButton {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  font-size: 0.75em;
+  outline: none;
+  border: none;
+  text-decoration: underline;
+  transition: color 0.25s;
+  gap: 0.2em;
+  align-items: center;
+
+  &:hover {
+    color: var(--primary-hover);
+  }
+}
+
+.input {
+  margin-left: 1em;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+  border: 0.25em var(--primary-active) outset;
+  padding: 0.3em;
+
+  &:focus {
+    outline: none;
+    border: 0.25em var(--primary-active) inset;
+    box-shadow: 0 0 0.1em 0.1em var(--primary-active-hover);
+  }
+}
+
+.submitContainer {
+  text-align: right;
+  font-size: 120%;
+}
+.submitBtn {
+  padding: 0.5em;
+  color: var(--primary);
+  border-color: var(--primary) solid;
+  border-radius: 1em;
+  transition: all 0.25s;
+  font-size: 0.75em;
+  font-weight: 700;
+
+  &:hover {
+    background-color: var(--primary-active-hover);
+    color: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
 }

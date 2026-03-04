@@ -1,0 +1,43 @@
+.newSchedule {
+  text-align: left;
+  margin: 1rem;
+  font-size: 90%;
+}
+
+.requiredStar {
+  color: var(--required);
+}
+
+.backIcon {
+  width: 50%;
+  height: 50%;
+}
+
+.endInput {
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+  border: 0.25em var(--primary-active) outset;
+  padding: 0.3em;
+
+  &:focus {
+    outline: none;
+    border: 0.25em var(--primary-active) inset;
+    box-shadow: 0 0 0.1em 0.1em var(--primary-active-hover);
+  }
+}
+
+.deleteBtn {
+  padding: 0.5em;
+  color: var(--required);
+  border-color: var(--required) solid;
+  border-radius: 1em;
+  transition: all 0.25s;
+  font-size: 0.75em;
+  font-weight: 700;
+
+  &:hover {
+    background-color: var(--required-hover);
+    color: var(--required);
+    border-color: var(--required);
+  }
+}

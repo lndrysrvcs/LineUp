@@ -17,6 +17,8 @@
   --primary-active: #bad8ff;
   --primary-hover: #907cdf;
   --primary-active-hover: #9ab8df;
+  --required: #ff6666;
+  --required-hover: #991111;
 }
 
 ::selection {

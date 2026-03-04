@@ -5,6 +5,7 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import NewSchedule from "@/pages/NewSchedule";
 import Schedule from "@/pages/Schedule";
+import ViewEditSchedule from "@/pages/ViewEditSchedule";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, type LoaderFunctionArgs } from "react-router";
 
 // Wrap Topbar as a layout route so it wraps all pages
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
           {
             path: ":guid", // matches /schedule/:guid
             element: <Schedule />,
+            loader: scheduleLoader,
+          },
+          {
+            path: ":guid/edit", // matches /schedule/:guid/edit
+            element: <ViewEditSchedule />,
             loader: scheduleLoader,
           },
         ],
