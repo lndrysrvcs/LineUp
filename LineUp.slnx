@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="LineUp.AppHost/LineUp.AppHost.csproj" />
   <Project Path="LineUp.Backend/LineUp.Backend.csproj" />
   <Project Path="lineup-client/lineup-client.esproj" />
+  <Project Path="LineUp.ServiceDefaults/LineUp.ServiceDefaults.csproj" />
 </Solution>
