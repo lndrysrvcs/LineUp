@@ -1,4 +1,6 @@
+using System.Text.Json.Serialization.Metadata;
 using LineUp.Backend;
+using LineUp.Backend.Attributes;
 using LineUp.Backend.Support;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -45,7 +47,36 @@ builder.Services.AddAuthorization(options =>
     );
 });
 
-builder.Services.AddControllers();
+// Source - https://stackoverflow.com/a/79715902
+// Posted by Moose Morals
+// Retrieved 2026-03-01, License - CC BY-SA 4.0
+
+builder
+    .Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.TypeInfoResolver = (
+            options.JsonSerializerOptions.TypeInfoResolver ?? new DefaultJsonTypeInfoResolver()
+        ).WithAddedModifier(ti =>
+        {
+            if (ti.Kind != JsonTypeInfoKind.Object)
+            {
+                return;
+            }
+
+            foreach (var p in ti.Properties)
+            {
+                if (
+                    p.AttributeProvider?.GetCustomAttributes(
+                        typeof(JsonDoNotSerializeAttribute),
+                        false
+                    ).Length > 0
+                )
+                {
+                    p.ShouldSerialize = (_, _) => false;
+                }
+            }
+        })
+    );
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 

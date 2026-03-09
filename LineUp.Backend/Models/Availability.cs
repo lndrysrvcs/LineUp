@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using LineUp.Backend.Attributes;
 using LineUp.Backend.Models.Forms;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,24 @@ public class Availability
         new List<FormQuestionAnswer>();
 
     // Navigation properties, ignored in JSON to not loop forever
-    [JsonIgnore]
+    [JsonDoNotSerialize]
     public required Schedule Schedule { get; set; }
+}
+
+public class AvailabilityUpdateDTO //A copy of the Availability class used to transfer data.
+{
+    public int Id { get; set; }
+
+    public DateTime[] AvailabilitySlots { get; set; } = [];
+
+    [MaxLength(64)]
+    public required string UserName { get; set; }
+
+    [MaxLength(256)]
+    public string? UserEmail { get; set; }
+
+    public AvailabilityPreferences? Preferences { get; set; }
+
+    public ICollection<FormQuestionAnswer> FormAnswers { get; set; } =
+        new List<FormQuestionAnswer>();
 }

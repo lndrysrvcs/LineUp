@@ -93,4 +93,18 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             scheduleToInsert
         );
     }
+
+    [HttpGet("{guid:guid}/createAvailability")] //Creates a new availability using this guid for the parent schedule and generating a new guid for the Availability.
+    public IActionResult CreateAvailability(Guid guid)
+    {
+        Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
+        if (schedule == null)
+        {
+            return NotFound();
+        }
+        Availability availability = new Availability { UserName = "", Schedule = schedule };
+        context.Availabilities.Add(availability);
+        context.SaveChanges();
+        return Ok(availability.Guid);
+    }
 }

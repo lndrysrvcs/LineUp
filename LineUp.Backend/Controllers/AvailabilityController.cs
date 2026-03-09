@@ -31,17 +31,39 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         return NotFound();
     }
 
-    [HttpGet("{guid:guid}/generateLink")]
-    public IActionResult GenerateLink(Guid guid)
+    [HttpGet("{guid:guid}")]
+    public async Task<IActionResult> GetAvailability(Guid guid)
     {
-        Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
-        if (schedule == null)
+        var result = await context.Availabilities.FirstOrDefaultAsync(a => a.Guid == guid);
+        if (result != null)
+            return Ok(result);
+        return NotFound();
+    }
+
+    [HttpPatch("{guid:guid}/edit")]
+    public async Task<IActionResult> EditAvailability(
+        Guid guid,
+        [FromBody] Availability availability
+    )
+    {
+        if (guid != availability.Guid)
         {
-            return NotFound();
+            return BadRequest();
         }
-        Availability availability = new Availability { UserName = "", Schedule = schedule };
-        context.Availabilities.Add(availability);
-        context.SaveChanges();
-        return Ok(availability.Guid);
+        context.Entry(availability).State = EntityState.Modified;
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!context.Availabilities.Any(a => a.Guid == guid))
+            {
+                return NotFound();
+            }
+            throw;
+        }
+
+        return NoContent();
     }
 }

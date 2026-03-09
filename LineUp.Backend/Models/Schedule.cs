@@ -24,7 +24,7 @@ public class Schedule
     public Form? Form { get; set; }
     public int? FormId { get; set; }
 
-    public ICollection<ShiftAssignment> ShiftAssignments { get; set; } =
+    public ICollection<ShiftAssignment>? ShiftAssignments { get; set; } =
         new List<ShiftAssignment>();
 
     public required SchedulePreferences SchedulePreferences { get; set; } = new();
