@@ -3,6 +3,7 @@ import Table from "@/components/Table";
 import { useApi } from "@/utils/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
@@ -20,9 +21,10 @@ const LoggedInHome = () => {
   const { fetchWithAuth } = useApi();
 
   const {
-    data: schedules = [],
+    data: schedules,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ["schedules", "allSchedules"],
     queryFn: () =>
@@ -30,10 +32,11 @@ const LoggedInHome = () => {
         if (!res.ok) {
           toast.error(<b>Failed to fetch schedules</b>, { id: "fetch-schedules-error", duration: Infinity });
           throw new Error("Failed to fetch schedules");
-        } else {
-          toast.dismiss("fetch-schedules-error");
         }
+
         const resJson = await res.json();
+        toast.dismiss("fetch-schedules-error");
+        console.log(resJson);
         return resJson.map((schedule: { name: string; respondents: number; guid: string }) => ({
           name: schedule.name,
           respondents: schedule.respondents ?? 0,
@@ -61,6 +64,16 @@ const LoggedInHome = () => {
       </td>
     </>
   );
+
+  useEffect(() => {
+    if (!schedules) {
+      toast.loading("Fetching schedules...", { id: "fetch-schedules-error", duration: Infinity });
+    }
+    if (error) {
+      toast.error(<b>Failed to fetch schedules</b>, { id: "fetch-schedules-error", duration: Infinity });
+      console.error(error);
+    }
+  }, [error, schedules]);
 
   return (
     <div className="home">

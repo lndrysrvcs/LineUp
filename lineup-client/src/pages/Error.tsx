@@ -1,7 +1,13 @@
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 
 export default function ErrorPage() {
   const error = useRouteError();
+
+  useEffect(() => {
+    toast.dismiss();
+  }, []);
 
   if (isRouteErrorResponse(error)) {
     return (

@@ -77,8 +77,15 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     public async Task<IActionResult> GetSchedules()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        List<Schedule> result = await context
+
+        List<ScheduleListDto> result = await context
             .Schedules.Where(s => s.Auth0UserId == userId)
+            .Select(s => new ScheduleListDto
+            {
+                Name = s.Name,
+                Guid = s.Guid,
+                Respondents = context.Availabilities.Count(a => a.Schedule.Id == s.Id),
+            })
             .ToListAsync();
 
         return Ok(result);
@@ -145,17 +152,32 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         );
     }
 
-    [HttpGet("{guid:guid}/createAvailability")] //Creates a new availability using this guid for the parent schedule and generating a new guid for the Availability.
-    public IActionResult CreateAvailability(Guid guid)
+    [HttpPost("{scheduleGuid:Guid}/createAvailability")]
+    public async Task<IActionResult> CreateAvailability(
+        Guid scheduleGuid,
+        [FromBody] AvailabilityCreateDto availability
+    )
     {
-        Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
+        var schedule = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == scheduleGuid);
         if (schedule == null)
         {
             return NotFound();
         }
-        Availability availability = new Availability { UserName = "", Schedule = schedule };
-        context.Availabilities.Add(availability);
-        context.SaveChanges();
-        return Ok(availability.Guid);
+
+        var availabilityToInsert = new Availability
+        {
+            Guid = Guid.NewGuid(),
+            Schedule = schedule,
+            AvailabilitySlots = availability.AvailabilitySlots,
+            UserName = availability.UserName,
+            UserEmail = availability.UserEmail,
+            Preferences = availability.Preferences,
+            FormAnswers = availability.FormAnswers,
+        };
+
+        context.Availabilities.Add(availabilityToInsert);
+        await context.SaveChangesAsync();
+
+        return Ok();
     }
 }

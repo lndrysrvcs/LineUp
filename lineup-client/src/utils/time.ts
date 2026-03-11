@@ -1,4 +1,4 @@
-import { WEEKDAYS, type DateDay, type Time, type ValidHours, type ValidMinutes, type Weekday } from "@/types";
+import { WEEKDAYS, type Time, type TimeRange, type ValidHours, type ValidMinutes, type Weekday } from "@/types";
 
 function timesAreEqual(time1: Time, time2: Time): boolean {
   return time1.hour === time2.hour && time1.minute === time2.minute;
@@ -31,8 +31,8 @@ function formatTime(time: Time): string {
   );
 }
 
-function formatDate(date: DateDay, time: Time): string {
-  return `${date.day}, ${date.date} at ${formatTime(time)}`;
+function formatDate(date: Date, time: Time): string {
+  return `${date.toLocaleDateString()}, ${formatTime(time)}`;
 }
 
 function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: ValidMinutes): string {
@@ -49,13 +49,12 @@ function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: Va
   return "";
 }
 
-function weekdayToNum(weekday: Weekday): number {
-  return WEEKDAYS.indexOf(weekday);
+function dayNumberToWeekday(num: number): Weekday {
+  return WEEKDAYS[num];
 }
 
-// should return something like "2/12-14:30". This should be completely unique per date and time
-function formatDateTime(date: string, time: Time): string {
-  return `${date}-${time.hour.toString().padStart(2, "0")}:${time.minute.toString().padStart(2, "0")}`;
+function weekdayToNum(weekday: Weekday): number {
+  return WEEKDAYS.indexOf(weekday);
 }
 
 // Takes a time string in 24H format (e.g. "23:59") and converts it to a Time object
@@ -104,26 +103,32 @@ function toMinutes(time: Time, isEnd = false): number {
   return time.hour * 60 + time.minute;
 }
 
-// Converts an array of Date objects to DateDays
-function convertToDateDays(dates: Date[]): DateDay[] {
-  return dates.map((jsDate) => ({
-    date: `${jsDate.getMonth() + 1}/${jsDate.getDate()}`,
-    day: jsDate.toLocaleDateString("en-US", {
-      weekday: "long",
-    }) as Weekday,
-  }));
+function rangeIs24Hours(range: TimeRange): boolean {
+  if (range.start.hour === 0 && range.end.hour === 0) {
+    if (range.start.minute === 0 && range.end.minute === 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function addTimeToDate(date: Date, time: Time): Date {
+  const newDate = new Date(date);
+  newDate.setHours(time.hour, time.minute, 0, 0);
+  return newDate;
 }
 
 export {
   addMinutesToTime,
-  convertToDateDays,
+  addTimeToDate,
+  dayNumberToWeekday,
   formatDate,
-  formatDateTime,
   formatTime,
   formatTimeForInput,
   getTimeIncrementLabel,
   getValidMinutesForInterval,
   parseTimeString,
+  rangeIs24Hours,
   timesAreEqual,
   toMinutes,
   weekdayToNum,

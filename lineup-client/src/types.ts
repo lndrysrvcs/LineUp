@@ -1,4 +1,4 @@
-export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
+export const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
 
 export type Weekday = (typeof WEEKDAYS)[number];
 
@@ -15,10 +15,4 @@ export type Time = {
 export type TimeRange = {
   start: Time;
   end: Time;
-};
-
-// {date: "2/12", day: "Thursday"}
-export type DateDay = {
-  date: string;
-  day: Weekday;
 };
