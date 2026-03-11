@@ -3,6 +3,7 @@ using System.Text.Json.Serialization.Metadata;
 using LineUp.Backend;
 using LineUp.Backend.Attributes;
 using LineUp.Backend.Support;
+using LineUp.ServiceDefaults;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -84,6 +85,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 builder.AddNpgsqlDbContext<LineUpContext>("postgresdb");
+
+builder.AddServiceDefaults();
 
 var app = builder.Build();
 
