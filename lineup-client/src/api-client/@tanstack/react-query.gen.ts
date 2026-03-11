@@ -5,36 +5,38 @@ import { type DefaultError, queryOptions, type UseMutationOptions } from "@tanst
 import { client } from "../client.gen";
 import {
   deleteApiScheduleByGuid,
-  get,
+  getApiAvailabilityByGuid,
   getApiAvailabilityByGuidExists,
-  getApiAvailabilityByGuidGenerateLink,
   getApiAvailabilityPublic,
   getApiClaims,
   getApiPrivate,
   getApiPrivateScoped,
   getApiPublic,
+  getApiSchedule,
   getApiScheduleByGuid,
-  getApiScheduleClaims,
-  getApiSchedulePublic,
+  getApiScheduleByGuidCreateAvailability,
+  getApiScheduleByGuidDetails,
   type Options,
+  patchApiAvailabilityByGuidEdit,
+  patchApiScheduleByGuid,
   postApiSchedule,
-  putApiScheduleByGuid,
 } from "../sdk.gen";
 import type {
   DeleteApiScheduleByGuidData,
+  GetApiAvailabilityByGuidData,
   GetApiAvailabilityByGuidExistsData,
-  GetApiAvailabilityByGuidGenerateLinkData,
   GetApiAvailabilityPublicData,
   GetApiClaimsData,
   GetApiPrivateData,
   GetApiPrivateScopedData,
   GetApiPublicData,
+  GetApiScheduleByGuidCreateAvailabilityData,
   GetApiScheduleByGuidData,
-  GetApiScheduleClaimsData,
-  GetApiSchedulePublicData,
-  GetData,
+  GetApiScheduleByGuidDetailsData,
+  GetApiScheduleData,
+  PatchApiAvailabilityByGuidEditData,
+  PatchApiScheduleByGuidData,
   PostApiScheduleData,
-  PutApiScheduleByGuidData,
 } from "../types.gen";
 
 export type QueryKey<TOptions extends Options> = [
@@ -175,16 +177,13 @@ export const getApiAvailabilityByGuidExistsOptions = (options: Options<GetApiAva
     queryKey: getApiAvailabilityByGuidExistsQueryKey(options),
   });
 
-export const getApiAvailabilityByGuidGenerateLinkQueryKey = (
-  options: Options<GetApiAvailabilityByGuidGenerateLinkData>,
-) => createQueryKey("getApiAvailabilityByGuidGenerateLink", options);
+export const getApiAvailabilityByGuidQueryKey = (options: Options<GetApiAvailabilityByGuidData>) =>
+  createQueryKey("getApiAvailabilityByGuid", options);
 
-export const getApiAvailabilityByGuidGenerateLinkOptions = (
-  options: Options<GetApiAvailabilityByGuidGenerateLinkData>,
-) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiAvailabilityByGuidGenerateLinkQueryKey>>({
+export const getApiAvailabilityByGuidOptions = (options: Options<GetApiAvailabilityByGuidData>) =>
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiAvailabilityByGuidQueryKey>>({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiAvailabilityByGuidGenerateLink({
+      const { data } = await getApiAvailabilityByGuid({
         ...options,
         ...queryKey[0],
         signal,
@@ -192,16 +191,32 @@ export const getApiAvailabilityByGuidGenerateLinkOptions = (
       });
       return data;
     },
-    queryKey: getApiAvailabilityByGuidGenerateLinkQueryKey(options),
+    queryKey: getApiAvailabilityByGuidQueryKey(options),
   });
 
-export const getApiSchedulePublicQueryKey = (options?: Options<GetApiSchedulePublicData>) =>
-  createQueryKey("getApiSchedulePublic", options);
+export const patchApiAvailabilityByGuidEditMutation = (
+  options?: Partial<Options<PatchApiAvailabilityByGuidEditData>>,
+): UseMutationOptions<unknown, DefaultError, Options<PatchApiAvailabilityByGuidEditData>> => {
+  const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<PatchApiAvailabilityByGuidEditData>> = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await patchApiAvailabilityByGuidEdit({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
 
-export const getApiSchedulePublicOptions = (options?: Options<GetApiSchedulePublicData>) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiSchedulePublicQueryKey>>({
+export const getApiScheduleByGuidDetailsQueryKey = (options: Options<GetApiScheduleByGuidDetailsData>) =>
+  createQueryKey("getApiScheduleByGuidDetails", options);
+
+export const getApiScheduleByGuidDetailsOptions = (options: Options<GetApiScheduleByGuidDetailsData>) =>
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidDetailsQueryKey>>({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiSchedulePublic({
+      const { data } = await getApiScheduleByGuidDetails({
         ...options,
         ...queryKey[0],
         signal,
@@ -209,24 +224,7 @@ export const getApiSchedulePublicOptions = (options?: Options<GetApiSchedulePubl
       });
       return data;
     },
-    queryKey: getApiSchedulePublicQueryKey(options),
-  });
-
-export const getApiScheduleClaimsQueryKey = (options?: Options<GetApiScheduleClaimsData>) =>
-  createQueryKey("getApiScheduleClaims", options);
-
-export const getApiScheduleClaimsOptions = (options?: Options<GetApiScheduleClaimsData>) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleClaimsQueryKey>>({
-    queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiScheduleClaims({
-        ...options,
-        ...queryKey[0],
-        signal,
-        throwOnError: true,
-      });
-      return data;
-    },
-    queryKey: getApiScheduleClaimsQueryKey(options),
+    queryKey: getApiScheduleByGuidDetailsQueryKey(options),
   });
 
 export const deleteApiScheduleByGuidMutation = (
@@ -262,12 +260,12 @@ export const getApiScheduleByGuidOptions = (options: Options<GetApiScheduleByGui
     queryKey: getApiScheduleByGuidQueryKey(options),
   });
 
-export const putApiScheduleByGuidMutation = (
-  options?: Partial<Options<PutApiScheduleByGuidData>>,
-): UseMutationOptions<unknown, DefaultError, Options<PutApiScheduleByGuidData>> => {
-  const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<PutApiScheduleByGuidData>> = {
+export const patchApiScheduleByGuidMutation = (
+  options?: Partial<Options<PatchApiScheduleByGuidData>>,
+): UseMutationOptions<unknown, DefaultError, Options<PatchApiScheduleByGuidData>> => {
+  const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<PatchApiScheduleByGuidData>> = {
     mutationFn: async (fnOptions) => {
-      const { data } = await putApiScheduleByGuid({
+      const { data } = await patchApiScheduleByGuid({
         ...options,
         ...fnOptions,
         throwOnError: true,
@@ -278,12 +276,13 @@ export const putApiScheduleByGuidMutation = (
   return mutationOptions;
 };
 
-export const getQueryKey = (options?: Options<GetData>) => createQueryKey("get", options);
+export const getApiScheduleQueryKey = (options?: Options<GetApiScheduleData>) =>
+  createQueryKey("getApiSchedule", options);
 
-export const getOptions = (options?: Options<GetData>) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getQueryKey>>({
+export const getApiScheduleOptions = (options?: Options<GetApiScheduleData>) =>
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleQueryKey>>({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await get({
+      const { data } = await getApiSchedule({
         ...options,
         ...queryKey[0],
         signal,
@@ -291,7 +290,7 @@ export const getOptions = (options?: Options<GetData>) =>
       });
       return data;
     },
-    queryKey: getQueryKey(options),
+    queryKey: getApiScheduleQueryKey(options),
   });
 
 export const postApiScheduleMutation = (
@@ -309,3 +308,23 @@ export const postApiScheduleMutation = (
   };
   return mutationOptions;
 };
+
+export const getApiScheduleByGuidCreateAvailabilityQueryKey = (
+  options: Options<GetApiScheduleByGuidCreateAvailabilityData>,
+) => createQueryKey("getApiScheduleByGuidCreateAvailability", options);
+
+export const getApiScheduleByGuidCreateAvailabilityOptions = (
+  options: Options<GetApiScheduleByGuidCreateAvailabilityData>,
+) =>
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidCreateAvailabilityQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await getApiScheduleByGuidCreateAvailability({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: getApiScheduleByGuidCreateAvailabilityQueryKey(options),
+  });

@@ -4,6 +4,64 @@ export type ClientOptions = {
   baseUrl: `${string}://${string}` | (string & {});
 };
 
+export type Availability = {
+  id?: number | string;
+  guid?: string;
+  availabilitySlots?: Array<Date>;
+  userName: string;
+  userEmail?: null | string;
+  preferences?: null | AvailabilityPreferences;
+  formAnswers?: Array<FormQuestionAnswer>;
+  schedule: Schedule;
+};
+
+export type AvailabilityPreferences = {
+  id?: string;
+};
+
+export type Form = {
+  id?: number | string;
+  questions?: Array<FormQuestion>;
+  schedule: Schedule;
+};
+
+export type FormQuestion = {
+  id?: number | string;
+  questionText?: string;
+  type?: QuestionType;
+  options?: Array<QuestionOptions>;
+};
+
+export type FormQuestionAnswer = {
+  id?: number | string;
+  formQuestionId?: number | string;
+  answerId?: number | string;
+  question: FormQuestion;
+  answerText: string;
+};
+
+export type QuestionOptions = {
+  id?: number | string;
+  optionText: string;
+  sortOrder?: number | string;
+};
+
+export type QuestionType = number;
+
+export type Schedule = {
+  id?: number | string;
+  guid?: string;
+  auth0UserId: string;
+  name: string;
+  dateCoverage: Array<Date>;
+  startTime: string;
+  endTime: string;
+  form?: null | Form;
+  formId?: null | number | string;
+  shiftAssignments?: null | Array<ShiftAssignment>;
+  schedulePreferences: SchedulePreferences;
+};
+
 export type ScheduleDto = {
   id?: null | number | string;
   guid?: null | string;
@@ -12,17 +70,32 @@ export type ScheduleDto = {
   endTime: string;
   shiftAssignments?: Array<ShiftAssignment>;
   schedulePreferences: SchedulePreferences;
+  name: string;
 };
 
 export type SchedulePreferences = {
   id?: string;
   minutesPerSlot?: number | string;
+  shiftIntervals?: number | string;
+  usersPerShift?: number | string;
+  maximumShiftDurationMinutes?: number | string;
+  maximumShiftsPerWorker?: number | string;
+};
+
+export type ScheduleUpdateDto = {
+  id?: null | number | string;
+  guid?: null | string;
+  shiftAssignments?: null | Array<ShiftAssignment>;
+  schedulePreferences?: null | SchedulePreferences;
+  name?: null | string;
 };
 
 export type ShiftAssignment = {
   id?: number | string;
   startTime?: Date;
   endTime?: Date;
+  availability?: Availability;
+  schedule?: Schedule;
 };
 
 export type GetApiPublicData = {
@@ -111,44 +184,48 @@ export type GetApiAvailabilityByGuidExistsResponses = {
   200: unknown;
 };
 
-export type GetApiAvailabilityByGuidGenerateLinkData = {
+export type GetApiAvailabilityByGuidData = {
   body?: never;
   path: {
     guid: string;
   };
   query?: never;
-  url: "/api/availability/{guid}/generateLink";
+  url: "/api/availability/{guid}";
 };
 
-export type GetApiAvailabilityByGuidGenerateLinkResponses = {
+export type GetApiAvailabilityByGuidResponses = {
   /**
    * OK
    */
   200: unknown;
 };
 
-export type GetApiSchedulePublicData = {
-  body?: never;
-  path?: never;
+export type PatchApiAvailabilityByGuidEditData = {
+  body: Availability;
+  path: {
+    guid: string;
+  };
   query?: never;
-  url: "/api/schedule/public";
+  url: "/api/availability/{guid}/edit";
 };
 
-export type GetApiSchedulePublicResponses = {
+export type PatchApiAvailabilityByGuidEditResponses = {
   /**
    * OK
    */
   200: unknown;
 };
 
-export type GetApiScheduleClaimsData = {
+export type GetApiScheduleByGuidDetailsData = {
   body?: never;
-  path?: never;
+  path: {
+    guid: string;
+  };
   query?: never;
-  url: "/api/schedule/claims";
+  url: "/api/schedule/{guid}/details";
 };
 
-export type GetApiScheduleClaimsResponses = {
+export type GetApiScheduleByGuidDetailsResponses = {
   /**
    * OK
    */
@@ -187,8 +264,8 @@ export type GetApiScheduleByGuidResponses = {
   200: unknown;
 };
 
-export type PutApiScheduleByGuidData = {
-  body: ScheduleDto;
+export type PatchApiScheduleByGuidData = {
+  body: ScheduleUpdateDto;
   path: {
     guid: string;
   };
@@ -196,21 +273,21 @@ export type PutApiScheduleByGuidData = {
   url: "/api/schedule/{guid}";
 };
 
-export type PutApiScheduleByGuidResponses = {
+export type PatchApiScheduleByGuidResponses = {
   /**
    * OK
    */
   200: unknown;
 };
 
-export type GetData = {
+export type GetApiScheduleData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/";
+  url: "/api/schedule";
 };
 
-export type GetResponses = {
+export type GetApiScheduleResponses = {
   /**
    * OK
    */
@@ -225,6 +302,22 @@ export type PostApiScheduleData = {
 };
 
 export type PostApiScheduleResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiScheduleByGuidCreateAvailabilityData = {
+  body?: never;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/schedule/{guid}/createAvailability";
+};
+
+export type GetApiScheduleByGuidCreateAvailabilityResponses = {
   /**
    * OK
    */

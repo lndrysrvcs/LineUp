@@ -3,6 +3,7 @@ using LineUp.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Trace;
 
 namespace LineUp.Backend.Controllers;
 
@@ -10,15 +11,65 @@ namespace LineUp.Backend.Controllers;
 [ApiController]
 public class ScheduleController(LineUpContext context) : ControllerBase
 {
+    [HttpGet("{guid:guid}/details")]
+    [Authorize]
+    public async Task<IActionResult> GetScheduleAuthenticated(Guid guid)
+    {
+        var schedule = await context
+            .Schedules.Include(s => s.SchedulePreferences)
+            .Include(schedule => schedule.Form)
+            .Include(schedule => schedule.ShiftAssignments)
+            .FirstOrDefaultAsync(s => s.Guid == guid);
+        if (schedule == null)
+            return NotFound();
+
+        if (User.FindFirstValue(ClaimTypes.NameIdentifier) != schedule.Auth0UserId)
+            return Unauthorized();
+        List<Availability> availabilities = await context
+            .Availabilities.Where(availability => availability.Schedule.Guid == guid)
+            .ToListAsync();
+        var dto = new GetScheduleAuthenticatedDto
+        {
+            Name = schedule.Name,
+            DateCoverage = schedule.DateCoverage,
+            StartTime = schedule.StartTime,
+            EndTime = schedule.EndTime,
+            Form = schedule.Form,
+            ShiftAssignments = schedule.ShiftAssignments,
+            SchedulePreferences = schedule.SchedulePreferences,
+            Availabilities = availabilities,
+        };
+        return Ok(dto);
+    }
+
     [HttpGet("{guid:guid}")]
     public async Task<IActionResult> GetSchedule(Guid guid)
     {
-        var result = await context
+        var schedule = await context
             .Schedules.Include(s => s.SchedulePreferences)
+            .Include(schedule => schedule.Form)
+            .Include(schedule => schedule.ShiftAssignments)
             .FirstOrDefaultAsync(s => s.Guid == guid);
-        if (result != null)
-            return Ok(result);
-        return NotFound();
+        if (schedule == null)
+            return NotFound();
+
+        var availabilityCount = context.Availabilities.Count(availability =>
+            availability.Schedule.Guid == guid
+        );
+
+        var dto = new GetScheduleUnauthenticatedDto
+        {
+            Name = schedule.Name,
+            DateCoverage = schedule.DateCoverage,
+            StartTime = schedule.StartTime,
+            EndTime = schedule.EndTime,
+            Form = schedule.Form,
+            ShiftAssignments = schedule.ShiftAssignments,
+            SchedulePreferences = schedule.SchedulePreferences,
+            AvailabilityCount = availabilityCount,
+        };
+
+        return Ok(dto);
     }
 
     [HttpGet]

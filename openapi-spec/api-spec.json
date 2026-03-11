@@ -88,7 +88,7 @@
         }
       }
     },
-    "/api/availability/{guid}/generateLink": {
+    "/api/availability/{guid}": {
       "get": {
         "tags": [
           "Availability"
@@ -154,22 +154,21 @@
         }
       }
     },
-    "/api/schedule/public": {
+    "/api/schedule/{guid}/details": {
       "get": {
         "tags": [
           "Schedule"
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
-        }
-      }
-    },
-    "/api/schedule/claims": {
-      "get": {
-        "tags": [
-          "Schedule"
         ],
         "responses": {
           "200": {

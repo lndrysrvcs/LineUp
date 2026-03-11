@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using LineUp.Backend;
 using LineUp.Backend.Attributes;
@@ -54,6 +55,7 @@ builder.Services.AddAuthorization(options =>
 builder
     .Services.AddControllers()
     .AddJsonOptions(options =>
+    {
         options.JsonSerializerOptions.TypeInfoResolver = (
             options.JsonSerializerOptions.TypeInfoResolver ?? new DefaultJsonTypeInfoResolver()
         ).WithAddedModifier(ti =>
@@ -75,8 +77,9 @@ builder
                     p.ShouldSerialize = (_, _) => false;
                 }
             }
-        })
-    );
+        });
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
