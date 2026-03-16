@@ -1,3 +1,4 @@
+using LineUp.AppHost;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ var web = builder.AddViteApp("web", "../lineup-client")
     .WithEndpoint("http", endpointAnnotation => endpointAnnotation.Port = 5173)
     .WithPnpm()
     .WithReference(api)
-    .WaitFor(api);
+    .WaitFor(api)
+    .AsDeployableService();
 
 builder.Build().Run();
