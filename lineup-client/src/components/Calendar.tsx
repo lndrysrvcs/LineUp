@@ -104,8 +104,8 @@ const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors }
   function needsSpaceAfterCol(col: number) {
     if (col >= pageDates.length - 1) return false;
 
-    if (pageDates[col].getDay() === 0) {
-      return pageDates[col + 1].getDay() !== 1;
+    if (pageDates[col].getDay() === 6) {
+      return pageDates[col + 1].getDay() !== 0;
     } else {
       return pageDates[col].getDay() + 1 !== pageDates[col + 1].getDay();
     }
@@ -123,8 +123,9 @@ const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors }
   }
 
   useEffect(() => {
-    globalThis.addEventListener("pointerup", () => setIsPointerDown(false));
-    return () => globalThis.removeEventListener("pointerup", () => setIsPointerDown(false));
+    const handler = () => setIsPointerDown(false);
+    globalThis.addEventListener("pointerup", handler);
+    return () => globalThis.removeEventListener("pointerup", handler);
   });
 
   return (

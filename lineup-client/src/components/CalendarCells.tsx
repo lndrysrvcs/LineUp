@@ -62,7 +62,13 @@ const FillableCell = ({
 const ColoredCell = ({ time, date, colors }: CalendarCellProps) => {
   const dateString = addTimeToDate(date, time).toISOString().replace(".000", "");
 
-  return <div className={"calendarInnerCell"} style={{ backgroundColor: colors[dateString] ?? "transparent" }}></div>;
+  return (
+    <div
+      className={"calendarInnerCell"}
+      style={{ backgroundColor: colors[dateString] ?? "transparent" }}
+      aria-label={dayNumberToWeekday(date.getDay()) + " " + formatTime(time)}
+    ></div>
+  );
 };
 
 export { ColoredCell, FillableCell };

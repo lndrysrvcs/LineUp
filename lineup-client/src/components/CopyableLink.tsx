@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-// Future-proofing for later
-// Used to make links in homepage table easily copyable
-
 interface CopyableLinkProps {
   url: string;
 }
