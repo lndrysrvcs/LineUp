@@ -107,4 +107,36 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         context.SaveChanges();
         return Ok(availability.Guid);
     }
+
+    [HttpPost("{guid:guid}/requestSwap")]
+    public IActionResult RequestSwap(
+        Guid guid,
+        [FromBody] ShiftAssignment[] fromPartyA,
+        [FromBody] ShiftAssignment[] fromPartyB
+    )
+    {
+        Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
+        if (schedule == null)
+        {
+            return NotFound();
+        }
+        SwapRequest swapRequest = new SwapRequest
+        {
+            FromPartyA = fromPartyA,
+            FromPartyB = fromPartyB,
+        };
+        // from the generated schedule, create a SwapRequest object in the DB that contains partyAShifts and partyBShifts
+        return Ok(swapRequest.Guid);
+    }
+
+    [HttpGet("{guid:guid}/processSwap")]
+    public IActionResult ProcessSwap(
+        Guid guid,
+        [FromBody] DateTime[] fromPartyA,
+        [FromBody] DateTime[] fromPartyB
+    )
+    {
+        //set the ShiftOwner on all partyBshifts to A and vice versa
+        return Ok();
+    }
 }
