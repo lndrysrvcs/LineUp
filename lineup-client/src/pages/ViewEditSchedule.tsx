@@ -11,7 +11,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { type MouseEvent } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../dateinput.css";
-import "./newschedule.css";
+import "./newSchedule.css";
 
 interface ScheduleData {
   name: string; //the name of the event
