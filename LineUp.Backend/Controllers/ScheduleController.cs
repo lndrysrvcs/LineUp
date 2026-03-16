@@ -116,9 +116,27 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     )
     {
         Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
-        if (schedule == null)
+        if (schedule == null || fromPartyA == null || fromPartyA[0] == null || fromPartyB == null || fromPartyB[0] == null)
         {
             return NotFound();
+        }
+        //validation that all the partyA shifts belong to the same person
+        Availability partyA = fromPartyA[0].Availability;
+        foreach (ShiftAssignment shift in fromPartyA)
+        {
+            if (shift.Availability != partyA)
+            {
+                return BadRequest();
+            }
+        }
+        //validation that all the partyB shifts belong to the same person
+        Availability partyB = fromPartyA[0].Availability;
+        foreach (ShiftAssignment shift in fromPartyB)
+        {
+            if (shift.Availability != partyB)
+            {
+                return BadRequest();
+            }
         }
         SwapRequest swapRequest = new SwapRequest
         {
@@ -134,11 +152,26 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     [HttpGet("{guid:guid}/processSwap")]
     public IActionResult ProcessSwap(
         Guid guid,
-        [FromBody] DateTime[] fromPartyA,
-        [FromBody] DateTime[] fromPartyB
+        [FromBody] ShiftAssignment[] fromPartyA,
+        [FromBody] ShiftAssignment[] fromPartyB
     )
     {
         //set the ShiftOwner on all partyBshifts to A and vice versa
+        if (fromPartyA == null || fromPartyB == null)
+        {
+            return NotFound();
+        }
+        Availability partyA = fromPartyA[0].Availability;
+        Availability partyB = fromPartyA[0].Availability;
+        foreach (ShiftAssignment shift in fromPartyB)
+        {
+            shift.Availability = partyA;
+        }
+        foreach (ShiftAssignment shift in fromPartyA)
+        {
+            shift.Availability = partyB;
+        }
+
         return Ok();
     }
 }
