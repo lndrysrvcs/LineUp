@@ -196,3 +196,7 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 
+*.DotSettings.user
+
+# no docker-compose files!
+LineUp.AppHost/aspire-output/

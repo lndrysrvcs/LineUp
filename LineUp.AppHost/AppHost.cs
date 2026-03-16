@@ -2,6 +2,8 @@ using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+builder.AddDockerComposeEnvironment("env");
+
 var postgres = builder.AddPostgres("postgres")
     .WithDataVolume();
 var postgresdb = postgres.AddDatabase("postgresdb");
