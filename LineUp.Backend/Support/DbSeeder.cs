@@ -204,7 +204,19 @@ public class DbSeeder(LineUpContext context)
 
         context.Set<ShiftAssignment>().AddRange(shift1, shift2);
         context.SaveChanges();
+        #endregion
 
+        #region Seed Shift Swap Request
+
+        var swap = new SwapRequest
+        {
+            FromPartyA = [shift1],
+            FromPartyB = [shift2],
+            Schedule = schedule,
+        };
+
+        context.Set<SwapRequest>().Add(swap);
+        context.SaveChanges();
         #endregion
     }
 }

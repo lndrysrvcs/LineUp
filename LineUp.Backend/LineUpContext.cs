@@ -13,6 +13,7 @@ public class LineUpContext : DbContext
     public DbSet<QuestionOptions> QuestionOptions { get; set; }
     public DbSet<FormQuestionAnswer> FormQuestionAnswers { get; set; }
     public DbSet<ShiftAssignment> ShiftAssignments { get; set; }
+    public DbSet<SwapRequest> SwapRequests { get; set; }
 
     public LineUpContext(DbContextOptions<LineUpContext> options)
         : base(options) { }

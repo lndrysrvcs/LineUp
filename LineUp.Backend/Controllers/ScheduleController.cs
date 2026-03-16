@@ -124,8 +124,10 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         {
             FromPartyA = fromPartyA,
             FromPartyB = fromPartyB,
+            Schedule = schedule,
         };
-        // from the generated schedule, create a SwapRequest object in the DB that contains partyAShifts and partyBShifts
+        context.SwapRequests.Add(swapRequest);
+        context.SaveChanges();
         return Ok(swapRequest.Guid);
     }
 
