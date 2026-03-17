@@ -83,7 +83,7 @@ builder
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
-builder.AddNpgsqlDbContext<LineUpContext>("postgresdb");
+builder.AddNpgsqlDbContext<LineUpContext>("lineupdb");
 
 var app = builder.Build();
 
