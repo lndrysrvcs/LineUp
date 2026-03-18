@@ -9,6 +9,10 @@
     <PackageReference Include="Aspire.Hosting.Docker" Version="13.3.0-preview.1.26167.4" />
     <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.3.0-preview.1.26167.4" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.3.0-preview.1.26167.4" />
+    <PackageReference Include="CSharpier.MsBuild" Version="1.2.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <PropertyGroup>
@@ -18,5 +22,4 @@
     <Nullable>enable</Nullable>
     <UserSecretsId>1fa2b9db-c0de-43e8-bfcb-0ce9dc288d1e</UserSecretsId>
   </PropertyGroup>
-
 </Project>

@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="LineUp.AppHost/LineUp.AppHost.csproj" />
+  <Project Path="LineUp.Backend.Tests/LineUp.Backend.Tests.csproj" />
   <Project Path="LineUp.Backend/LineUp.Backend.csproj" />
   <Project Path="lineup-client/lineup-client.esproj" />
   <Project Path="LineUp.MigrationService/LineUp.MigrationService.csproj" />
@@ -7,4 +8,5 @@
   <Project Path="LineUp.Scheduler.Tests/LineUp.Scheduler.Tests.csproj" />
   <Project Path="LineUp.Scheduler\LineUp.Scheduler.csproj" />
   <Project Path="LineUp.ServiceDefaults/LineUp.ServiceDefaults.csproj" />
+  <Project Path="LineUp.EndToEndTests/LineUp.EndToEndTests.csproj" />
 </Solution>
