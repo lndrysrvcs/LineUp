@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using LineUp.Backend.Models.Forms;
+using System.Text.Json.Serialization;
+using LineUp.Core.Models;
+using LineUp.Core.Models.Forms;
 
 namespace LineUp.Backend.Models;
 
@@ -17,4 +19,8 @@ public class AvailabilityCreateDto
 
     public ICollection<FormQuestionAnswer> FormAnswers { get; set; } =
         new List<FormQuestionAnswer>();
+
+    // Navigation properties, ignored in JSON to not loop forever
+    [JsonIgnore]
+    public Schedule Schedule { get; set; }
 }

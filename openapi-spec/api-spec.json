@@ -304,7 +304,7 @@
         }
       }
     },
-    "/api/schedule/{guid}/createAvailability": {
+    "/api/schedule/{guid}/generateSchedule": {
       "get": {
         "tags": [
           "Schedule"
@@ -332,8 +332,7 @@
     "schemas": {
       "Availability": {
         "required": [
-          "userName",
-          "schedule"
+          "userName"
         ],
         "type": "object",
         "properties": {
@@ -382,9 +381,6 @@
             "items": {
               "$ref": "#/components/schemas/FormQuestionAnswer"
             }
-          },
-          "schedule": {
-            "$ref": "#/components/schemas/Schedule"
           }
         }
       },
@@ -394,31 +390,6 @@
           "id": {
             "type": "string",
             "format": "uuid"
-          }
-        }
-      },
-      "Form": {
-        "required": [
-          "schedule"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "questions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FormQuestion"
-            }
-          },
-          "schedule": {
-            "$ref": "#/components/schemas/Schedule"
           }
         }
       },
@@ -517,85 +488,6 @@
       },
       "QuestionType": {
         "type": "integer"
-      },
-      "Schedule": {
-        "required": [
-          "auth0UserId",
-          "name",
-          "dateCoverage",
-          "startTime",
-          "endTime",
-          "schedulePreferences"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "auth0UserId": {
-            "maxLength": 256,
-            "type": "string"
-          },
-          "name": {
-            "maxLength": 256,
-            "type": "string"
-          },
-          "dateCoverage": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          "startTime": {
-            "type": "string",
-            "format": "time"
-          },
-          "endTime": {
-            "type": "string",
-            "format": "time"
-          },
-          "form": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/Form"
-              }
-            ]
-          },
-          "formId": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "null",
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "shiftAssignments": {
-            "type": [
-              "null",
-              "array"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/ShiftAssignment"
-            }
-          },
-          "schedulePreferences": {
-            "$ref": "#/components/schemas/SchedulePreferences"
-          }
-        }
       },
       "ScheduleDto": {
         "required": [
@@ -767,10 +659,14 @@
             "format": "date-time"
           },
           "availability": {
-            "$ref": "#/components/schemas/Availability"
-          },
-          "schedule": {
-            "$ref": "#/components/schemas/Schedule"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Availability"
+              }
+            ]
           }
         }
       }

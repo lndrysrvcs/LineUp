@@ -22,13 +22,11 @@ import type {
   GetApiScheduleByGuidCreateAvailabilityData,
   GetApiScheduleByGuidCreateAvailabilityResponses,
   GetApiScheduleByGuidData,
-  GetApiScheduleByGuidDetailsData,
-  GetApiScheduleByGuidDetailsResponses,
+  GetApiScheduleByGuidGenerateScheduleData,
+  GetApiScheduleByGuidGenerateScheduleResponses,
   GetApiScheduleByGuidResponses,
   GetApiScheduleData,
   GetApiScheduleResponses,
-  PatchApiAvailabilityByGuidEditData,
-  PatchApiAvailabilityByGuidEditResponses,
   PatchApiScheduleByGuidData,
   PatchApiScheduleByGuidResponses,
   PostApiScheduleData,
@@ -95,26 +93,6 @@ export const getApiAvailabilityByGuid = <ThrowOnError extends boolean = false>(
     ...options,
   });
 
-export const patchApiAvailabilityByGuidEdit = <ThrowOnError extends boolean = false>(
-  options: Options<PatchApiAvailabilityByGuidEditData, ThrowOnError>,
-) =>
-  (options.client ?? client).patch<PatchApiAvailabilityByGuidEditResponses, unknown, ThrowOnError>({
-    url: "/api/availability/{guid}/edit",
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
-
-export const getApiScheduleByGuidDetails = <ThrowOnError extends boolean = false>(
-  options: Options<GetApiScheduleByGuidDetailsData, ThrowOnError>,
-) =>
-  (options.client ?? client).get<GetApiScheduleByGuidDetailsResponses, unknown, ThrowOnError>({
-    url: "/api/schedule/{guid}/details",
-    ...options,
-  });
-
 export const deleteApiScheduleByGuid = <ThrowOnError extends boolean = false>(
   options: Options<DeleteApiScheduleByGuidData, ThrowOnError>,
 ) =>
@@ -160,10 +138,10 @@ export const postApiSchedule = <ThrowOnError extends boolean = false>(
     },
   });
 
-export const getApiScheduleByGuidCreateAvailability = <ThrowOnError extends boolean = false>(
-  options: Options<GetApiScheduleByGuidCreateAvailabilityData, ThrowOnError>,
+export const getApiScheduleByGuidGenerateSchedule = <ThrowOnError extends boolean = false>(
+  options: Options<GetApiScheduleByGuidGenerateScheduleData, ThrowOnError>,
 ) =>
-  (options.client ?? client).get<GetApiScheduleByGuidCreateAvailabilityResponses, unknown, ThrowOnError>({
-    url: "/api/schedule/{guid}/createAvailability",
+  (options.client ?? client).get<GetApiScheduleByGuidGenerateScheduleResponses, unknown, ThrowOnError>({
+    url: "/api/schedule/{guid}/generateSchedule",
     ...options,
   });

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using LineUp.Backend.Models;
+using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -150,6 +151,39 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             new { guid = scheduleToInsert.Guid },
             scheduleToInsert
         );
+    }
+
+    [HttpGet("{guid:guid}/generateSchedule")]
+    [Authorize]
+    public async Task<IActionResult> GenerateSchedule(Guid guid)
+    {
+        var schedule = await context
+            .Schedules.Include(schedule => schedule.SchedulePreferences)
+            .FirstOrDefaultAsync(s => s.Guid == guid);
+        if (schedule == null)
+            return NotFound();
+        List<Availability> availabilities = await context
+            .Availabilities.Where(a => a.Schedule == schedule)
+            .ToListAsync();
+        if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+            return Unauthorized();
+
+        var result = Scheduler.Scheduler.RunScheduler(
+            schedule,
+            availabilities,
+            schedule.SchedulePreferences
+        );
+
+        await context
+            .ShiftAssignments.Where(shiftAssignment => shiftAssignment.Schedule == schedule)
+            .ExecuteDeleteAsync();
+
+        if (result.Assignments != null)
+            await context.ShiftAssignments.AddRangeAsync(result.Assignments);
+
+        await context.SaveChangesAsync();
+
+        return Ok(result);
     }
 
     [HttpPost("{scheduleGuid:Guid}/createAvailability")]

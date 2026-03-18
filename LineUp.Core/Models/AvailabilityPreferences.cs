@@ -1,4 +1,4 @@
-namespace LineUp.Backend.Models;
+namespace LineUp.Core.Models;
 
 public class AvailabilityPreferences
 {

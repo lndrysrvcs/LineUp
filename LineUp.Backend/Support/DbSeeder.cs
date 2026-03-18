@@ -1,5 +1,6 @@
 using LineUp.Backend.Models;
-using LineUp.Backend.Models.Forms;
+using LineUp.Core.Models;
+using LineUp.Core.Models.Forms;
 
 namespace LineUp.Backend.Support;
 
@@ -16,14 +17,15 @@ public class DbSeeder(LineUpContext context)
         #region  Seed Schedule
         var schedule = new Schedule
         {
+            Guid = Guid.Empty,
             Auth0UserId = "test-test-123-lineup-test",
             DateCoverage =
             [
-                DateOnly.FromDateTime(DateTime.Today),
-                DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
-                DateOnly.FromDateTime(DateTime.Today.AddDays(2)),
-                DateOnly.FromDateTime(DateTime.Today.AddDays(3)),
-                DateOnly.FromDateTime(DateTime.Today.AddDays(4)),
+                DateOnly.FromDateTime(DateTime.UtcNow),
+                DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1)),
+                DateOnly.FromDateTime(DateTime.UtcNow.AddDays(2)),
+                DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)),
+                DateOnly.FromDateTime(DateTime.UtcNow.AddDays(4)),
             ],
             StartTime = new TimeOnly(9, 0),
             EndTime = new TimeOnly(17, 0),
@@ -113,11 +115,22 @@ public class DbSeeder(LineUpContext context)
             UserEmail = "john.doe@example.com",
             AvailabilitySlots =
             [
+                // Day 0: 9:00 - 12:00
                 DateTime.UtcNow.Date.AddHours(9),
+                DateTime.UtcNow.Date.AddHours(9).AddMinutes(30),
                 DateTime.UtcNow.Date.AddHours(10),
-                DateTime.UtcNow.Date.AddHours(14),
-                DateTime.UtcNow.Date.AddDays(1).AddHours(9),
+                DateTime.UtcNow.Date.AddHours(10).AddMinutes(30),
+                DateTime.UtcNow.Date.AddHours(11),
+                DateTime.UtcNow.Date.AddHours(11).AddMinutes(30),
+                // Day 1: 13:00 - 17:00
+                DateTime.UtcNow.Date.AddDays(1).AddHours(13),
+                DateTime.UtcNow.Date.AddDays(1).AddHours(13).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(1).AddHours(14),
+                DateTime.UtcNow.Date.AddDays(1).AddHours(14).AddMinutes(30),
                 DateTime.UtcNow.Date.AddDays(1).AddHours(15),
+                DateTime.UtcNow.Date.AddDays(1).AddHours(15).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(1).AddHours(16),
+                DateTime.UtcNow.Date.AddDays(1).AddHours(16).AddMinutes(30),
             ],
             Schedule = schedule,
             Preferences = new AvailabilityPreferences(),
@@ -129,11 +142,34 @@ public class DbSeeder(LineUpContext context)
             UserEmail = "jane.smith@example.com",
             AvailabilitySlots =
             [
-                DateTime.UtcNow.Date.AddHours(10),
-                DateTime.UtcNow.Date.AddHours(11),
+                // Day 0: 12:00 - 17:00
+                DateTime.UtcNow.Date.AddHours(12),
+                DateTime.UtcNow.Date.AddHours(12).AddMinutes(30),
                 DateTime.UtcNow.Date.AddHours(13),
+                DateTime.UtcNow.Date.AddHours(13).AddMinutes(30),
+                DateTime.UtcNow.Date.AddHours(14),
+                DateTime.UtcNow.Date.AddHours(14).AddMinutes(30),
+                DateTime.UtcNow.Date.AddHours(15),
+                DateTime.UtcNow.Date.AddHours(15).AddMinutes(30),
+                DateTime.UtcNow.Date.AddHours(16),
+                DateTime.UtcNow.Date.AddHours(16).AddMinutes(30),
+                // Day 2: All day (9:00 - 17:00)
+                DateTime.UtcNow.Date.AddDays(2).AddHours(9),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(9).AddMinutes(30),
                 DateTime.UtcNow.Date.AddDays(2).AddHours(10),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(10).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(11),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(11).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(12),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(12).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(13),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(13).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(14),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(14).AddMinutes(30),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(15),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(15).AddMinutes(30),
                 DateTime.UtcNow.Date.AddDays(2).AddHours(16),
+                DateTime.UtcNow.Date.AddDays(2).AddHours(16).AddMinutes(30),
             ],
             Schedule = schedule,
             Preferences = new AvailabilityPreferences(),
@@ -191,15 +227,13 @@ public class DbSeeder(LineUpContext context)
             StartTime = DateTime.UtcNow.Date.AddHours(9),
             EndTime = DateTime.UtcNow.Date.AddHours(12),
             Availability = availability1,
-            Schedule = schedule,
         };
 
         var shift2 = new ShiftAssignment
         {
-            StartTime = DateTime.UtcNow.Date.AddHours(13),
+            StartTime = DateTime.UtcNow.Date.AddHours(12),
             EndTime = DateTime.UtcNow.Date.AddHours(17),
             Availability = availability2,
-            Schedule = schedule,
         };
 
         context.Set<ShiftAssignment>().AddRange(shift1, shift2);

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LineUp.Backend.Models.Forms;
+namespace LineUp.Core.Models.Forms;
 
 public class QuestionOptions
 {

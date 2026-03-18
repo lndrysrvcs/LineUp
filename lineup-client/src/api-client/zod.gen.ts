@@ -77,6 +77,24 @@ export const zFormQuestionAnswer = z.object({
   answerText: z.string(),
 });
 
+export const zAvailability = z.object({
+  id: z.optional(
+    z.union([
+      z
+        .int()
+        .min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
+        .max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
+      z.string().regex(/^-?(?:0|[1-9]\d*)$/),
+    ]),
+  ),
+  guid: z.optional(z.uuid()),
+  availabilitySlots: z.optional(z.array(z.iso.datetime())),
+  userName: z.string().max(64),
+  userEmail: z.optional(z.union([z.null(), z.string().max(256)])),
+  preferences: z.optional(z.union([z.null(), zAvailabilityPreferences])),
+  formAnswers: z.optional(z.array(zFormQuestionAnswer)),
+});
+
 export const zSchedulePreferences = z.object({
   id: z.optional(z.uuid()),
   minutesPerSlot: z.optional(
@@ -136,15 +154,9 @@ export const zAvailability = z.object({
       z.string().regex(/^-?(?:0|[1-9]\d*)$/),
     ]),
   ),
-  guid: z.optional(z.uuid()),
-  availabilitySlots: z.optional(z.array(z.iso.datetime())),
-  userName: z.string().max(64),
-  userEmail: z.optional(z.union([z.null(), z.string().max(256)])),
-  preferences: z.optional(z.union([z.null(), zAvailabilityPreferences])),
-  formAnswers: z.optional(z.array(zFormQuestionAnswer)),
-  get schedule() {
-    return z.lazy((): any => zSchedule);
-  },
+  startTime: z.optional(z.iso.datetime()),
+  endTime: z.optional(z.iso.datetime()),
+  availability: z.optional(z.union([z.null(), zAvailability])),
 });
 
 export const zForm = z.object({
@@ -228,25 +240,9 @@ export const zScheduleUpdateDto = z.object({
     ]),
   ),
   guid: z.optional(z.union([z.null(), z.uuid()])),
-  shiftAssignments: z.optional(z.union([z.null(), z.array(z.lazy((): any => zShiftAssignment))])),
+  shiftAssignments: z.optional(z.union([z.null(), z.array(zShiftAssignment)])),
   schedulePreferences: z.optional(z.union([z.null(), zSchedulePreferences])),
   name: z.optional(z.union([z.null(), z.string()])),
-});
-
-export const zShiftAssignment = z.object({
-  id: z.optional(
-    z.union([
-      z
-        .int()
-        .min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
-        .max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
-      z.string().regex(/^-?(?:0|[1-9]\d*)$/),
-    ]),
-  ),
-  startTime: z.optional(z.iso.datetime()),
-  endTime: z.optional(z.iso.datetime()),
-  availability: z.optional(zAvailability),
-  schedule: z.optional(zSchedule),
 });
 
 export const zGetApiPublicData = z.object({
@@ -295,23 +291,7 @@ export const zGetApiAvailabilityByGuidData = z.object({
   query: z.optional(z.never()),
 });
 
-export const zGetApiScheduleByGuidDetailsData = z.object({
-  body: z.optional(z.never()),
-  path: z.object({
-    guid: z.uuid(),
-  }),
-  query: z.optional(z.never()),
-});
-
 export const zDeleteApiScheduleByGuidData = z.object({
-  body: z.optional(z.never()),
-  path: z.object({
-    guid: z.uuid(),
-  }),
-  query: z.optional(z.never()),
-});
-
-export const zGetApiScheduleByGuidData = z.object({
   body: z.optional(z.never()),
   path: z.object({
     guid: z.uuid(),
@@ -333,14 +313,6 @@ export const zGetApiScheduleByGuidCreateAvailabilityData = z.object({
   query: z.optional(z.never()),
 });
 
-export const zPatchApiAvailabilityByGuidEditData = z.object({
-  body: zAvailability,
-  path: z.object({
-    guid: z.uuid(),
-  }),
-  query: z.optional(z.never()),
-});
-
 export const zPatchApiScheduleByGuidData = z.object({
   body: zScheduleUpdateDto,
   path: z.object({
@@ -349,8 +321,22 @@ export const zPatchApiScheduleByGuidData = z.object({
   query: z.optional(z.never()),
 });
 
+export const zGetApiScheduleData = z.object({
+  body: z.optional(z.never()),
+  path: z.optional(z.never()),
+  query: z.optional(z.never()),
+});
+
 export const zPostApiScheduleData = z.object({
   body: zScheduleDto,
   path: z.optional(z.never()),
+  query: z.optional(z.never()),
+});
+
+export const zGetApiScheduleByGuidGenerateScheduleData = z.object({
+  body: z.optional(z.never()),
+  path: z.object({
+    guid: z.uuid(),
+  }),
   query: z.optional(z.never()),
 });

@@ -5,7 +5,6 @@ import { type DefaultError, queryOptions, type UseMutationOptions } from "@tanst
 import { client } from "../client.gen";
 import {
   deleteApiScheduleByGuid,
-  getApiAvailabilityByGuid,
   getApiAvailabilityByGuidExists,
   getApiAvailabilityPublic,
   getApiClaims,
@@ -14,10 +13,8 @@ import {
   getApiPublic,
   getApiSchedule,
   getApiScheduleByGuid,
-  getApiScheduleByGuidCreateAvailability,
-  getApiScheduleByGuidDetails,
+  getApiScheduleByGuidGenerateSchedule,
   type Options,
-  patchApiAvailabilityByGuidEdit,
   patchApiScheduleByGuid,
   postApiSchedule,
 } from "../sdk.gen";
@@ -32,9 +29,8 @@ import type {
   GetApiPublicData,
   GetApiScheduleByGuidCreateAvailabilityData,
   GetApiScheduleByGuidData,
-  GetApiScheduleByGuidDetailsData,
+  GetApiScheduleByGuidGenerateScheduleData,
   GetApiScheduleData,
-  PatchApiAvailabilityByGuidEditData,
   PatchApiScheduleByGuidData,
   PostApiScheduleData,
 } from "../types.gen";
@@ -194,39 +190,6 @@ export const getApiAvailabilityByGuidOptions = (options: Options<GetApiAvailabil
     queryKey: getApiAvailabilityByGuidQueryKey(options),
   });
 
-export const patchApiAvailabilityByGuidEditMutation = (
-  options?: Partial<Options<PatchApiAvailabilityByGuidEditData>>,
-): UseMutationOptions<unknown, DefaultError, Options<PatchApiAvailabilityByGuidEditData>> => {
-  const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<PatchApiAvailabilityByGuidEditData>> = {
-    mutationFn: async (fnOptions) => {
-      const { data } = await patchApiAvailabilityByGuidEdit({
-        ...options,
-        ...fnOptions,
-        throwOnError: true,
-      });
-      return data;
-    },
-  };
-  return mutationOptions;
-};
-
-export const getApiScheduleByGuidDetailsQueryKey = (options: Options<GetApiScheduleByGuidDetailsData>) =>
-  createQueryKey("getApiScheduleByGuidDetails", options);
-
-export const getApiScheduleByGuidDetailsOptions = (options: Options<GetApiScheduleByGuidDetailsData>) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidDetailsQueryKey>>({
-    queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiScheduleByGuidDetails({
-        ...options,
-        ...queryKey[0],
-        signal,
-        throwOnError: true,
-      });
-      return data;
-    },
-    queryKey: getApiScheduleByGuidDetailsQueryKey(options),
-  });
-
 export const deleteApiScheduleByGuidMutation = (
   options?: Partial<Options<DeleteApiScheduleByGuidData>>,
 ): UseMutationOptions<unknown, DefaultError, Options<DeleteApiScheduleByGuidData>> => {
@@ -309,16 +272,16 @@ export const postApiScheduleMutation = (
   return mutationOptions;
 };
 
-export const getApiScheduleByGuidCreateAvailabilityQueryKey = (
-  options: Options<GetApiScheduleByGuidCreateAvailabilityData>,
-) => createQueryKey("getApiScheduleByGuidCreateAvailability", options);
+export const getApiScheduleByGuidGenerateScheduleQueryKey = (
+  options: Options<GetApiScheduleByGuidGenerateScheduleData>,
+) => createQueryKey("getApiScheduleByGuidGenerateSchedule", options);
 
-export const getApiScheduleByGuidCreateAvailabilityOptions = (
-  options: Options<GetApiScheduleByGuidCreateAvailabilityData>,
+export const getApiScheduleByGuidGenerateScheduleOptions = (
+  options: Options<GetApiScheduleByGuidGenerateScheduleData>,
 ) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidCreateAvailabilityQueryKey>>({
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidGenerateScheduleQueryKey>>({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiScheduleByGuidCreateAvailability({
+      const { data } = await getApiScheduleByGuidGenerateSchedule({
         ...options,
         ...queryKey[0],
         signal,
@@ -326,5 +289,5 @@ export const getApiScheduleByGuidCreateAvailabilityOptions = (
       });
       return data;
     },
-    queryKey: getApiScheduleByGuidCreateAvailabilityQueryKey(options),
+    queryKey: getApiScheduleByGuidGenerateScheduleQueryKey(options),
   });

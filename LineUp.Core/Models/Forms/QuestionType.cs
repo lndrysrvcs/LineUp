@@ -1,4 +1,4 @@
-namespace LineUp.Backend.Models.Forms;
+namespace LineUp.Core.Models.Forms;
 
 public enum QuestionType
 {
