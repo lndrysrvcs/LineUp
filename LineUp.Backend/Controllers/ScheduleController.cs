@@ -53,6 +53,14 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             .FirstOrDefaultAsync(s => s.Guid == guid);
         if (schedule == null)
             return NotFound();
+        if (schedule.ShiftAssignments != null && schedule.ShiftAssignments.Count != 0)
+        {
+            foreach (var shiftAssignment in schedule.ShiftAssignments)
+            {
+                //TODO CREATE DTO FOR AVAILABILITY TO NOT EXPOSE GUID
+                await context.Entry(shiftAssignment).Reference(sa => sa.Availability).LoadAsync();
+            }
+        }
 
         var availabilityCount = context.Availabilities.Count(availability =>
             availability.Schedule.Guid == guid
@@ -154,7 +162,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     }
 
     [HttpGet("{guid:guid}/generateSchedule")]
-    [Authorize]
+    //[Authorize]
     public async Task<IActionResult> GenerateSchedule(Guid guid)
     {
         var schedule = await context
@@ -165,8 +173,8 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         List<Availability> availabilities = await context
             .Availabilities.Where(a => a.Schedule == schedule)
             .ToListAsync();
-        if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
-            return Unauthorized();
+        //if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        //   return Unauthorized();
 
         var result = Scheduler.Scheduler.RunScheduler(
             schedule,
@@ -175,7 +183,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         );
 
         await context
-            .ShiftAssignments.Where(shiftAssignment => shiftAssignment.Schedule == schedule)
+            .ShiftAssignments.Where(shiftAssignment => shiftAssignment.ScheduleId == schedule.Id)
             .ExecuteDeleteAsync();
 
         if (result.Assignments != null)
@@ -212,6 +220,6 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         context.Availabilities.Add(availabilityToInsert);
         await context.SaveChangesAsync();
 
-        return Ok();
+        return Ok(availabilityToInsert.Guid);
     }
 }

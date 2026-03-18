@@ -9,7 +9,7 @@ import { parseTimeString } from "@/utils/time.ts";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { type MouseEvent } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import "../dateinput.css";
 import "./newSchedule.css";
 
@@ -31,6 +31,7 @@ const ViewEditSchedule = () => {
   const { guid } = useParams<{ guid: string }>();
   const { data } = useQuery(loaderQuery("/api/schedule/{}/details", guid!));
   const [focusedTime, setFocusedTime] = React.useState<string | null>(null);
+  const scheduleGenerated = data.shiftAssignments.length > 0;
 
   function getMaxAvailability() {
     let max = 0;
@@ -99,6 +100,26 @@ const ViewEditSchedule = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
       navigate("/");
+    },
+  });
+
+  const generateScheduleMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetchWithAuth(`/api/schedule/${guid}/generateSchedule`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to generate schedule");
+      }
+
+      return true;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["schedules"] });
     },
   });
 
@@ -198,8 +219,18 @@ const ViewEditSchedule = () => {
 
   const handleGenerate = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    //TODO: call backend to generate schedule
-    // Note: when calling generate schedule, use 1440 and 99999 as default values for maxShiftDuration and maxShiftsPerWorker
+
+    if (
+      (scheduleGenerated &&
+        !confirm("Are you sure you want to generate this schedule? This will override the current schedule.")) ||
+      !confirm(
+        "Are you sure you want to generate this schedule? Once it's generated, no new responses will be accepted.",
+      )
+    ) {
+      return;
+    }
+
+    addToasts(generateScheduleMutation.mutateAsync(), "Generating schedule... This may take a while...");
   };
 
   const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
@@ -240,13 +271,20 @@ const ViewEditSchedule = () => {
         setFocusedCell={setFocusedTime}
       />
       <div className="submitContainer">
+        {scheduleGenerated && (
+          <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
+            Generated Schedule
+          </Link>
+        )}
         <button
           type="button"
           className="submitBtn"
           onClick={handleGenerate}
-          disabled={updateScheduleMutation.isPending || deleteScheduleMutation.isPending}
+          disabled={
+            updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+          }
         >
-          Generate Schedule
+          {scheduleGenerated ? "Regenerate Schedule" : "Generate Schedule"}
         </button>
       </div>
       <hr />
@@ -318,7 +356,9 @@ const ViewEditSchedule = () => {
           <button
             type="submit"
             className="submitBtn"
-            disabled={updateScheduleMutation.isPending || deleteScheduleMutation.isPending}
+            disabled={
+              updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+            }
           >
             Confirm Changes
           </button>
@@ -329,7 +369,9 @@ const ViewEditSchedule = () => {
             type="button"
             className="deleteBtn"
             onClick={handleDelete}
-            disabled={updateScheduleMutation.isPending || deleteScheduleMutation.isPending}
+            disabled={
+              updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+            }
           >
             Delete Schedule
           </button>
@@ -349,6 +391,7 @@ const ViewEditSchedule = () => {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: true,
+                timeZone: "UTC",
               }).format(new Date(focusedTime!))}
             </div>
           )}

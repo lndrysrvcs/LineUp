@@ -49,6 +49,7 @@ vi.mock("../utils/api", async () => {
           availabilities: [{ availabilitySlots: ["2026-01-01T09:00:00"], userName: "Test User" }],
           dateCoverage: ["2026-01-01"],
           schedulePreferences: { minutesPerSlot: 15, usersPerShift: 1 },
+          shiftAssignments: [],
         }),
       }),
     }),

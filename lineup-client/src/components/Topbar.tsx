@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Topbar = ({ children }: Props) => {
-  const { isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -25,11 +25,11 @@ const Topbar = ({ children }: Props) => {
       <div className="topbar">
         <div className="lineUpLogo">
           <Link to="/">
-            <img src={lineupLogo} alt="Line Up Logo" height={50} />
+            <img src={lineupLogo} alt="LineUp Logo" height={50} />
           </Link>
         </div>
         <div className="signOutButton">
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <button
               onClick={() =>
                 logout({
@@ -39,6 +39,10 @@ const Topbar = ({ children }: Props) => {
               className="inlineButton"
             >
               Log Out
+            </button>
+          ) : (
+            <button onClick={() => loginWithRedirect()} className="inlineButton">
+              Sign In
             </button>
           )}
         </div>

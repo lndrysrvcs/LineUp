@@ -2,10 +2,10 @@ import { getToken } from "@/utils/api/auth-token";
 import { toast } from "react-hot-toast";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function addToasts(promise: Promise<any>) {
+function addToasts(promise: Promise<any>, loadingMessage?: string, successMessage?: string) {
   toast.promise(promise, {
-    loading: "Submitting...",
-    success: <b>Success!</b>,
+    loading: loadingMessage ?? "Submitting...",
+    success: <b>{successMessage ?? "Success!"}</b>,
     error: (err) => <b>Error: {err.message}</b>,
   });
 }

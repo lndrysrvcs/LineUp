@@ -61,7 +61,7 @@ describe("Topbar", () => {
 
   it("renders logo and home link", () => {
     renderTopbar();
-    const img = screen.getByAltText("Line Up Logo");
+    const img = screen.getByAltText("LineUp Logo");
     expect(img).toBeInTheDocument();
     const link = img.closest("a");
     expect(link).toHaveAttribute("href", "/");

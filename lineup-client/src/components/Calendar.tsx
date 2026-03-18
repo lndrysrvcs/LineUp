@@ -1,11 +1,11 @@
 import type { TimeRange, ValidMinutes } from "@/types";
 import {
   addMinutesToTime,
-  addTimeToDate,
   dayNumberToWeekday,
   formatTime,
   getTimeIncrementLabel,
   rangeIs24Hours,
+  standardizeDateAndTime,
 } from "@/utils/time";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Fragment, useEffect, useState } from "react";
@@ -18,11 +18,12 @@ interface CalendarProps {
   dates: Date[];
   range: TimeRange;
   colors?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "var(--color)", ...}
+  text?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "Rhyder", ...}
   setFocusedCell?: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 // Children are each cell of the calendar
-const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors }: CalendarProps) => {
+const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors, text }: CalendarProps) => {
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isEnablingCells, setIsEnablingCells] = useState(false);
@@ -187,9 +188,7 @@ const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors }
               onPointerEnter={() =>
                 setFocusedCell &&
                 setFocusedCell(
-                  addTimeToDate(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes))
-                    .toISOString()
-                    .replace(".000", ""),
+                  standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
                 )
               }
               onPointerLeave={() => setFocusedCell && setFocusedCell(null)}
@@ -204,6 +203,7 @@ const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors }
                 isEnablingCells={isEnablingCells}
                 setIsEnablingCells={setIsEnablingCells}
                 colors={colors ?? {}}
+                text={text ?? {}}
               />
             </div>
           ))}

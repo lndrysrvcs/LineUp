@@ -1,5 +1,5 @@
 import type { Time } from "@/types";
-import { addTimeToDate, dayNumberToWeekday, formatTime } from "@/utils/time";
+import { dayNumberToWeekday, formatTime, standardizeDateAndTime } from "@/utils/time";
 import React from "react";
 
 export interface CalendarCellProps {
@@ -12,6 +12,7 @@ export interface CalendarCellProps {
   isEnablingCells: boolean;
   setIsEnablingCells: React.Dispatch<React.SetStateAction<boolean>>;
   colors: { [key: string]: string };
+  text: { [key: string]: string };
 }
 
 const FillableCell = ({
@@ -24,7 +25,7 @@ const FillableCell = ({
   isEnablingCells,
   setIsEnablingCells,
 }: CalendarCellProps) => {
-  const dateString = addTimeToDate(date, time).toISOString();
+  const dateString = standardizeDateAndTime(date, time);
   const isClicked = selectedCells.includes(dateString);
 
   function updateCell() {
@@ -59,15 +60,17 @@ const FillableCell = ({
   );
 };
 
-const ColoredCell = ({ time, date, colors }: CalendarCellProps) => {
-  const dateString = addTimeToDate(date, time).toISOString().replace(".000", "");
+const ColoredCell = ({ time, date, colors, text }: CalendarCellProps) => {
+  const dateString = standardizeDateAndTime(date, time);
 
   return (
     <div
       className={"calendarInnerCell"}
       style={{ backgroundColor: colors[dateString] ?? "transparent" }}
       aria-label={dayNumberToWeekday(date.getDay()) + " " + formatTime(time)}
-    ></div>
+    >
+      {text[dateString] ?? ""}
+    </div>
   );
 };
 

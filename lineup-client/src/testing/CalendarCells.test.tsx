@@ -3,7 +3,7 @@
  */
 import { ColoredCell, FillableCell } from "@/components/CalendarCells";
 import type { Time } from "@/types";
-import { addTimeToDate } from "@/utils/time";
+import { standardizeDateAndTime } from "@/utils/time";
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -16,6 +16,7 @@ describe("CalendarCells component", () => {
   const setIsPointerDown = vi.fn();
   const setIsEnablingCells = vi.fn();
   const colors: { [key: string]: string } = {};
+  const text: { [key: string]: string } = {};
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -38,6 +39,7 @@ describe("CalendarCells component", () => {
           isEnablingCells={false}
           setIsEnablingCells={setIsEnablingCells}
           colors={colors}
+          text={text}
         />,
       );
       const cell = screen.getByRole("button");
@@ -58,6 +60,7 @@ describe("CalendarCells component", () => {
           isEnablingCells={false}
           setIsEnablingCells={setIsEnablingCells}
           colors={colors}
+          text={text}
         />,
       );
       const cell = screen.getByRole("button");
@@ -73,7 +76,7 @@ describe("CalendarCells component", () => {
       expect(setIsEnablingCells).toHaveBeenCalledWith(true);
 
       const setSelectedCellsUpdater = setSelectedCells.mock.calls[0][0];
-      expect(setSelectedCellsUpdater([])).toEqual([addTimeToDate(date, time).toISOString()]);
+      expect(setSelectedCellsUpdater([])).toEqual([standardizeDateAndTime(date, time)]);
 
       await user.pointer({
         target: cell,
@@ -89,13 +92,14 @@ describe("CalendarCells component", () => {
         <FillableCell
           time={time}
           date={date}
-          selectedCells={[addTimeToDate(date, time).toISOString()]}
+          selectedCells={[standardizeDateAndTime(date, time)]}
           setSelectedCells={setSelectedCells}
           isPointerDown={false}
           setIsPointerDown={setIsPointerDown}
           isEnablingCells={false}
           setIsEnablingCells={setIsEnablingCells}
           colors={colors}
+          text={text}
         />,
       );
       const cell = screen.getByRole("button");
@@ -111,7 +115,7 @@ describe("CalendarCells component", () => {
       expect(setIsEnablingCells).toHaveBeenCalledWith(false);
 
       const setSelectedCellsUpdater = setSelectedCells.mock.calls[0][0];
-      expect(setSelectedCellsUpdater([addTimeToDate(date, time).toISOString()])).toEqual([]);
+      expect(setSelectedCellsUpdater([standardizeDateAndTime(date, time)])).toEqual([]);
 
       await user.pointer({
         target: cell,
@@ -136,6 +140,7 @@ describe("CalendarCells component", () => {
             isEnablingCells={true}
             setIsEnablingCells={setIsEnablingCells}
             colors={colors}
+            text={text}
           />
         </>,
       );
@@ -167,6 +172,7 @@ describe("CalendarCells component", () => {
             isEnablingCells={true}
             setIsEnablingCells={setIsEnablingCells}
             colors={colors}
+            text={text}
           />
         </>,
       );
@@ -194,6 +200,7 @@ describe("CalendarCells component", () => {
           isEnablingCells={false}
           setIsEnablingCells={setIsEnablingCells}
           colors={colors}
+          text={text}
         />,
       );
       const cell = screen.getByLabelText("Friday 09:15 AM");
@@ -212,6 +219,7 @@ describe("CalendarCells component", () => {
           isEnablingCells={true}
           setIsEnablingCells={setIsEnablingCells}
           colors={colors}
+          text={text}
         />,
       );
       const cell = screen.getByLabelText("Friday 09:15 AM");
@@ -220,7 +228,7 @@ describe("CalendarCells component", () => {
     });
 
     it("should have the specified background color if it is in the colors list", () => {
-      const isoStringDB = addTimeToDate(date, time).toISOString().replace(".000", "");
+      const isoStringDB = standardizeDateAndTime(date, time);
       const actualColors: { [key: string]: string } = { [isoStringDB]: "red" };
       render(
         <ColoredCell
@@ -233,6 +241,7 @@ describe("CalendarCells component", () => {
           isEnablingCells={true}
           setIsEnablingCells={setIsEnablingCells}
           colors={actualColors}
+          text={text}
         />,
       );
       const cell = screen.getByLabelText("Friday 09:15 AM");

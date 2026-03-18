@@ -120,6 +120,7 @@
 .submitContainer {
   text-align: right;
   font-size: 120%;
+  vertical-align: bottom;
 }
 .submitBtn {
   padding: 0.5em;
@@ -190,4 +191,9 @@
   color: var(--primary-active);
   text-align: right;
   font-size: 0.75em;
+}
+
+.generatedScheduleLink {
+  font-size: 0.75rem;
+  margin-right: 1em;
 }

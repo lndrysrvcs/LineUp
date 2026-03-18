@@ -19,8 +19,4 @@ public class AvailabilityCreateDto
 
     public ICollection<FormQuestionAnswer> FormAnswers { get; set; } =
         new List<FormQuestionAnswer>();
-
-    // Navigation properties, ignored in JSON to not loop forever
-    [JsonIgnore]
-    public Schedule Schedule { get; set; }
 }

@@ -5,7 +5,7 @@ const LoggedOutHome = () => {
 
   return (
     <div className="home">
-      Welcome to <b>Line Up</b>, your best tool for easily scheduling any shift-based events. To get started,{" "}
+      Welcome to <b>LineUp</b>, your best tool for easily scheduling any shift-based events. To get started,{" "}
       <button className="inlineButton" onClick={() => loginWithRedirect()}>
         sign in
       </button>{" "}

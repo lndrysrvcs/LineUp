@@ -79,6 +79,7 @@ builder
             }
         });
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
@@ -126,7 +127,7 @@ if (seed)
     var db = scope.ServiceProvider.GetRequiredService<LineUpContext>();
     //TODO DONT DO THIS IN PROD!!!!!!!!!!!!!! :(((((
     db.Database.EnsureDeleted();
-    db.Database.EnsureCreated();
+    db.Database.Migrate();
 
     DbSeeder seeder = new(db);
     seeder.Seed();

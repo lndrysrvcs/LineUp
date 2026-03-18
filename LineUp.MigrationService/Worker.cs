@@ -251,7 +251,6 @@ public class Worker(
                 StartTime = DateTime.UtcNow.Date.AddHours(9),
                 EndTime = DateTime.UtcNow.Date.AddHours(12),
                 Availability = availability1,
-                Schedule = schedule,
             };
 
             var shift2 = new ShiftAssignment
@@ -259,7 +258,6 @@ public class Worker(
                 StartTime = DateTime.UtcNow.Date.AddHours(13),
                 EndTime = DateTime.UtcNow.Date.AddHours(17),
                 Availability = availability2,
-                Schedule = schedule,
             };
 
             await context.ShiftAssignments.AddRangeAsync(shift1, shift2);

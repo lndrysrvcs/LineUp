@@ -102,6 +102,11 @@ const NewSchedule = () => {
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (scheduleData.name.trim() === "") {
+      alert("You must enter a name with letters!");
+      return;
+    }
+
     switch (checkValidTimeRange(scheduleData.shiftTimes, scheduleData.hours)) {
       case 1:
         alert("Cannot have Schedule Duration end before it starts.");
@@ -121,7 +126,7 @@ const NewSchedule = () => {
 
     addToasts(
       createScheduleMutation.mutateAsync({
-        name: scheduleData.name,
+        name: scheduleData.name.trim(),
         dateCoverage: scheduleData.dates?.map((d) => d.toISOString().split("T")[0]) || [],
         startTime: formatTimeForInput(scheduleData.hours.start),
         endTime: formatTimeForInput(scheduleData.hours.end),

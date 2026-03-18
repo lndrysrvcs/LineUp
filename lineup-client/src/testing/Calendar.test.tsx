@@ -3,7 +3,7 @@
  */
 import { Calendar } from "@/components/Calendar";
 import { ColoredCell } from "@/components/CalendarCells";
-import { addTimeToDate } from "@/utils/time";
+import { standardizeDateAndTime } from "@/utils/time";
 import "@testing-library/jest-dom/vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -398,9 +398,7 @@ describe("Calendar component", () => {
     expect(setFocusedCell).not.toHaveBeenCalled();
 
     await userEvent.hover(cells[1]);
-    expect(setFocusedCell).toHaveBeenCalledWith(
-      addTimeToDate(dates[0], { hour: 9, minute: 30 }).toISOString().replace(".000", ""),
-    );
+    expect(setFocusedCell).toHaveBeenCalledWith(standardizeDateAndTime(dates[0], { hour: 9, minute: 30 }));
 
     await userEvent.unhover(cells[1]);
     expect(setFocusedCell).toHaveBeenCalledWith(null);
