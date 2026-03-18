@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using LineUp.Core.Attributes;
-using LineUp.Core.Models.Forms;
+using LineUp.Backend.Attributes;
+using LineUp.Backend.Models.Forms;
 using Microsoft.EntityFrameworkCore;
 
-namespace LineUp.Core.Models;
+namespace LineUp.Backend.Models;
 
 [Index(nameof(Guid))]
 public class Availability

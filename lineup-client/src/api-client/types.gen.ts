@@ -12,10 +12,17 @@ export type Availability = {
   userEmail?: null | string;
   preferences?: null | AvailabilityPreferences;
   formAnswers?: Array<FormQuestionAnswer>;
+  schedule: Schedule;
 };
 
 export type AvailabilityPreferences = {
   id?: string;
+};
+
+export type Form = {
+  id?: number | string;
+  questions?: Array<FormQuestion>;
+  schedule: Schedule;
 };
 
 export type FormQuestion = {
@@ -40,6 +47,20 @@ export type QuestionOptions = {
 };
 
 export type QuestionType = number;
+
+export type Schedule = {
+  id?: number | string;
+  guid?: string;
+  auth0UserId: string;
+  name: string;
+  dateCoverage: Array<Date>;
+  startTime: string;
+  endTime: string;
+  form?: null | Form;
+  formId?: null | number | string;
+  shiftAssignments?: null | Array<ShiftAssignment>;
+  schedulePreferences: SchedulePreferences;
+};
 
 export type ScheduleDto = {
   id?: null | number | string;
@@ -73,7 +94,8 @@ export type ShiftAssignment = {
   id?: number | string;
   startTime?: Date;
   endTime?: Date;
-  availability?: null | Availability;
+  availability?: Availability;
+  schedule?: Schedule;
 };
 
 export type GetApiPublicData = {
@@ -178,6 +200,38 @@ export type GetApiAvailabilityByGuidResponses = {
   200: unknown;
 };
 
+export type PatchApiAvailabilityByGuidEditData = {
+  body: Availability;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/availability/{guid}/edit";
+};
+
+export type PatchApiAvailabilityByGuidEditResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
+export type GetApiScheduleByGuidDetailsData = {
+  body?: never;
+  path: {
+    guid: string;
+  };
+  query?: never;
+  url: "/api/schedule/{guid}/details";
+};
+
+export type GetApiScheduleByGuidDetailsResponses = {
+  /**
+   * OK
+   */
+  200: unknown;
+};
+
 export type DeleteApiScheduleByGuidData = {
   body?: never;
   path: {
@@ -254,16 +308,16 @@ export type PostApiScheduleResponses = {
   200: unknown;
 };
 
-export type GetApiScheduleByGuidGenerateScheduleData = {
+export type GetApiScheduleByGuidCreateAvailabilityData = {
   body?: never;
   path: {
     guid: string;
   };
   query?: never;
-  url: "/api/schedule/{guid}/generateSchedule";
+  url: "/api/schedule/{guid}/createAvailability";
 };
 
-export type GetApiScheduleByGuidGenerateScheduleResponses = {
+export type GetApiScheduleByGuidCreateAvailabilityResponses = {
   /**
    * OK
    */

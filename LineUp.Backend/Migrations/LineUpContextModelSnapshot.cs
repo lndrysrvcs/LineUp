@@ -22,7 +22,7 @@ namespace LineUp.Backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LineUp.Core.Models.Availability", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Availability", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("Availabilities");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.AvailabilityPreferences", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.AvailabilityPreferences", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("AvailabilityPreferences");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.Form", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.Form", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("Forms");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.FormQuestion", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +113,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("FormQuestions");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.FormQuestionAnswer", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestionAnswer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,7 +143,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("FormQuestionAnswers");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.QuestionOptions", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.QuestionOptions", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,7 +169,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("QuestionOptions");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Schedule", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Schedule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -218,7 +218,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("Schedules");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.SchedulePreferences", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.SchedulePreferences", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,7 +244,7 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("SchedulePreferences");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.ShiftAssignment", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.ShiftAssignment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +252,7 @@ namespace LineUp.Backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AvailabilityId")
+                    b.Property<int>("AvailabilityId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("EndTime")
@@ -273,13 +273,13 @@ namespace LineUp.Backend.Migrations
                     b.ToTable("ShiftAssignments");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Availability", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Availability", b =>
                 {
-                    b.HasOne("LineUp.Core.Models.AvailabilityPreferences", "Preferences")
+                    b.HasOne("LineUp.Backend.Models.AvailabilityPreferences", "Preferences")
                         .WithMany()
                         .HasForeignKey("PreferencesId");
 
-                    b.HasOne("LineUp.Core.Models.Schedule", "Schedule")
+                    b.HasOne("LineUp.Backend.Models.Schedule", "Schedule")
                         .WithMany()
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -290,20 +290,20 @@ namespace LineUp.Backend.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.FormQuestion", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestion", b =>
                 {
-                    b.HasOne("LineUp.Core.Models.Forms.Form", null)
+                    b.HasOne("LineUp.Backend.Models.Forms.Form", null)
                         .WithMany("Questions")
                         .HasForeignKey("FormId");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.FormQuestionAnswer", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestionAnswer", b =>
                 {
-                    b.HasOne("LineUp.Core.Models.Availability", null)
+                    b.HasOne("LineUp.Backend.Models.Availability", null)
                         .WithMany("FormAnswers")
                         .HasForeignKey("AvailabilityId");
 
-                    b.HasOne("LineUp.Core.Models.Forms.FormQuestion", "Question")
+                    b.HasOne("LineUp.Backend.Models.Forms.FormQuestion", "Question")
                         .WithMany()
                         .HasForeignKey("FormQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,20 +312,20 @@ namespace LineUp.Backend.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.QuestionOptions", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.QuestionOptions", b =>
                 {
-                    b.HasOne("LineUp.Core.Models.Forms.FormQuestion", null)
+                    b.HasOne("LineUp.Backend.Models.Forms.FormQuestion", null)
                         .WithMany("Options")
                         .HasForeignKey("FormQuestionId");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Schedule", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Schedule", b =>
                 {
-                    b.HasOne("LineUp.Core.Models.Forms.Form", "Form")
+                    b.HasOne("LineUp.Backend.Models.Forms.Form", "Form")
                         .WithOne("Schedule")
-                        .HasForeignKey("LineUp.Core.Models.Schedule", "FormId");
+                        .HasForeignKey("LineUp.Backend.Models.Schedule", "FormId");
 
-                    b.HasOne("LineUp.Core.Models.SchedulePreferences", "SchedulePreferences")
+                    b.HasOne("LineUp.Backend.Models.SchedulePreferences", "SchedulePreferences")
                         .WithMany()
                         .HasForeignKey("SchedulePreferencesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,13 +336,15 @@ namespace LineUp.Backend.Migrations
                     b.Navigation("SchedulePreferences");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.ShiftAssignment", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.ShiftAssignment", b =>
                 {
-                    b.HasOne("LineUp.Core.Models.Availability", "Availability")
+                    b.HasOne("LineUp.Backend.Models.Availability", "Availability")
                         .WithMany()
-                        .HasForeignKey("AvailabilityId");
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("LineUp.Core.Models.Schedule", "Schedule")
+                    b.HasOne("LineUp.Backend.Models.Schedule", "Schedule")
                         .WithMany("ShiftAssignments")
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -353,12 +355,12 @@ namespace LineUp.Backend.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Availability", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Availability", b =>
                 {
                     b.Navigation("FormAnswers");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.Form", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.Form", b =>
                 {
                     b.Navigation("Questions");
 
@@ -366,12 +368,12 @@ namespace LineUp.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Forms.FormQuestion", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Forms.FormQuestion", b =>
                 {
                     b.Navigation("Options");
                 });
 
-            modelBuilder.Entity("LineUp.Core.Models.Schedule", b =>
+            modelBuilder.Entity("LineUp.Backend.Models.Schedule", b =>
                 {
                     b.Navigation("ShiftAssignments");
                 });

@@ -1,5 +1,5 @@
-using LineUp.Core.Models;
-using LineUp.Core.Models.Forms;
+using LineUp.Backend.Models;
+using LineUp.Backend.Models.Forms;
 using Microsoft.EntityFrameworkCore;
 
 namespace LineUp.Backend;

@@ -5,6 +5,7 @@ import { type DefaultError, queryOptions, type UseMutationOptions } from "@tanst
 import { client } from "../client.gen";
 import {
   deleteApiScheduleByGuid,
+  getApiAvailabilityByGuid,
   getApiAvailabilityByGuidExists,
   getApiAvailabilityPublic,
   getApiClaims,
@@ -13,8 +14,10 @@ import {
   getApiPublic,
   getApiSchedule,
   getApiScheduleByGuid,
-  getApiScheduleByGuidGenerateSchedule,
+  getApiScheduleByGuidCreateAvailability,
+  getApiScheduleByGuidDetails,
   type Options,
+  patchApiAvailabilityByGuidEdit,
   patchApiScheduleByGuid,
   postApiSchedule,
 } from "../sdk.gen";
@@ -29,8 +32,9 @@ import type {
   GetApiPublicData,
   GetApiScheduleByGuidCreateAvailabilityData,
   GetApiScheduleByGuidData,
-  GetApiScheduleByGuidGenerateScheduleData,
+  GetApiScheduleByGuidDetailsData,
   GetApiScheduleData,
+  PatchApiAvailabilityByGuidEditData,
   PatchApiScheduleByGuidData,
   PostApiScheduleData,
 } from "../types.gen";
@@ -190,6 +194,39 @@ export const getApiAvailabilityByGuidOptions = (options: Options<GetApiAvailabil
     queryKey: getApiAvailabilityByGuidQueryKey(options),
   });
 
+export const patchApiAvailabilityByGuidEditMutation = (
+  options?: Partial<Options<PatchApiAvailabilityByGuidEditData>>,
+): UseMutationOptions<unknown, DefaultError, Options<PatchApiAvailabilityByGuidEditData>> => {
+  const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<PatchApiAvailabilityByGuidEditData>> = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await patchApiAvailabilityByGuidEdit({
+        ...options,
+        ...fnOptions,
+        throwOnError: true,
+      });
+      return data;
+    },
+  };
+  return mutationOptions;
+};
+
+export const getApiScheduleByGuidDetailsQueryKey = (options: Options<GetApiScheduleByGuidDetailsData>) =>
+  createQueryKey("getApiScheduleByGuidDetails", options);
+
+export const getApiScheduleByGuidDetailsOptions = (options: Options<GetApiScheduleByGuidDetailsData>) =>
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidDetailsQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await getApiScheduleByGuidDetails({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+      return data;
+    },
+    queryKey: getApiScheduleByGuidDetailsQueryKey(options),
+  });
+
 export const deleteApiScheduleByGuidMutation = (
   options?: Partial<Options<DeleteApiScheduleByGuidData>>,
 ): UseMutationOptions<unknown, DefaultError, Options<DeleteApiScheduleByGuidData>> => {
@@ -272,16 +309,16 @@ export const postApiScheduleMutation = (
   return mutationOptions;
 };
 
-export const getApiScheduleByGuidGenerateScheduleQueryKey = (
-  options: Options<GetApiScheduleByGuidGenerateScheduleData>,
-) => createQueryKey("getApiScheduleByGuidGenerateSchedule", options);
+export const getApiScheduleByGuidCreateAvailabilityQueryKey = (
+  options: Options<GetApiScheduleByGuidCreateAvailabilityData>,
+) => createQueryKey("getApiScheduleByGuidCreateAvailability", options);
 
-export const getApiScheduleByGuidGenerateScheduleOptions = (
-  options: Options<GetApiScheduleByGuidGenerateScheduleData>,
+export const getApiScheduleByGuidCreateAvailabilityOptions = (
+  options: Options<GetApiScheduleByGuidCreateAvailabilityData>,
 ) =>
-  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidGenerateScheduleQueryKey>>({
+  queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getApiScheduleByGuidCreateAvailabilityQueryKey>>({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await getApiScheduleByGuidGenerateSchedule({
+      const { data } = await getApiScheduleByGuidCreateAvailability({
         ...options,
         ...queryKey[0],
         signal,
@@ -289,5 +326,5 @@ export const getApiScheduleByGuidGenerateScheduleOptions = (
       });
       return data;
     },
-    queryKey: getApiScheduleByGuidGenerateScheduleQueryKey(options),
+    queryKey: getApiScheduleByGuidCreateAvailabilityQueryKey(options),
   });

@@ -5,7 +5,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
-namespace LineUp.Core.Attributes;
+namespace LineUp.Backend.Attributes;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public sealed class JsonDoNotSerializeAttribute : JsonAttribute;

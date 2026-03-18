@@ -1,6 +1,6 @@
-using LineUp.Core.Attributes;
+using LineUp.Backend.Attributes;
 
-namespace LineUp.Core.Models.Forms;
+namespace LineUp.Backend.Models.Forms;
 
 public class Form
 {

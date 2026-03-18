@@ -1,4 +1,4 @@
-namespace LineUp.Core.Models.Forms;
+namespace LineUp.Backend.Models.Forms;
 
 public class FormQuestionAnswer
 {

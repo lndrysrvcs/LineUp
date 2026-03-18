@@ -1,6 +1,6 @@
 using LineUp.Backend;
 using LineUp.MigrationService;
-using LineUp.ServiceDefaults;
+using lineup.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);
 

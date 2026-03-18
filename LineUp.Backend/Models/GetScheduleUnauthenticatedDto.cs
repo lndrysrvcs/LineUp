@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using LineUp.Core.Models;
-using LineUp.Core.Models.Forms;
+using LineUp.Backend.Models.Forms;
 
 namespace LineUp.Backend.Models;
 
