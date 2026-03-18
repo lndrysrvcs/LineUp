@@ -109,69 +109,41 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     }
 
     [HttpPost("{guid:guid}/requestSwap")]
-    public IActionResult RequestSwap(
-        Guid guid,
-        [FromBody] ShiftAssignment[] fromPartyA,
-        [FromBody] ShiftAssignment[] fromPartyB
-    )
+    public IActionResult RequestSwap(Guid guid, [FromBody] List<ShiftAssignment> shiftCollection)
     {
         Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
-        if (schedule == null || fromPartyA == null || fromPartyA[0] == null || fromPartyB == null || fromPartyB[0] == null)
+        if (schedule == null || shiftCollection == null || shiftCollection[0] == null)
         {
             return NotFound();
         }
-        //validation that all the partyA shifts belong to the same person
-        Availability partyA = fromPartyA[0].Availability;
-        foreach (ShiftAssignment shift in fromPartyA)
+        //Sort through the shifts (assume an unsorted list)
+        Availability partyA = shiftCollection[0].Availability;
+        List<ShiftAssignment> partyAShifts = [];
+        Availability partyB = null;
+        List<ShiftAssignment> partyBShifts = [];
+        foreach (ShiftAssignment shift in shiftCollection)
         {
-            if (shift.Availability != partyA)
+            Availability shiftOwner = shift.Availability;
+            if (shiftOwner == partyA)
+                partyAShifts.Append(shift);
+            else if (partyB == null)
             {
-                return BadRequest();
+                partyB = shiftOwner;
+                partyBShifts.Append(shift);
             }
-        }
-        //validation that all the partyB shifts belong to the same person
-        Availability partyB = fromPartyA[0].Availability;
-        foreach (ShiftAssignment shift in fromPartyB)
-        {
-            if (shift.Availability != partyB)
-            {
-                return BadRequest();
-            }
+            else if (shiftOwner == partyB)
+                partyBShifts.Append(shift);
+            else
+                return BadRequest("More than two parties identified");
         }
         SwapRequest swapRequest = new SwapRequest
         {
-            FromPartyA = fromPartyA,
-            FromPartyB = fromPartyB,
+            FromPartyA = partyAShifts,
+            FromPartyB = partyBShifts,
             Schedule = schedule,
         };
         context.SwapRequests.Add(swapRequest);
         context.SaveChanges();
         return Ok(swapRequest.Guid);
-    }
-
-    [HttpGet("{guid:guid}/processSwap")]
-    public IActionResult ProcessSwap(
-        Guid guid,
-        [FromBody] ShiftAssignment[] fromPartyA,
-        [FromBody] ShiftAssignment[] fromPartyB
-    )
-    {
-        //set the ShiftOwner on all partyBshifts to A and vice versa
-        if (fromPartyA == null || fromPartyB == null)
-        {
-            return NotFound();
-        }
-        Availability partyA = fromPartyA[0].Availability;
-        Availability partyB = fromPartyA[0].Availability;
-        foreach (ShiftAssignment shift in fromPartyB)
-        {
-            shift.Availability = partyA;
-        }
-        foreach (ShiftAssignment shift in fromPartyA)
-        {
-            shift.Availability = partyB;
-        }
-
-        return Ok();
     }
 }

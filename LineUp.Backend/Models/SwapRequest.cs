@@ -9,9 +9,9 @@ public class SwapRequest
 {
     public int Id { get; set; }
     public Guid Guid { get; init; } = Guid.NewGuid();
-    public required ShiftAssignment[] FromPartyA { get; set; }
+    public required List<ShiftAssignment> FromPartyA { get; set; }
 
-    public required ShiftAssignment[] FromPartyB { get; set; }
+    public required List<ShiftAssignment> FromPartyB { get; set; }
 
     public bool partyAConfirm = false;
 
