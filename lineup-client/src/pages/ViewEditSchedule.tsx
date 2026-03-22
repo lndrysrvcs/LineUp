@@ -301,17 +301,18 @@ const ViewEditSchedule = () => {
         setFocusedCell={setFocusedTime}
       />
       <div className="submitContainer">
-        {scheduleGenerated && (
-          <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
-            Generated Schedule
-          </Link>
-        )}
+        <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
+          {scheduleGenerated ? "Generated Schedule" : "Availability Form"}
+        </Link>
         <button
           type="button"
           className="submitBtn"
           onClick={handleGenerate}
           disabled={
-            updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+            updateScheduleMutation.isPending ||
+            deleteScheduleMutation.isPending ||
+            generateScheduleMutation.isPending ||
+            data.availabilities.length == 0
           }
         >
           {scheduleGenerated ? "Regenerate Schedule" : "Generate Schedule"}
