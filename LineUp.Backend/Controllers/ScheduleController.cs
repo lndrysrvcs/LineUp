@@ -116,7 +116,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             && scheduleToDelete.ShiftAssignments.Count != 0
         )
         {
-            return BadRequest("Cannot delete schedule with assigned shifts");
+            return Forbid("Cannot delete schedule with assigned shifts");
         }
         context.Schedules.Remove(scheduleToDelete);
         await context.SaveChangesAsync();
