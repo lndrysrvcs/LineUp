@@ -211,7 +211,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             )
         )
         {
-            return Conflict("Email already exists in this schedule!");
+            return UnprocessableEntity("Email already exists in this schedule!");
         }
 
         var availabilityToInsert = new Availability
