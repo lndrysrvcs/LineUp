@@ -201,3 +201,7 @@ nunit-*.xml
 # no docker-compose files!
 LineUp.AppHost/aspire-output/
 "lineup-client/obj//Debug/
+
+.idea/**/.idea/
+.idea/**/workspace.xml
+.idea/**/projectSettingsUpdater.xml
