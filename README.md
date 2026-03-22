@@ -29,6 +29,7 @@ LineUp is a scheduling tool for when you need 100% coverage over a period of tim
    cp .env.example .env # Make sure to populate .env!
    pnpm install
    ```
+   > Note: If you need the API client to be generated, see the "API Client Generation" section below.
 
 3. **Start the app, seeding with test data**
    ```bash

@@ -201,3 +201,6 @@ nunit-*.xml
 # no docker-compose files!
 LineUp.AppHost/aspire-output/
 "lineup-client/obj//Debug/
+
+# api spec
+openapi-spec/

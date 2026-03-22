@@ -1,5 +1,4 @@
 <Project Sdk="Aspire.AppHost.Sdk/13.3.0-preview.1.26167.4">
-
   <ItemGroup>
     <ProjectReference Include="..\LineUp.Backend\LineUp.Backend.csproj" />
     <ProjectReference Include="..\LineUp.MigrationService\LineUp.MigrationService.csproj" />
