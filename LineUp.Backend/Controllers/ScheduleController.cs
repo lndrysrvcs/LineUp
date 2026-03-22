@@ -4,7 +4,6 @@ using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Trace;
 
 namespace LineUp.Backend.Controllers;
 
@@ -204,6 +203,15 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         if (schedule == null)
         {
             return NotFound();
+        }
+
+        if (
+            await context.Availabilities.AnyAsync(a =>
+                a.UserEmail == availability.UserEmail && a.Schedule.Guid == scheduleGuid
+            )
+        )
+        {
+            return Conflict("Email already exists in this schedule!");
         }
 
         var availabilityToInsert = new Availability
