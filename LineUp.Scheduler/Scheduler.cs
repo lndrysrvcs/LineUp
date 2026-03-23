@@ -21,6 +21,10 @@ public static class Scheduler
     {
         var cpsatModel = new CpModel();
         var shiftsPerDay = AvailabilityMatrixTools.SlotsPerDay(schedule);
+        if (shiftsPerDay <= 0)
+        {
+            throw new Exception("Schedule has zero or negative slots per day.");
+        }
 
         List<Availability> allAvailabilities = GenerateAvailabilitiesWithSystemUser(
             schedule,
