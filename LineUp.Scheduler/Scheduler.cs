@@ -22,7 +22,10 @@ public static class Scheduler
         var cpsatModel = new CpModel();
         var shiftsPerDay = AvailabilityMatrixTools.SlotsPerDay(schedule);
 
-        List<Availability> allAvailabilities = GenerateAvailabilitiesWithSystemUser(schedule, availabilities);
+        List<Availability> allAvailabilities = GenerateAvailabilitiesWithSystemUser(
+            schedule,
+            availabilities
+        );
 
         // ALWAYS GO BY THIS OR YOU WILL LOSE TRACK OF THINGS
         Dictionary<Guid, int> availabilityIndices =
@@ -84,7 +87,12 @@ public static class Scheduler
             throw new Exception("Solver did not find an optimal solution");
         }
 
-        List<ShiftAssignment> assignments = ConvertToAssignments(solver, shifts, allAvailabilities, schedule);
+        List<ShiftAssignment> assignments = ConvertToAssignments(
+            solver,
+            shifts,
+            allAvailabilities,
+            schedule
+        );
 
         return new SolverResult { Status = status, Assignments = assignments };
     }
