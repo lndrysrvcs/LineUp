@@ -65,7 +65,8 @@ public static class Scheduler
             shifts,
             preferences,
             availabilityIndices,
-            solverAvailabilityMatrix
+            solverAvailabilityMatrix,
+            schedule.SchedulePreferences.MinutesPerSlot
         );
 
         ApplyObjective(
@@ -209,7 +210,8 @@ public static class Scheduler
         Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts,
         SchedulePreferences preferences,
         Dictionary<Guid, int> availabilityIndices,
-        int[,,] solverAvailabilityMatrix
+        int[,,] solverAvailabilityMatrix,
+        int minutesPerSlot
     )
     {
         // Each shift should have only UsersPerShift workers
@@ -231,24 +233,75 @@ public static class Scheduler
         }
 
         // Users can only be assigned to slots where they're available
+        // Enforce max shifts per worker, continuity, and max duration
         foreach (var a in availabilities)
         {
+            if (a.Guid == Guid.AllBitsSet)
+            {
+                // System user is always available and has no preferences
+                continue;
+            }
+
+            List<IntVar> userAllShifts = new();
+
             foreach (var d in dateCoverage)
             {
                 var dateIndex = Array.IndexOf(dateCoverage, d);
+                List<IntVar> userDayShifts = new();
+
                 foreach (var s in allShifts)
                 {
-                    if (a.Guid == Guid.AllBitsSet)
-                    {
-                        // System user is always available
-                        continue;
-                    }
+                    var shiftVar = shifts[Tuple.Create(a.Guid, d, s)];
+                    userAllShifts.Add(shiftVar);
+                    userDayShifts.Add(shiftVar);
 
                     if (solverAvailabilityMatrix[availabilityIndices[a.Guid], dateIndex, s] == 0)
                     {
-                        model.Add(shifts[Tuple.Create(a.Guid, d, s)] == 0);
+                        model.Add(shiftVar == 0);
                     }
                 }
+
+                // Continuity and MaximumShiftDurationMinutes per day
+                // To enforce at most ONE continuous block:
+                // Let works[t] be the decision variable for slot t.
+                // Let starts[t] be true if works[t] and NOT works[t-1].
+                // Sum(starts[t]) <= 1 ensures at most one block.
+                if (userDayShifts.Count > 0)
+                {
+                    List<IntVar> starts = new();
+                    for (int s = 0; s < userDayShifts.Count; s++)
+                    {
+                        var start = model.NewBoolVar($"{a.Guid}_{d}_starts_{s}");
+                        starts.Add(start);
+                        if (s == 0)
+                        {
+                            // start[0] iff userDayShifts[0]
+                            model.Add(start == userDayShifts[0]);
+                        }
+                        else
+                        {
+                            // start[s] iff userDayShifts[s] AND NOT userDayShifts[s-1]
+                            // This is start[s] >= userDayShifts[s] - userDayShifts[s-1]
+                            // AND start[s] <= userDayShifts[s]
+                            // AND start[s] <= 1 - userDayShifts[s-1]
+                            model.Add(start >= userDayShifts[s] - userDayShifts[s - 1]);
+                        }
+                    }
+                    model.Add(LinearExpr.Sum(starts) <= 1);
+
+                    // Max duration per continuous block (which is now only one block)
+                    if (preferences.MaximumShiftDurationMinutes > 0)
+                    {
+                        int maxSlots = preferences.MaximumShiftDurationMinutes / minutesPerSlot;
+                        model.Add(LinearExpr.Sum(userDayShifts) <= maxSlots);
+                    }
+                }
+            }
+
+            // MaximumShiftsPerWorker (total across all days)
+            if (preferences.MaximumShiftsPerWorker > 0)
+            {
+                model.Add(LinearExpr.Sum(userAllShifts) <= preferences.MaximumShiftsPerWorker);
             }
         }
     }
