@@ -89,11 +89,14 @@ public class ScheduleController(LineUpContext context) : ControllerBase
 
         List<ScheduleListDto> result = await context
             .Schedules.Where(s => s.Auth0UserId == userId)
+            .OrderByDescending(s => s.Id)
+            .Include(s => s.ShiftAssignments)
             .Select(s => new ScheduleListDto
             {
                 Name = s.Name,
                 Guid = s.Guid,
                 Respondents = context.Availabilities.Count(a => a.Schedule.Id == s.Id),
+                IsGenerated = s.ShiftAssignments != null && s.ShiftAssignments.Count != 0,
             })
             .ToListAsync();
 

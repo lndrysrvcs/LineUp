@@ -10,6 +10,7 @@ import Topbar from "../components/Topbar";
 const mockState = vi.hoisted(() => ({
   isAuthenticated: true,
   navigationState: "idle" as "idle" | "loading",
+  loginMock: vi.fn(),
   logoutMock: vi.fn(),
   toastLoadingMock: vi.fn(),
   toastRemoveMock: vi.fn(),
@@ -19,6 +20,7 @@ vi.mock("@auth0/auth0-react", () => ({
   useAuth0: () => ({
     isAuthenticated: mockState.isAuthenticated,
     logout: mockState.logoutMock,
+    loginWithRedirect: mockState.loginMock,
   }),
 }));
 
@@ -78,6 +80,12 @@ describe("Topbar", () => {
     expect(screen.getByRole("button", { name: /log out/i })).toBeInTheDocument();
   });
 
+  it("shows sign in button when not authenticated", () => {
+    mockState.isAuthenticated = false;
+    renderTopbar();
+    expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
+  });
+
   it("hides logout button when not authenticated", () => {
     mockState.isAuthenticated = false;
     renderTopbar();
@@ -90,6 +98,13 @@ describe("Topbar", () => {
     expect(mockState.logoutMock).toHaveBeenCalledWith({
       logoutParams: { returnTo: globalThis.location.origin },
     });
+  });
+
+  it("calls loginWithRedirect when sign in button clicked", () => {
+    mockState.isAuthenticated = false;
+    renderTopbar();
+    fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
+    expect(mockState.loginMock).toHaveBeenCalled();
   });
 
   it("shows loading toast during navigation", () => {

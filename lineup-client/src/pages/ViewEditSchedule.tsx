@@ -61,6 +61,7 @@ const ViewEditSchedule = () => {
       usersPerShift: number;
       maximumShiftDurationMinutes: number | undefined;
       maximumShiftsPerWorker: number | undefined;
+      //minimumShiftsPerWorker: number | undefined;
     };
   };
 
@@ -185,19 +186,48 @@ const ViewEditSchedule = () => {
 
     setScheduleData((prev) => {
       if (event.target instanceof HTMLInputElement && event.target.type === "number") {
-        if (value === "") return { ...prev, [name]: undefined };
+        if (value === "") return { ...prev, [name]: null };
 
-        let numericValue = Number(value);
-        const maxValue = event.target.max ? Number(event.target.max) : undefined;
-        const minValue = event.target.min ? Number(event.target.min) : undefined;
-
-        if (maxValue !== undefined && numericValue > maxValue) numericValue = maxValue;
-        if (minValue !== undefined && numericValue < minValue) numericValue = minValue;
+        const numericValue = Number(value);
+        if (Number.isNaN(numericValue)) return prev;
 
         return { ...prev, [name]: numericValue };
       }
       return { ...prev, [name]: value };
     });
+  };
+
+  const handleNumberBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (value === "") return;
+
+    let numericValue = Number(value);
+    if (Number.isNaN(numericValue)) return;
+
+    if (name === "maxShiftLength") {
+      const step = scheduleData.shiftTimes ? Number(scheduleData.shiftTimes) : 60;
+      const min = step;
+      const max = 1440;
+
+      numericValue = snapToStep(numericValue, step, min);
+
+      if (numericValue > max) numericValue = max;
+    }
+
+    setScheduleData((prev) => ({
+      ...prev,
+      [name]: numericValue,
+    }));
+  };
+
+  const snapToStep = (value: number, step: number, min: number) => {
+    if (value < min) return min;
+
+    const remainder = (value - min) % step;
+    const lower = value - remainder;
+    const upper = lower + step;
+
+    return Math.abs(value - lower) <= Math.abs(value - upper) ? lower : upper;
   };
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
@@ -271,17 +301,18 @@ const ViewEditSchedule = () => {
         setFocusedCell={setFocusedTime}
       />
       <div className="submitContainer">
-        {scheduleGenerated && (
-          <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
-            Generated Schedule
-          </Link>
-        )}
+        <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
+          {scheduleGenerated ? "Generated Schedule" : "Availability Form"}
+        </Link>
         <button
           type="button"
           className="submitBtn"
           onClick={handleGenerate}
           disabled={
-            updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+            updateScheduleMutation.isPending ||
+            deleteScheduleMutation.isPending ||
+            generateScheduleMutation.isPending ||
+            data.availabilities.length == 0
           }
         >
           {scheduleGenerated ? "Regenerate Schedule" : "Generate Schedule"}
@@ -294,7 +325,7 @@ const ViewEditSchedule = () => {
       <br />
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="scheduleName">Schedule Name: </label>
+          <label htmlFor="scheduleName">Schedule Name</label>
           <br />
           <input
             className="input"
@@ -307,7 +338,7 @@ const ViewEditSchedule = () => {
           />
         </div>
         <div>
-          <label htmlFor="peoplePerShift">Workers per shift: </label>
+          <label htmlFor="peoplePerShift">Workers per shift</label>
           <br />
           <input
             className="input"
@@ -322,7 +353,7 @@ const ViewEditSchedule = () => {
           />
         </div>
         <div>
-          <label htmlFor="maxShiftLength">Maximum Shift Duration (in minutes):</label>
+          <label htmlFor="maxShiftLength">Maximum Shift Duration (in minutes)</label>
           <br />
           <input
             className="input"
@@ -334,10 +365,11 @@ const ViewEditSchedule = () => {
             max="1440"
             value={scheduleData.maxShiftLength ?? ""}
             onChange={handleInputChange}
+            onBlur={handleNumberBlur}
           />
         </div>
         <div>
-          <label htmlFor="maxShifts">Maximum Shifts per Worker:</label>
+          <label htmlFor="maxShifts">Maximum Shifts per Worker</label>
           <br />
           <input
             className="input"
