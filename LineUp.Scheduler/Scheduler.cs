@@ -201,7 +201,7 @@ public static class Scheduler
         return shifts;
     }
 
-    public static void ApplyConstraints(
+    private static void ApplyConstraints(
         CpModel model,
         List<Availability> availabilities,
         DateOnly[] dateCoverage,
@@ -364,7 +364,7 @@ public static class Scheduler
 
         return output.ToArray();
     }
-
+    
     public record SolverResult
     {
         public CpSolverStatus Status { get; init; }
