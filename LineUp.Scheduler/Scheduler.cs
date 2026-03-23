@@ -364,7 +364,7 @@ public static class Scheduler
 
         return output.ToArray();
     }
-    
+
     public record SolverResult
     {
         public CpSolverStatus Status { get; init; }

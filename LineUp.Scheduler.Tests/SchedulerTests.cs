@@ -1,8 +1,5 @@
 using Google.OrTools.Sat;
 using LineUp.Core.Models;
-using LineUp.Core.Models.Forms;
-using LineUp.Scheduler;
-using Xunit;
 
 namespace LineUp.Scheduler.Tests;
 
@@ -49,7 +46,10 @@ public class SchedulerTests
         Assert.Equal(CpSolverStatus.Optimal, result.Status);
         Assert.NotNull(result.Assignments);
         Assert.Equal(2, result.Assignments.Count);
-        Assert.All(result.Assignments, a => Assert.Equal(availability.Guid, a.Availability.Guid));
+        Assert.All(result.Assignments, a => {
+            Assert.NotNull(a.Availability);
+            Assert.Equal(availability.Guid, a.Availability.Guid);
+        });
     }
 
     [Fact]

@@ -9,9 +9,9 @@ public class AvailabilityMatrixToolsTest
     private readonly Schedule schedule = new()
     {
         Id = 0,
-        Guid = default,
+        Guid = Guid.Empty,
         Auth0UserId = "test-test-123-lineup-test",
-        Name = null,
+        Name = "test schedule",
         DateCoverage =
         [
             DateOnly.FromDateTime(DateTime.UtcNow),
@@ -25,7 +25,7 @@ public class AvailabilityMatrixToolsTest
         ShiftAssignments = [],
         SchedulePreferences = new SchedulePreferences
         {
-            Id = default,
+            Id = Guid.Empty,
             MinutesPerSlot = 15,
             ShiftIntervals = 0,
             UsersPerShift = 0,
