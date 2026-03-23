@@ -205,3 +205,5 @@ LineUp.AppHost/aspire-output/
 .idea/**/.idea/
 .idea/**/workspace.xml
 .idea/**/projectSettingsUpdater.xml
+# api spec
+openapi-spec/

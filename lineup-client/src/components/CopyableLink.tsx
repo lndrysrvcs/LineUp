@@ -2,9 +2,10 @@ import { useState } from "react";
 
 interface CopyableLinkProps {
   url: string;
+  display?: string;
 }
 
-const CopyableLink = ({ url }: CopyableLinkProps) => {
+const CopyableLink = ({ url, display }: CopyableLinkProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -15,7 +16,7 @@ const CopyableLink = ({ url }: CopyableLinkProps) => {
 
   return (
     <button className="unstyledButton copyableLink" onClick={handleCopy} title="Click to copy link">
-      {copied ? "Copied" : url}
+      {copied ? "Copied" : (display ?? url)}
     </button>
   );
 };
