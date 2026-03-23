@@ -1,6 +1,5 @@
-using LineUp.Backend.Models;
+using CSharpVitamins;
 using LineUp.Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +20,8 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         );
     }
 
-    [HttpGet("{guid:guid}/exists")]
-    public IActionResult Exists(Guid guid)
+    [HttpGet($"{{guid:{nameof(ShortGuid)}}}/exists")]
+    public IActionResult Exists(ShortGuid guid)
     {
         if (context.Availabilities.Any(a => a.Guid == guid))
         {
@@ -32,8 +31,8 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         return NotFound();
     }
 
-    [HttpGet("{guid:guid}")]
-    public async Task<IActionResult> GetAvailability(Guid guid)
+    [HttpGet($"{{guid:{nameof(ShortGuid)}}}")]
+    public async Task<IActionResult> GetAvailability(ShortGuid guid)
     {
         var result = await context.Availabilities.FirstOrDefaultAsync(a => a.Guid == guid);
         if (result != null)
@@ -41,9 +40,9 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         return NotFound();
     }
 
-    [HttpPatch("{guid:guid}/edit")]
+    [HttpPatch($"{{guid:{nameof(ShortGuid)}}}/edit")]
     public async Task<IActionResult> EditAvailability(
-        Guid guid,
+        ShortGuid guid,
         [FromBody] Availability availability
     )
     {
