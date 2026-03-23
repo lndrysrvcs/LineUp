@@ -202,5 +202,8 @@ nunit-*.xml
 LineUp.AppHost/aspire-output/
 "lineup-client/obj//Debug/
 
+# Junie
+.junie/
+
 # api spec
 openapi-spec/
