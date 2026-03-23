@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="CSharpVitamins.ShortGuid" />
     <PackageReference Include="Google.OrTools" />
     <PackageReference Include="CSharpier.MsBuild">
       <PrivateAssets>all</PrivateAssets>

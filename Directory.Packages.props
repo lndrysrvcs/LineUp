@@ -13,6 +13,7 @@
     <PackageVersion Include="Auth0.AspNetCore.Authentication" Version="1.6.1" />
     <PackageVersion Include="coverlet.collector" Version="8.0.1" />
     <PackageVersion Include="CSharpier.MsBuild" Version="1.2.6" />
+    <PackageVersion Include="CSharpVitamins.ShortGuid" Version="2.0.0" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0" />
     <PackageVersion Include="Google.OrTools" Version="9.15.6755" />
     <PackageVersion Include="JetBrains.Annotations" Version="2025.2.4" />

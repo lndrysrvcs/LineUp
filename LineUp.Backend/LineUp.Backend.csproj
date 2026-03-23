@@ -4,22 +4,32 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
   <PropertyGroup>
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
     <OpenApiDocumentsDirectory>../openapi-spec</OpenApiDocumentsDirectory>
     <OpenApiGenerateDocumentsOptions>--file-name api-spec</OpenApiGenerateDocumentsOptions>
     <InterceptorsNamespaces>$(InterceptorsNamespaces);Microsoft.AspNetCore.OpenApi.Generated</InterceptorsNamespaces>
   </PropertyGroup>
+
   <PropertyGroup Condition="$(Configuration)=='Gen' Or $(GEN)=='true'">
     <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
   </PropertyGroup>
-  <Target Name="GenerateSpec" AfterTargets="Build" Condition="$(Configuration)=='Gen' Or $(GEN)=='true'">
+
+  <Target
+    Name="GenerateSpec"
+    AfterTargets="Build"
+    Condition="$(Configuration)=='Gen' Or $(GEN)=='true'"
+  >
     <Message Text="Generating OpenAPI schema file." Importance="high" />
+
     <Exec Command="pnpm gen" WorkingDirectory="../lineup-client" />
   </Target>
+
   <ItemGroup>
     <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Auth0.AspNetCore.Authentication" />
+    <PackageReference Include="CSharpVitamins.ShortGuid" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
@@ -46,10 +56,14 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
+
   <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Models\Converters\" />
     <ProjectReference Include="..\LineUp.Core\LineUp.Core.csproj" />
     <ProjectReference Include="..\LineUp.Scheduler\LineUp.Scheduler.csproj" />
   </ItemGroup>
