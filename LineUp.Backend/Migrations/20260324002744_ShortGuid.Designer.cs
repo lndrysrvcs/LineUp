@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LineUp.Backend.Migrations
 {
     [DbContext(typeof(LineUpContext))]
-    [Migration("20260324002311_ShortGuid")]
+    [Migration("20260324002744_ShortGuid")]
     partial class ShortGuid
     {
         /// <inheritdoc />
@@ -204,9 +204,8 @@ namespace LineUp.Backend.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<string>("SchedulePreferencesId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("SchedulePreferencesId")
+                        .HasColumnType("uuid");
 
                     b.Property<TimeOnly>("StartTime")
                         .HasColumnType("time without time zone");
@@ -225,8 +224,9 @@ namespace LineUp.Backend.Migrations
 
             modelBuilder.Entity("LineUp.Core.Models.SchedulePreferences", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<int>("MaximumShiftDurationMinutes")
                         .HasColumnType("integer");
