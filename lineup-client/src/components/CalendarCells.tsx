@@ -5,8 +5,8 @@ import React from "react";
 export interface CalendarCellProps {
   time: Time;
   date: Date;
-  selectedCells: string[];
-  setSelectedCells: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedCells?: string[];
+  setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
   isPointerDown: boolean;
   setIsPointerDown: React.Dispatch<React.SetStateAction<boolean>>;
   isEnablingCells: boolean;
@@ -26,13 +26,13 @@ const FillableCell = ({
   setIsEnablingCells,
 }: CalendarCellProps) => {
   const dateString = standardizeDateAndTime(date, time);
-  const isClicked = selectedCells.includes(dateString);
+  const isClicked = selectedCells?.includes(dateString);
 
   function updateCell() {
     if (isClicked) {
-      setSelectedCells((cells) => cells.filter((cell) => cell !== dateString));
+      setSelectedCells?.((cells) => cells.filter((cell) => cell !== dateString));
     } else {
-      setSelectedCells((cells) => [...cells, dateString]);
+      setSelectedCells?.((cells) => [...cells, dateString]);
     }
   }
 

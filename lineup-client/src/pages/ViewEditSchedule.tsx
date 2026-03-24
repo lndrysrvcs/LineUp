@@ -253,9 +253,10 @@ const ViewEditSchedule = () => {
     if (
       (scheduleGenerated &&
         !confirm("Are you sure you want to generate this schedule? This will override the current schedule.")) ||
-      !confirm(
-        "Are you sure you want to generate this schedule? Once it's generated, no new responses will be accepted.",
-      )
+      (!scheduleGenerated &&
+        !confirm(
+          "Are you sure you want to generate this schedule? Once it's generated, no new responses will be accepted.",
+        ))
     ) {
       return;
     }
