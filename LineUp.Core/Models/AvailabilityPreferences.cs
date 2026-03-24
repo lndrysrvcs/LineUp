@@ -1,6 +1,8 @@
+using CSharpVitamins;
+
 namespace LineUp.Core.Models;
 
 public class AvailabilityPreferences
 {
-    public Guid Id { get; set; }
+    public ShortGuid Id { get; set; } = ShortGuid.NewGuid();
 }

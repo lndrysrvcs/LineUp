@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using CSharpVitamins;
 using LineUp.Core.Models.Forms;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ namespace LineUp.Core.Models;
 public class Schedule
 {
     public int Id { get; set; }
-    public Guid Guid { get; init; } = Guid.NewGuid();
+    public ShortGuid Guid { get; init; } = ShortGuid.NewGuid();
 
     [MaxLength(256)]
     public required string Auth0UserId { get; set; }

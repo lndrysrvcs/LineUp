@@ -1,10 +1,10 @@
 using System.Security.Claims;
+using CSharpVitamins;
 using LineUp.Backend.Models;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Trace;
 
 namespace LineUp.Backend.Controllers;
 
@@ -12,9 +12,9 @@ namespace LineUp.Backend.Controllers;
 [ApiController]
 public class ScheduleController(LineUpContext context) : ControllerBase
 {
-    [HttpGet("{guid:guid}/details")]
+    [HttpGet($"{{guid:{nameof(ShortGuid)}}}/details")]
     [Authorize]
-    public async Task<IActionResult> GetScheduleAuthenticated(Guid guid)
+    public async Task<IActionResult> GetScheduleAuthenticated(ShortGuid guid)
     {
         var schedule = await context
             .Schedules.Include(s => s.SchedulePreferences)
@@ -43,8 +43,8 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         return Ok(dto);
     }
 
-    [HttpGet("{guid:guid}")]
-    public async Task<IActionResult> GetSchedule(Guid guid)
+    [HttpGet($"{{guid:{nameof(ShortGuid)}}}")]
+    public async Task<IActionResult> GetSchedule(ShortGuid guid)
     {
         var schedule = await context
             .Schedules.Include(s => s.SchedulePreferences)
@@ -103,9 +103,9 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{guid:guid}")]
+    [HttpDelete($"{{guid:{nameof(ShortGuid)}}}")]
     [Authorize]
-    public async Task<IActionResult> DeleteSchedule(Guid guid)
+    public async Task<IActionResult> DeleteSchedule(ShortGuid guid)
     {
         var scheduleToDelete = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
         if (scheduleToDelete == null)
@@ -117,10 +117,10 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         return NoContent();
     }
 
-    [HttpPatch("{guid:guid}")]
+    [HttpPatch($"{{guid:{nameof(ShortGuid)}}}")]
     [Authorize]
     public async Task<IActionResult> UpdateSchedule(
-        Guid guid,
+        ShortGuid guid,
         [FromBody] ScheduleUpdateDto schedule
     )
     {
@@ -146,7 +146,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         var scheduleToInsert = new Schedule
         {
             Auth0UserId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
-            Guid = Guid.NewGuid(),
+            Guid = ShortGuid.NewGuid(),
             DateCoverage = schedule.DateCoverage,
             StartTime = schedule.StartTime,
             EndTime = schedule.EndTime,
@@ -164,9 +164,9 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         );
     }
 
-    [HttpGet("{guid:guid}/generateSchedule")]
+    [HttpGet($"{{guid:{nameof(ShortGuid)}}}/generateSchedule")]
     //[Authorize]
-    public async Task<IActionResult> GenerateSchedule(Guid guid)
+    public async Task<IActionResult> GenerateSchedule(ShortGuid guid)
     {
         var schedule = await context
             .Schedules.Include(schedule => schedule.SchedulePreferences)
@@ -197,9 +197,9 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("{scheduleGuid:Guid}/createAvailability")]
+    [HttpPost($"{{scheduleGuid:{nameof(ShortGuid)}}}/createAvailability")]
     public async Task<IActionResult> CreateAvailability(
-        Guid scheduleGuid,
+        ShortGuid scheduleGuid,
         [FromBody] AvailabilityCreateDto availability
     )
     {
@@ -211,7 +211,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
 
         var availabilityToInsert = new Availability
         {
-            Guid = Guid.NewGuid(),
+            Guid = ShortGuid.NewGuid(),
             Schedule = schedule,
             AvailabilitySlots = availability.AvailabilitySlots,
             UserName = availability.UserName,
