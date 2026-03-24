@@ -32,7 +32,6 @@
       Version="13.3.0-preview.1.26167.4"
     />
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.6.1" />
-    <PackageReference Include="CSharpVitamins.ShortGuid" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
@@ -65,8 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="Models\Converters\" />
     <ProjectReference Include="..\LineUp.Core\LineUp.Core.csproj" />
     <ProjectReference Include="..\LineUp.Scheduler\LineUp.Scheduler.csproj" />
   </ItemGroup>

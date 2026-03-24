@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using CSharpVitamins;
 using LineUp.Core.Models;
 using LineUp.Core.Models.Forms;
 
@@ -8,9 +7,6 @@ namespace LineUp.Backend.Models;
 
 public class AvailabilityCreateDto
 {
-    public int Id { get; set; }
-    public ShortGuid Guid { get; init; } = ShortGuid.NewGuid();
-
     public DateTime[] AvailabilitySlots { get; set; } = [];
 
     [MaxLength(64)]

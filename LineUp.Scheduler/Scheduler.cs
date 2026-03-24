@@ -1,4 +1,3 @@
-using CSharpVitamins;
 using Google.OrTools.Sat;
 using LineUp.Core.Models;
 using LineUp.Core.Models.Forms;
@@ -70,7 +69,7 @@ public class Scheduler
 
         var allShifts = Enumerable.Range(0, shiftsPerDay).ToArray();
 
-        Dictionary<Tuple<ShortGuid, DateOnly, int>, IntVar> shifts = new();
+        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts = new();
         var solverAvailabilityMatrix = new int[
             availabilities.Count(),
             schedule.DateCoverage.Length,
@@ -117,7 +116,7 @@ public class Scheduler
                 for (var i = 0; i < availabilities.Count(); i++)
                 {
                     var a = availabilities.ElementAt(i).Guid;
-                    Tuple<ShortGuid, DateOnly, int> key = Tuple.Create(a, d, s);
+                    Tuple<Guid, DateOnly, int> key = Tuple.Create(a, d, s);
 
                     x[i] = shifts[key];
                 }

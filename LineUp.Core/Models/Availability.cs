@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using CSharpVitamins;
 using LineUp.Core.Attributes;
 using LineUp.Core.Models.Forms;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ namespace LineUp.Core.Models;
 public class Availability
 {
     public int Id { get; set; }
-    public ShortGuid Guid { get; init; } = ShortGuid.NewGuid();
+    public Guid Guid { get; init; } = Guid.NewGuid();
 
     public DateTime[] AvailabilitySlots { get; set; } = [];
 
