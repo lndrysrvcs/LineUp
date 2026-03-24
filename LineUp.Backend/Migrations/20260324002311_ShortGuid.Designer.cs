@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LineUp.Backend.Migrations
 {
     [DbContext(typeof(LineUpContext))]
-    [Migration("20260324000320_ShortGuid")]
+    [Migration("20260324002311_ShortGuid")]
     partial class ShortGuid
     {
         /// <inheritdoc />
@@ -37,11 +37,12 @@ namespace LineUp.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("timestamp with time zone[]");
 
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<Guid?>("PreferencesId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("PreferencesId")
+                        .HasColumnType("text");
 
                     b.Property<int>("ScheduleId")
                         .HasColumnType("integer");
@@ -68,9 +69,8 @@ namespace LineUp.Backend.Migrations
 
             modelBuilder.Entity("LineUp.Core.Models.AvailabilityPreferences", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -195,16 +195,18 @@ namespace LineUp.Backend.Migrations
                     b.Property<int?>("FormId")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid>("SchedulePreferencesId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("SchedulePreferencesId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<TimeOnly>("StartTime")
                         .HasColumnType("time without time zone");
@@ -223,9 +225,8 @@ namespace LineUp.Backend.Migrations
 
             modelBuilder.Entity("LineUp.Core.Models.SchedulePreferences", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<int>("MaximumShiftDurationMinutes")
                         .HasColumnType("integer");
