@@ -40,17 +40,29 @@ public class SchedulerStressTests
         {
             var userSlots = new List<DateTime>();
 
-            // Each user provides availability for ~30% of the slots
             foreach (var date in schedule.DateCoverage)
             {
                 var currentTime = schedule.StartTime;
                 while (currentTime < schedule.EndTime)
                 {
-                    if (random.NextDouble() < 0.3)
+                    // Instead of 30% random, we try to create blocks.
+                    // 20% chance to start a block of 2-4 hours.
+                    if (random.NextDouble() < 0.2)
                     {
-                        userSlots.Add(new DateTime(date, currentTime, DateTimeKind.Utc));
+                        int blockMinutes = random.Next(4, 9) * 30; // 2 to 4 hours in 30-min increments
+                        var blockEnd = currentTime.AddMinutes(blockMinutes);
+                        if (blockEnd > schedule.EndTime) blockEnd = schedule.EndTime;
+
+                        while (currentTime < blockEnd)
+                        {
+                            userSlots.Add(new DateTime(date, currentTime, DateTimeKind.Utc));
+                            currentTime = currentTime.AddMinutes(schedule.SchedulePreferences.MinutesPerSlot);
+                        }
                     }
-                    currentTime = currentTime.AddMinutes(schedule.SchedulePreferences.MinutesPerSlot);
+                    else
+                    {
+                        currentTime = currentTime.AddMinutes(schedule.SchedulePreferences.MinutesPerSlot);
+                    }
                 }
             }
 
