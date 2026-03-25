@@ -24,5 +24,7 @@ public class LineUpContext : DbContext
             .HasOne(f => f.Form)
             .WithOne(f => f.Schedule)
             .HasForeignKey<Schedule>(f => f.FormId);
+
+        modelBuilder.Entity<Availability>().HasIndex(a => new { a.Id, a.UserEmail }).IsUnique();
     }
 }
