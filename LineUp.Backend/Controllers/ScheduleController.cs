@@ -218,6 +218,15 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         }
 
         if (
+            context.Availabilities.Any(a =>
+                a.UserName == availability.UserName && a.Schedule.Guid == scheduleGuid
+            )
+        )
+        {
+            return Conflict("Conflicting user name!");
+        }
+
+        if (
             await context.Availabilities.AnyAsync(a =>
                 a.UserEmail == availability.UserEmail && a.Schedule.Guid == scheduleGuid
             )
