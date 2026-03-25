@@ -1,6 +1,4 @@
-using LineUp.Backend.Models;
 using LineUp.Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

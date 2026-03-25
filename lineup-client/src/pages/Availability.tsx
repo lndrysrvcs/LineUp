@@ -14,8 +14,31 @@ const Availability = () => {
   const { guid } = useParams();
   const { data } = useQuery(loaderQuery("/api/schedule/{}", guid!));
   const [focusedTime, setFocusedTime] = useState<string | null>(null);
+  const storageKey = `availability-${guid}`;
+  const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
+  console.log(backgroundColors);
 
   console.log(data);
+
+  const storedForm = (() => {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey) ?? "{}");
+    } catch {
+      return {};
+    }
+  })();
+
+  const [name, setName] = useState<string>(storedForm.name ?? "");
+  const [email, setEmail] = useState<string>(storedForm.email ?? "");
+  const [selectedCells, setSelectedCells] = useState<string[]>(storedForm.selectedCells ?? []);
+
+  const persistToStorage = (nextName: string, nextEmail: string, nextCells: string[]) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({ name: nextName, email: nextEmail, selectedCells: nextCells }));
+    } catch {
+      // localStorage may be unavailable (e.g. private browsing quota exceeded)
+    }
+  };
 
   type CreateAvailabilityProps = {
     userName: string;
@@ -25,7 +48,6 @@ const Availability = () => {
 
   const createAvailabilityMutation = useMutation({
     mutationFn: async (newAvailability: CreateAvailabilityProps) => {
-      console.log(newAvailability);
       const res = await fetchWithAuth(`/api/schedule/${guid}/createAvailability`, {
         method: "POST",
         body: JSON.stringify(newAvailability),
@@ -41,6 +63,11 @@ const Availability = () => {
       return res;
     },
     onSuccess: () => {
+      try {
+        localStorage.removeItem(storageKey);
+      } catch {
+        // ignore storage errors
+      }
       queryClient.invalidateQueries({ queryKey: ["availability"] });
       navigate("/");
     },
@@ -54,16 +81,28 @@ const Availability = () => {
   function mapAssignments() {
     const colors: { [key: string]: string } = {};
     const text: { [key: string]: string } = {};
+    const nameToColor: { [key: string]: string } = {};
+
     if (!scheduleGenerated) {
       return [colors, text];
     }
 
     for (const availability of data.shiftAssignments) {
-      colors[availability.startTime] = "var(--primary-active)";
       if (availability.startTime in text) {
         text[availability.startTime] = text[availability.startTime] + ", " + availability.userName;
       } else {
         text[availability.startTime] = availability.userName;
+      }
+    }
+
+    let numColors = 0;
+    for (const time of Object.keys(text)) {
+      if (text[time] in nameToColor) {
+        colors[time] = nameToColor[text[time]];
+      } else {
+        nameToColor[text[time]] = backgroundColors[numColors % backgroundColors.length];
+        colors[time] = backgroundColors[numColors % backgroundColors.length];
+        numColors++;
       }
     }
     return [colors, text];
@@ -71,23 +110,22 @@ const Availability = () => {
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
 
-    if ((formData.get("name") as string).trim() === "" || (formData.get("email") as string).trim() === "") {
+    if (name.trim() === "" || email.trim() === "") {
       alert("You must enter a name with letters!");
       return;
     }
 
-    if (formData.get("calendarSelected") === "") {
+    if (selectedCells.length === 0) {
       alert("Please select at least one time slot.");
       return;
     }
 
     addToasts(
       createAvailabilityMutation.mutateAsync({
-        userName: (formData.get("name") as string).trim(),
-        userEmail: (formData.get("email") as string).trim(),
-        availabilitySlots: (formData.get("calendarSelected") as string).split(","),
+        userName: name.trim(),
+        userEmail: email.trim(),
+        availabilitySlots: selectedCells,
       }),
     );
   };
@@ -131,7 +169,7 @@ const Availability = () => {
                     minute: "2-digit",
                     hour12: true,
                     timeZone: "UTC",
-                  }).format(new Date(focusedTime!))}
+                  }).format(new Date(focusedTime))}
                 </div>
               )}
             </div>
@@ -149,14 +187,36 @@ const Availability = () => {
                   Full Name
                 </label>
                 <br />
-                <input className="input" type="text" id="name" name="name" required />
+                <input
+                  className="input"
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    persistToStorage(e.target.value, email, selectedCells);
+                  }}
+                  required
+                />
               </div>
               <div>
                 <label htmlFor="email" className="required">
                   Email
                 </label>
                 <br />
-                <input className="input" type="email" id="email" name="email" required />
+                <input
+                  className="input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    persistToStorage(name, e.target.value, selectedCells);
+                  }}
+                  required
+                />
               </div>
             </div>
             <div>
@@ -173,6 +233,12 @@ const Availability = () => {
                 range={{
                   start: parseTimeString(data.startTime)!,
                   end: parseTimeString(data.endTime)!,
+                }}
+                selectedCells={selectedCells}
+                setSelectedCells={(cells) => {
+                  const next = typeof cells === "function" ? cells(selectedCells) : cells;
+                  setSelectedCells(next);
+                  persistToStorage(name, email, next);
                 }}
               />
             </div>

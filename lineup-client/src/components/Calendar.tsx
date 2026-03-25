@@ -20,11 +20,22 @@ interface CalendarProps {
   colors?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "var(--color)", ...}
   text?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "Rhyder", ...}
   setFocusedCell?: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedCells?: string[];
+  setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 // Children are each cell of the calendar
-const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors, text }: CalendarProps) => {
-  const [selectedCells, setSelectedCells] = useState<string[]>([]);
+const Calendar = ({
+  Cell,
+  minutesPerCell,
+  dates,
+  range,
+  setFocusedCell,
+  colors,
+  text,
+  selectedCells,
+  setSelectedCells,
+}: CalendarProps) => {
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isEnablingCells, setIsEnablingCells] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -186,12 +197,11 @@ const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors, 
               className={calculateCellClasses(row, col)}
               style={extraColMargin(col)}
               onPointerEnter={() =>
-                setFocusedCell &&
-                setFocusedCell(
+                setFocusedCell?.(
                   standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
                 )
               }
-              onPointerLeave={() => setFocusedCell && setFocusedCell(null)}
+              onPointerLeave={() => setFocusedCell?.(null)}
             >
               <Cell
                 time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
@@ -210,7 +220,6 @@ const Calendar = ({ Cell, minutesPerCell, dates, range, setFocusedCell, colors, 
         </Fragment>
       ))}
       <div className="calendarLabel calendarRowLabel">{formatTime(range.end)}</div>
-      <input type="hidden" name="calendarSelected" value={selectedCells} />
     </div>
   );
 };
