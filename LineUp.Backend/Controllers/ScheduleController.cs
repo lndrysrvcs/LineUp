@@ -106,11 +106,20 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     [Authorize]
     public async Task<IActionResult> DeleteSchedule(Guid guid)
     {
-        var scheduleToDelete = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
+        var scheduleToDelete = await context
+            .Schedules.Include(schedule => schedule.ShiftAssignments)
+            .FirstOrDefaultAsync(s => s.Guid == guid);
         if (scheduleToDelete == null)
             return NotFound();
         if (scheduleToDelete.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
+        if (
+            scheduleToDelete.ShiftAssignments != null
+            && scheduleToDelete.ShiftAssignments.Count != 0
+        )
+        {
+            return Forbid("Cannot delete schedule with assigned shifts");
+        }
         context.Schedules.Remove(scheduleToDelete);
         await context.SaveChangesAsync();
         return NoContent();
