@@ -202,5 +202,8 @@ nunit-*.xml
 LineUp.AppHost/aspire-output/
 "lineup-client/obj//Debug/
 
+.idea/**/.idea/
+.idea/**/workspace.xml
+.idea/**/projectSettingsUpdater.xml
 # api spec
 openapi-spec/
