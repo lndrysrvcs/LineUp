@@ -16,21 +16,14 @@
     <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
   </PropertyGroup>
 
-  <Target
-    Name="GenerateSpec"
-    AfterTargets="Build"
-    Condition="$(Configuration)=='Gen' Or $(GEN)=='true'"
-  >
+  <Target Name="GenerateSpec" AfterTargets="Build" Condition="$(Configuration)=='Gen' Or $(GEN)=='true'">
     <Message Text="Generating OpenAPI schema file." Importance="high" />
 
     <Exec Command="pnpm gen" WorkingDirectory="../lineup-client" />
   </Target>
 
   <ItemGroup>
-    <PackageReference
-      Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"
-      Version="13.3.0-preview.1.26167.4"
-    />
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.3.0-preview.1.26167.4" />
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
@@ -55,6 +48,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.13.10" />
   </ItemGroup>
