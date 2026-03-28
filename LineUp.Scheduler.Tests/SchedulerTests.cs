@@ -20,8 +20,8 @@ public class SchedulerTests
             SchedulePreferences = new SchedulePreferences
             {
                 MinutesPerSlot = 60,
-                UsersPerShift = 1
-            }
+                UsersPerShift = 1,
+            },
         };
 
         var availability = new Availability
@@ -30,10 +30,11 @@ public class SchedulerTests
             UserName = "John Doe",
             UserEmail = "john@example.com",
             Schedule = schedule,
-            AvailabilitySlots = [
+            AvailabilitySlots =
+            [
                 new DateTime(2026, 3, 23, 9, 0, 0, DateTimeKind.Utc),
-                new DateTime(2026, 3, 23, 10, 0, 0, DateTimeKind.Utc)
-            ]
+                new DateTime(2026, 3, 23, 10, 0, 0, DateTimeKind.Utc),
+            ],
         };
 
         var availabilities = new List<Availability> { availability };
@@ -46,10 +47,14 @@ public class SchedulerTests
         Assert.Equal(CpSolverStatus.Optimal, result.Status);
         Assert.NotNull(result.Assignments);
         Assert.Equal(2, result.Assignments.Count);
-        Assert.All(result.Assignments, a => {
-            Assert.NotNull(a.Availability);
-            Assert.Equal(availability.Guid, a.Availability.Guid);
-        });
+        Assert.All(
+            result.Assignments,
+            a =>
+            {
+                Assert.NotNull(a.Availability);
+                Assert.Equal(availability.Guid, a.Availability.Guid);
+            }
+        );
     }
 
     [Fact]
@@ -63,7 +68,7 @@ public class SchedulerTests
             EndTime = new TimeOnly(10, 0),
             Auth0UserId = "test",
             Name = "test",
-            SchedulePreferences = new SchedulePreferences { MinutesPerSlot = 60 }
+            SchedulePreferences = new SchedulePreferences { MinutesPerSlot = 60 },
         };
         var availabilities = new List<Availability>();
 

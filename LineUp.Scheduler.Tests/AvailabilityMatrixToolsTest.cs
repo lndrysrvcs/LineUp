@@ -30,7 +30,7 @@ public class AvailabilityMatrixToolsTest
             ShiftIntervals = 0,
             UsersPerShift = 0,
             MaximumShiftDurationMinutes = 0,
-            MaximumShiftsPerWorker = 0
+            MaximumShiftsPerWorker = 0,
         },
     };
 
@@ -39,7 +39,7 @@ public class AvailabilityMatrixToolsTest
     {
         // Act
         var result = AvailabilityMatrixTools.GenerateEmptyMatrixFromSchedule(schedule);
-        
+
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.GetLength(0));
@@ -50,11 +50,12 @@ public class AvailabilityMatrixToolsTest
     public void GenerateMatrixPointerHashSet_IsCorrectLength()
     {
         // Act
-        Dictionary<TimeOnly, int> result = AvailabilityMatrixTools.GenerateMatrixTimePointerHashSet(schedule);
-        
+        Dictionary<TimeOnly, int> result = AvailabilityMatrixTools.GenerateMatrixTimePointerHashSet(
+            schedule
+        );
+
         // Assert
         Assert.NotNull(result);
         Assert.Equal(4, result.Count);
     }
-
 }

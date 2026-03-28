@@ -22,8 +22,8 @@ public class SchedulerPreferenceTests
             {
                 MinutesPerSlot = 60,
                 UsersPerShift = 1,
-                MaximumShiftsPerWorker = 1 // Only 1 shift per worker
-            }
+                MaximumShiftsPerWorker = 1, // Only 1 shift per worker
+            },
         };
 
         var availability = new Availability
@@ -32,11 +32,12 @@ public class SchedulerPreferenceTests
             UserName = "John Doe",
             UserEmail = "john@example.com",
             Schedule = schedule,
-            AvailabilitySlots = [
+            AvailabilitySlots =
+            [
                 new DateTime(2026, 3, 23, 9, 0, 0, DateTimeKind.Utc),
                 new DateTime(2026, 3, 23, 10, 0, 0, DateTimeKind.Utc),
-                new DateTime(2026, 3, 23, 11, 0, 0, DateTimeKind.Utc)
-            ]
+                new DateTime(2026, 3, 23, 11, 0, 0, DateTimeKind.Utc),
+            ],
         };
 
         var availabilities = new List<Availability> { availability };
@@ -68,8 +69,8 @@ public class SchedulerPreferenceTests
                 MinutesPerSlot = 60,
                 UsersPerShift = 1,
                 MaximumShiftDurationMinutes = 60, // Max 1 hour (1 slot)
-                MaximumShiftsPerWorker = 2 // But can work 2 shifts total
-            }
+                MaximumShiftsPerWorker = 2, // But can work 2 shifts total
+            },
         };
 
         var availability = new Availability
@@ -78,12 +79,13 @@ public class SchedulerPreferenceTests
             UserName = "John Doe",
             UserEmail = "john@example.com",
             Schedule = schedule,
-            AvailabilitySlots = [
+            AvailabilitySlots =
+            [
                 new DateTime(2026, 3, 23, 9, 0, 0, DateTimeKind.Utc),
                 new DateTime(2026, 3, 23, 10, 0, 0, DateTimeKind.Utc),
                 new DateTime(2026, 3, 23, 11, 0, 0, DateTimeKind.Utc),
-                new DateTime(2026, 3, 23, 12, 0, 0, DateTimeKind.Utc)
-            ]
+                new DateTime(2026, 3, 23, 12, 0, 0, DateTimeKind.Utc),
+            ],
         };
 
         var availabilities = new List<Availability> { availability };
@@ -94,16 +96,16 @@ public class SchedulerPreferenceTests
         // Assert
         Assert.Equal(CpSolverStatus.Optimal, result.Status);
         Assert.NotNull(result.Assignments);
-        
-        var johnAssignments = result.Assignments
-            .Where(a => a.Availability.Guid == availability.Guid)
+
+        var johnAssignments = result
+            .Assignments.Where(a => a.Availability.Guid == availability.Guid)
             .OrderBy(a => a.StartTime)
             .ToList();
 
-        // With continuity enforced (at most one block per day), 
-        // and max duration 60 min (1 slot), 
+        // With continuity enforced (at most one block per day),
+        // and max duration 60 min (1 slot),
         // John can only have ONE slot despite max shifts per worker being 2.
-        Assert.Single(johnAssignments); 
+        Assert.Single(johnAssignments);
     }
 
     [Fact]
@@ -123,8 +125,8 @@ public class SchedulerPreferenceTests
                 MinutesPerSlot = 60,
                 UsersPerShift = 1,
                 MaximumShiftDurationMinutes = 120, // Max 2 hours (2 slots)
-                MaximumShiftsPerWorker = 4 // Can work up to 4 shifts total
-            }
+                MaximumShiftsPerWorker = 4, // Can work up to 4 shifts total
+            },
         };
 
         var availability = new Availability
@@ -133,7 +135,8 @@ public class SchedulerPreferenceTests
             UserName = "John Doe",
             UserEmail = "john@example.com",
             Schedule = schedule,
-            AvailabilitySlots = [
+            AvailabilitySlots =
+            [
                 // Day 1
                 new DateTime(2026, 3, 23, 9, 0, 0, DateTimeKind.Utc),
                 new DateTime(2026, 3, 23, 10, 0, 0, DateTimeKind.Utc),
@@ -141,8 +144,8 @@ public class SchedulerPreferenceTests
                 // Day 2
                 new DateTime(2026, 3, 24, 9, 0, 0, DateTimeKind.Utc),
                 new DateTime(2026, 3, 24, 10, 0, 0, DateTimeKind.Utc),
-                new DateTime(2026, 3, 24, 11, 0, 0, DateTimeKind.Utc)
-            ]
+                new DateTime(2026, 3, 24, 11, 0, 0, DateTimeKind.Utc),
+            ],
         };
 
         var availabilities = new List<Availability> { availability };
@@ -153,14 +156,20 @@ public class SchedulerPreferenceTests
         // Assert
         Assert.Equal(CpSolverStatus.Optimal, result.Status);
         Assert.NotNull(result.Assignments);
-        
-        var johnAssignmentsDay1 = result.Assignments
-            .Where(a => a.Availability.Guid == availability.Guid && a.StartTime.Date == new DateTime(2026, 3, 23))
+
+        var johnAssignmentsDay1 = result
+            .Assignments.Where(a =>
+                a.Availability.Guid == availability.Guid
+                && a.StartTime.Date == new DateTime(2026, 3, 23)
+            )
             .OrderBy(a => a.StartTime)
             .ToList();
 
-        var johnAssignmentsDay2 = result.Assignments
-            .Where(a => a.Availability.Guid == availability.Guid && a.StartTime.Date == new DateTime(2026, 3, 24))
+        var johnAssignmentsDay2 = result
+            .Assignments.Where(a =>
+                a.Availability.Guid == availability.Guid
+                && a.StartTime.Date == new DateTime(2026, 3, 24)
+            )
             .OrderBy(a => a.StartTime)
             .ToList();
 

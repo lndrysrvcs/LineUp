@@ -21,18 +21,32 @@ public class SchedulerLogicTests
                 MinutesPerSlot = minutesPerSlot,
                 UsersPerShift = usersPerShift,
                 MaximumShiftsPerWorker = 0,
-                MaximumShiftDurationMinutes = 0
-            }
+                MaximumShiftDurationMinutes = 0,
+            },
         };
     }
 
-    private Availability CreateAvailability(Schedule schedule, string userName, params int[] slotIndices)
+    private Availability CreateAvailability(
+        Schedule schedule,
+        string userName,
+        params int[] slotIndices
+    )
     {
         var slots = new List<DateTime>();
         var date = schedule.DateCoverage[0];
         foreach (var i in slotIndices)
         {
-            slots.Add(new DateTime(date.Year, date.Month, date.Day, schedule.StartTime.Hour, schedule.StartTime.Minute, 0, DateTimeKind.Utc).AddMinutes(i * schedule.SchedulePreferences.MinutesPerSlot));
+            slots.Add(
+                new DateTime(
+                    date.Year,
+                    date.Month,
+                    date.Day,
+                    schedule.StartTime.Hour,
+                    schedule.StartTime.Minute,
+                    0,
+                    DateTimeKind.Utc
+                ).AddMinutes(i * schedule.SchedulePreferences.MinutesPerSlot)
+            );
         }
 
         return new Availability
@@ -43,7 +57,7 @@ public class SchedulerLogicTests
             Schedule = schedule,
             AvailabilitySlots = slots.ToArray(),
             Preferences = new AvailabilityPreferences(),
-            FormAnswers = new List<FormQuestionAnswer>()
+            FormAnswers = new List<FormQuestionAnswer>(),
         };
     }
 
@@ -131,11 +145,11 @@ public class SchedulerLogicTests
 
         // Assert
         Assert.Equal(CpSolverStatus.Optimal, result.Status);
-        Assert.Empty(result.Assignments); 
-        // We know system user was used internally because it didn't throw "no solution found" 
+        Assert.Empty(result.Assignments);
+        // We know system user was used internally because it didn't throw "no solution found"
         // and it didn't assign anyone.
     }
-    
+
     [Fact]
     public void RunScheduler_MultipleDays_ContinuityPerDay()
     {
@@ -144,9 +158,10 @@ public class SchedulerLogicTests
         schedule.DateCoverage = [new DateOnly(2026, 3, 23), new DateOnly(2026, 3, 24)];
 
         // User available for one slot each day
-        var slots = new List<DateTime> {
+        var slots = new List<DateTime>
+        {
             new DateTime(2026, 3, 23, 9, 0, 0, DateTimeKind.Utc),
-            new DateTime(2026, 3, 24, 9, 0, 0, DateTimeKind.Utc)
+            new DateTime(2026, 3, 24, 9, 0, 0, DateTimeKind.Utc),
         };
         var user = new Availability
         {
@@ -155,7 +170,7 @@ public class SchedulerLogicTests
             AvailabilitySlots = slots.ToArray(),
             Schedule = schedule,
             Preferences = new AvailabilityPreferences(),
-            FormAnswers = new List<FormQuestionAnswer>()
+            FormAnswers = new List<FormQuestionAnswer>(),
         };
 
         var availabilities = new List<Availability> { user };
@@ -176,7 +191,9 @@ public class SchedulerLogicTests
         schedule.EndTime = schedule.StartTime; // Zero duration -> 0 slots
 
         // Act & Assert
-        Assert.ThrowsAny<Exception>(() => Scheduler.RunScheduler(schedule, new List<Availability>(), schedule.SchedulePreferences));
+        Assert.ThrowsAny<Exception>(() =>
+            Scheduler.RunScheduler(schedule, new List<Availability>(), schedule.SchedulePreferences)
+        );
     }
 
     [Fact]
@@ -209,12 +226,14 @@ public class SchedulerLogicTests
             AvailabilitySlots = [new DateTime(2025, 1, 1, 9, 0, 0, DateTimeKind.Utc)], // Wrong year
             Schedule = schedule,
             Preferences = new AvailabilityPreferences(),
-            FormAnswers = new List<FormQuestionAnswer>()
+            FormAnswers = new List<FormQuestionAnswer>(),
         };
         var availabilities = new List<Availability> { user };
 
         // Act & Assert
-        var ex = Assert.Throws<Exception>(() => Scheduler.RunScheduler(schedule, availabilities, schedule.SchedulePreferences));
+        var ex = Assert.Throws<Exception>(() =>
+            Scheduler.RunScheduler(schedule, availabilities, schedule.SchedulePreferences)
+        );
         Assert.Contains("Availability slot is not in schedule date coverage!", ex.Message);
     }
 
@@ -224,7 +243,7 @@ public class SchedulerLogicTests
         // Arrange
         var schedule = CreateBasicSchedule();
         // User only available for 9-10
-        var user = CreateAvailability(schedule, "John", 0); 
+        var user = CreateAvailability(schedule, "John", 0);
         var availabilities = new List<Availability> { user };
 
         // Act
