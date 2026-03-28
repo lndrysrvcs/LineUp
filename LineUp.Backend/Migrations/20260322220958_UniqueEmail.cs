@@ -14,7 +14,8 @@ namespace LineUp.Backend.Migrations
                 name: "IX_Availabilities_Id_UserEmail",
                 table: "Availabilities",
                 columns: new[] { "Id", "UserEmail" },
-                unique: true);
+                unique: true
+            );
         }
 
         /// <inheritdoc />
@@ -22,7 +23,8 @@ namespace LineUp.Backend.Migrations
         {
             migrationBuilder.DropIndex(
                 name: "IX_Availabilities_Id_UserEmail",
-                table: "Availabilities");
+                table: "Availabilities"
+            );
         }
     }
 }
