@@ -57,5 +57,14 @@ public class AvailabilityMatrixToolsTest
         // Assert
         Assert.NotNull(result);
         Assert.Equal(4, result.Count);
+        Assert.Contains(new TimeOnly(9, 0), result.Keys);
+        Assert.Equal(0, result[new TimeOnly(9, 0)]);
+        Assert.Contains(new TimeOnly(9, 15), result.Keys);
+        Assert.Equal(1, result[new TimeOnly(9, 15)]);
+        Assert.Contains(new TimeOnly(9, 30), result.Keys);
+        Assert.Equal(2, result[new TimeOnly(9, 30)]);
+        Assert.Contains(new TimeOnly(9, 45), result.Keys);
+        Assert.Equal(3, result[new TimeOnly(9, 45)]);
+        Assert.DoesNotContain(new TimeOnly(10, 0), result.Keys);
     }
 }
