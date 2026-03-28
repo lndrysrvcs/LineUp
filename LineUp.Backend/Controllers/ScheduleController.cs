@@ -174,7 +174,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
 
     [HttpGet("{guid:guid}/generateSchedule")]
     //[Authorize]
-    public async Task<IActionResult> GenerateSchedule(Guid guid)
+    public async Task<IActionResult> GenerateSchedule(Guid guid, [FromQuery] bool random = false)
     {
         var schedule = await context
             .Schedules.Include(schedule => schedule.SchedulePreferences)
@@ -190,7 +190,8 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         var result = Scheduler.Scheduler.RunScheduler(
             schedule,
             availabilities,
-            schedule.SchedulePreferences
+            schedule.SchedulePreferences,
+            random
         );
 
         await context

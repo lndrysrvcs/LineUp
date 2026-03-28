@@ -16,7 +16,8 @@ public static class Scheduler
     public static SolverResult RunScheduler(
         Schedule schedule,
         IEnumerable<Availability> availabilities,
-        SchedulePreferences preferences
+        SchedulePreferences preferences,
+        bool random = false
     )
     {
         var cpsatModel = new CpModel();
@@ -80,10 +81,15 @@ public static class Scheduler
             allShifts,
             shifts,
             availabilityIndices,
-            solverAvailabilityMatrix
+            solverAvailabilityMatrix,
+            random
         );
 
         var solver = new CpSolver();
+        if (random)
+        {
+            solver.StringParameters = $"random_seed:{new Random().Next()}";
+        }
         var status = solver.Solve(cpsatModel);
         Console.WriteLine($"Solve status: {status}");
 
@@ -317,11 +323,13 @@ public static class Scheduler
         int[] allShifts,
         Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts,
         Dictionary<Guid, int> availabilityIndices,
-        int[,,] solverAvailabilityMatrix
+        int[,,] solverAvailabilityMatrix,
+        bool random
     )
     {
         List<IntVar> flatShifts = new();
-        List<int> flatShiftRequests = new();
+        List<long> flatShiftRequests = new();
+        Random? rng = random ? new Random() : null;
 
         foreach (var a in availabilities)
         {
@@ -331,18 +339,28 @@ public static class Scheduler
                 foreach (var s in allShifts)
                 {
                     flatShifts.Add(shifts[Tuple.Create(a.Guid, d, s)]);
+                    long weight;
                     if (a.Guid == Guid.AllBitsSet)
                     {
                         // penalize system user assignments
-                        flatShiftRequests.Add(-1);
+                        // use a large negative weight to ensure real users are always preferred
+                        weight = -10000;
                     }
                     else
                     {
                         // passthrough existing weight if not system user
-                        flatShiftRequests.Add(
+                        // usually this is 1 for available, 0 for unavailable (though unavailable is already constrained to 0)
+                        weight =
                             solverAvailabilityMatrix[availabilityIndices[a.Guid], dateIndex, s]
-                        );
+                            * 100;
                     }
+
+                    if (rng != null)
+                    {
+                        // add a small random weight to break ties
+                        weight += rng.Next(1, 10);
+                    }
+                    flatShiftRequests.Add(weight);
                 }
             }
         }
