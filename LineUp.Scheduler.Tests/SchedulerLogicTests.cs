@@ -65,21 +65,40 @@ public class SchedulerLogicTests
     public void RunScheduler_EnforcesContinuity()
     {
         // Arrange
-        // User is available for 9-10 and 11-12, but NOT 10-11.
-        // The solver should only pick ONE of them if it tries to maximize but enforces continuity.
-        // Wait, the current implementation says "at most one continuous block".
-        // If they are available for two separate slots, it should only pick one if it can't pick both in a continuous way.
-        var schedule = CreateBasicSchedule();
-        var user = CreateAvailability(schedule, "John", 0, 2); // 9-10 and 11-12
-        var availabilities = new List<Availability> { user };
+        // We have a 4-slot schedule (9:00 - 13:00) with 2 users per shift.
+        // This allows both users to potentially be assigned at the same time.
+        var schedule = CreateBasicSchedule(usersPerShift: 2);
+        schedule.EndTime = new TimeOnly(13, 0); // 4 slots: 9-10, 10-11, 11-12, 12-13
+
+        // Continuous User: Available for all 4 slots.
+        var continuousUser = CreateAvailability(schedule, "Continuous User", 0, 1, 2, 3);
+
+        // Sparse User: Available for slots 0 and 2 (9-10 and 11-12).
+        // Since continuity is enforced, they should only be assigned ONE of these slots.
+        var sparseUser = CreateAvailability(schedule, "Sparse User", 0, 2);
+
+        var availabilities = new List<Availability> { continuousUser, sparseUser };
 
         // Act
         var result = Scheduler.RunScheduler(schedule, availabilities, schedule.SchedulePreferences);
 
         // Assert
         Assert.Equal(CpSolverStatus.Optimal, result.Status);
-        // It should pick 9-10 OR 11-12, but NOT both because that would be two blocks.
-        Assert.Single(result.Assignments);
+
+        // Check Continuous User
+        var continuousAssignments = result
+            .Assignments.Where(a => a.Availability.UserName == "Continuous User")
+            .OrderBy(a => a.StartTime)
+            .ToList();
+        // They can have all 4 slots as they are continuous.
+        Assert.Equal(4, continuousAssignments.Count);
+
+        // Check Sparse User
+        var sparseAssignments = result
+            .Assignments.Where(a => a.Availability.UserName == "Sparse User")
+            .ToList();
+        // Sparse User can only have ONE slot because their availability is not continuous.
+        Assert.Single(sparseAssignments);
     }
 
     [Fact]
@@ -238,22 +257,19 @@ public class SchedulerLogicTests
     }
 
     [Fact]
-    public void RunScheduler_MixedAvailability_FillsOnlyPossibleSlots()
+    public void GenerateAvailabilitiesWithSystemUser_AddsSystemUser()
     {
         // Arrange
         var schedule = CreateBasicSchedule();
-        // User only available for 9-10
-        var user = CreateAvailability(schedule, "John", 0);
-        var availabilities = new List<Availability> { user };
+        schedule.EndTime = schedule.StartTime.AddMinutes(60);
+        var availabilities = new List<Availability>();
 
         // Act
-        var result = Scheduler.RunScheduler(schedule, availabilities, schedule.SchedulePreferences);
+        var result = Scheduler.GenerateAvailabilitiesWithSystemUser(schedule, availabilities);
 
         // Assert
-        Assert.Equal(CpSolverStatus.Optimal, result.Status);
-        // Only one assignment for John
-        Assert.Single(result.Assignments);
-        Assert.Equal("John", result.Assignments[0].Availability.UserName);
-        // Other slots (10-11, 11-12) were filled by system user but not returned in Assignments
+        Assert.Single(result);
+        Assert.Equal(Guid.AllBitsSet, result[0].Guid);
+        Assert.Equal("System", result[0].UserName);
     }
 }
