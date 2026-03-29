@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using LineUp.Backend;
+using LineUp.Backend.Services;
 using LineUp.Backend.Support;
 using LineUp.Core.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Resend;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -85,6 +87,17 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 builder.AddNpgsqlDbContext<LineUpContext>("lineupdb");
+
+builder.Services.AddHttpClient<ResendClient>();
+builder.Services.Configure<ResendClientOptions>(o =>
+{
+    o.ApiToken =
+        builder.Configuration["Parameters:resend-api-key"]
+        ?? Environment.GetEnvironmentVariable("RESEND_APITOKEN");
+});
+builder.Services.AddTransient<IResend, ResendClient>();
+
+builder.Services.AddScoped<IEmailService, ResendEmailService>();
 
 var app = builder.Build();
 

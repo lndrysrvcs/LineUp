@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using LineUp.Backend.Models;
+using LineUp.Backend.Services;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace LineUp.Backend.Controllers;
 
 [Route("api/schedule")]
 [ApiController]
-public class ScheduleController(LineUpContext context) : ControllerBase
+public class ScheduleController(LineUpContext context, IEmailService emailService) : ControllerBase
 {
     [HttpGet("{guid:guid}/details")]
     [Authorize]
@@ -178,6 +179,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     {
         var schedule = await context
             .Schedules.Include(schedule => schedule.SchedulePreferences)
+            .Include(schedule => schedule.ShiftAssignments)
             .FirstOrDefaultAsync(s => s.Guid == guid);
         if (schedule == null)
             return NotFound();
@@ -201,6 +203,17 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             await context.ShiftAssignments.AddRangeAsync(result.Assignments);
 
         await context.SaveChangesAsync();
+
+        foreach (var availability in availabilities)
+        {
+            if (availability.UserEmail != null)
+            {
+                await emailService.SendShiftAssignmentEmail(
+                    (schedule.ShiftAssignments ?? []).Count != 0,
+                    availability
+                );
+            }
+        }
 
         return Ok(result);
     }
