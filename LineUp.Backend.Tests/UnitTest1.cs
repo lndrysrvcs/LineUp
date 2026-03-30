@@ -354,14 +354,8 @@ public class UnitTest1
             Guid availabilityGuid = returnedAvailability.Guid;
             // Act
 
-            var failedAvailabilityUpdateResult = await availController.EditAvailability(
-                Guid.Empty,
-                sampleAvailability
-            );
-
-            Availability newSampleAvailability = new Availability
+            AvailabilityUpdateDTO sampleAvailabilityDto = new AvailabilityUpdateDTO
             {
-                Guid = availabilityGuid,
                 UserName = "Test Availability",
                 UserEmail = "test@email.com",
                 AvailabilitySlots =
@@ -383,33 +377,20 @@ public class UnitTest1
                     DateTime.UtcNow.Date.AddDays(1).AddHours(16),
                     DateTime.UtcNow.Date.AddDays(1).AddHours(16).AddMinutes(30),
                 ],
-                Schedule = new Schedule
-                {
-                    Guid = Guid.Empty,
-                    Auth0UserId = "replace this schedule",
-                    DateCoverage = [],
-                    StartTime = new TimeOnly(0, 0),
-                    EndTime = new TimeOnly(0, 0),
-                    SchedulePreferences = new SchedulePreferences
-                    {
-                        MinutesPerSlot = 30,
-                        ShiftIntervals = 30,
-                        UsersPerShift = 1,
-                        MaximumShiftDurationMinutes = 120,
-                        MaximumShiftsPerWorker = 1,
-                    },
-                    Name = "ReplaceThisScheduleWithSampleSchedule",
-                },
                 Preferences = new AvailabilityPreferences(),
             };
-            newSampleAvailability.Schedule = sampleSchedule;
             var availabilityUpdateResult = await availController.EditAvailability(
                 availabilityGuid,
-                newSampleAvailability
+                sampleAvailabilityDto
+            );
+
+            var failedAvailabilityUpdateResult = await availController.EditAvailability(
+                Guid.Empty,
+                sampleAvailabilityDto
             );
             // Assert
             Assert.IsType<NoContentResult>(availabilityUpdateResult);
-            Assert.IsType<BadRequestResult>(failedAvailabilityUpdateResult);
+            Assert.IsType<NotFoundResult>(failedAvailabilityUpdateResult);
         }
     }
 }
