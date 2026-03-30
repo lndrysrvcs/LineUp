@@ -202,6 +202,9 @@ nunit-*.xml
 LineUp.AppHost/aspire-output/
 "lineup-client/obj//Debug/
 
+# Junie
+.junie/
+
 .idea/**/.idea/
 .idea/**/workspace.xml
 .idea/**/projectSettingsUpdater.xml

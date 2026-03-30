@@ -9,9 +9,9 @@ public class AvailabilityMatrixToolsTest
     private readonly Schedule schedule = new()
     {
         Id = 0,
-        Guid = default,
+        Guid = Guid.Empty,
         Auth0UserId = "test-test-123-lineup-test",
-        Name = null,
+        Name = "test schedule",
         DateCoverage =
         [
             DateOnly.FromDateTime(DateTime.UtcNow),
@@ -25,12 +25,12 @@ public class AvailabilityMatrixToolsTest
         ShiftAssignments = [],
         SchedulePreferences = new SchedulePreferences
         {
-            Id = default,
+            Id = Guid.Empty,
             MinutesPerSlot = 15,
             ShiftIntervals = 0,
             UsersPerShift = 0,
             MaximumShiftDurationMinutes = 0,
-            MaximumShiftsPerWorker = 0
+            MaximumShiftsPerWorker = 0,
         },
     };
 
@@ -39,7 +39,7 @@ public class AvailabilityMatrixToolsTest
     {
         // Act
         var result = AvailabilityMatrixTools.GenerateEmptyMatrixFromSchedule(schedule);
-        
+
         // Assert
         Assert.NotNull(result);
         Assert.Equal(3, result.GetLength(0));
@@ -50,11 +50,21 @@ public class AvailabilityMatrixToolsTest
     public void GenerateMatrixPointerHashSet_IsCorrectLength()
     {
         // Act
-        Dictionary<TimeOnly, int> result = AvailabilityMatrixTools.GenerateMatrixTimePointerHashSet(schedule);
-        
+        Dictionary<TimeOnly, int> result = AvailabilityMatrixTools.GenerateMatrixTimePointerHashSet(
+            schedule
+        );
+
         // Assert
         Assert.NotNull(result);
         Assert.Equal(4, result.Count);
+        Assert.Contains(new TimeOnly(9, 0), result.Keys);
+        Assert.Equal(0, result[new TimeOnly(9, 0)]);
+        Assert.Contains(new TimeOnly(9, 15), result.Keys);
+        Assert.Equal(1, result[new TimeOnly(9, 15)]);
+        Assert.Contains(new TimeOnly(9, 30), result.Keys);
+        Assert.Equal(2, result[new TimeOnly(9, 30)]);
+        Assert.Contains(new TimeOnly(9, 45), result.Keys);
+        Assert.Equal(3, result[new TimeOnly(9, 45)]);
+        Assert.DoesNotContain(new TimeOnly(10, 0), result.Keys);
     }
-
 }
