@@ -24,6 +24,8 @@ public class Availability
 
     public ICollection<FormQuestionAnswer> FormAnswers { get; set; } =
         new List<FormQuestionAnswer>();
+    
+    public Guid ScheduleGuid => Schedule.Guid;
 
     // Navigation properties, ignored in JSON to not loop forever
     [JsonDoNotSerialize]
