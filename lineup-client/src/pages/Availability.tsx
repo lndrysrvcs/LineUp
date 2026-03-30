@@ -112,7 +112,7 @@ const Availability = () => {
     event.preventDefault();
 
     if (name.trim() === "" || email.trim() === "") {
-      alert("You must enter a name with letters!");
+      alert("You must enter a name and email with letters!");
       return;
     }
 
