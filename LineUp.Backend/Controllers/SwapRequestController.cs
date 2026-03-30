@@ -1,5 +1,7 @@
 using System.Security.Claims;
 using LineUp.Backend.Models;
+using LineUp.Core.Attributes;
+using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

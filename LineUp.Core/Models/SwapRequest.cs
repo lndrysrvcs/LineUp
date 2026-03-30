@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
-using LineUp.Backend.Attributes;
+using LineUp.Core.Attributes;
 using Microsoft.EntityFrameworkCore;
 
-namespace LineUp.Backend.Models;
+namespace LineUp.Core.Models;
 
 [Index(nameof(Guid))]
 public class SwapRequest
