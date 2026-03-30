@@ -11,7 +11,7 @@ using Moq;
 
 namespace LineUp.Backend.Tests;
 
-public class UnitTest1
+public class CRUDTests
 {
     Schedule sampleSchedule = new Schedule
     {
