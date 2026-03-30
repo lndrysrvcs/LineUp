@@ -1,24 +1,35 @@
 import lineupLogo from "@/assets/lineup-full.png";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigation } from "react-router";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Topbar = ({ children }: Props) => {
-  const { isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (navigation.state === "loading") {
+      toast.loading("Loading...", { id: "loading-navigation", duration: Infinity });
+    } else {
+      toast.remove("loading-navigation");
+    }
+  }, [navigation.state]);
 
   return (
     <div className="root">
       <div className="topbar">
         <div className="lineUpLogo">
           <Link to="/">
-            <img src={lineupLogo} alt="Line Up Logo" height={50} />
+            <img src={lineupLogo} alt="LineUp Logo" height={50} />
           </Link>
         </div>
         <div className="signOutButton">
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <button
               onClick={() =>
                 logout({
@@ -28,6 +39,10 @@ const Topbar = ({ children }: Props) => {
               className="inlineButton"
             >
               Log Out
+            </button>
+          ) : (
+            <button onClick={() => loginWithRedirect()} className="inlineButton">
+              Sign In
             </button>
           )}
         </div>

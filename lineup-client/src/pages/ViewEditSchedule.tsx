@@ -1,25 +1,22 @@
-import type { DateDay, TimeRange, ValidMinutes } from "@/types";
+import type { TimeRange, ValidMinutes } from "@/types";
 //import { useAuth0 } from "@auth0/auth0-react";
-import { queryClient, useApi } from "@/utils/api";
-import { addToasts } from "@/utils/db";
-import toast from "react-hot-toast";
-import { convertToDateDays, parseTimeString } from "@/utils/time.ts";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import React, { type MouseEvent } from "react";
-import { useNavigate } from "react-router";
-import "./newschedule.css";
-import "../dateinput.css";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { useParams } from "react-router";
 import { Calendar } from "@/components/Calendar";
-// TODO: Replace with availability viewable cell when that's made
-import { FillableCell } from "@/components/CalendarCells";
+import { ColoredCell } from "@/components/CalendarCells";
+import { MousePopup } from "@/components/MousePopup";
+import { queryClient, useApi } from "@/utils/api";
+import { addToasts, loaderQuery } from "@/utils/db";
+import { parseTimeString } from "@/utils/time.ts";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import React, { type MouseEvent } from "react";
+import { Link, useNavigate, useParams } from "react-router";
+import "../dateinput.css";
+import "./newSchedule.css";
 
 interface ScheduleData {
   name: string; //the name of the event
   shiftTimes: ValidMinutes | "" | undefined; //how the availability intervals are determined
   dates: Date[] | undefined; //the dates being scheduled (js Date version)
-  dateDays: DateDay[]; //the dates being schedules (DateDay version)
   hours: TimeRange; //the hours throughout the day that need covered
   pplPerShift: number | undefined; //how many people should work simultaneously
 
@@ -32,25 +29,29 @@ const ViewEditSchedule = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid } = useParams<{ guid: string }>();
+  const { data } = useQuery(loaderQuery("/api/schedule/{}/details", guid!));
+  const [focusedTime, setFocusedTime] = React.useState<string | null>(null);
+  const scheduleGenerated = data.shiftAssignments.length > 0;
 
-  const {
-    data: schedule,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["schedules", guid],
-    queryFn: () =>
-      fetchWithAuth(`/api/schedule/${guid}`).then(async (res) => {
-        if (!res.ok) {
-          toast.error(<b>Failed to fetch schedule</b>, { id: "fetch-schedule-error", duration: Infinity });
-          throw new Error("Failed to fetch schedule");
-        } else {
-          toast.dismiss("fetch-schedule-error");
-        }
-        const resJson = await res.json();
-        return resJson;
-      }),
-  });
+  function getMaxAvailability() {
+    let max = 0;
+    for (const slot of availabilityPerTime.values()) {
+      if (max < slot.length) {
+        max = slot.length;
+      }
+    }
+    return max;
+  }
+
+  function calculateColors() {
+    const colors: { [key: string]: string } = {};
+    const maxAvailability = getMaxAvailability();
+    for (const slot of availabilityPerTime.keys()) {
+      colors[slot] =
+        `color-mix(in srgb, var(--primary-active) ${(availabilityPerTime.get(slot)!.length / maxAvailability) * 100}%, transparent)`;
+    }
+    return colors;
+  }
 
   type EditScheduleProps = {
     name: string;
@@ -60,6 +61,7 @@ const ViewEditSchedule = () => {
       usersPerShift: number;
       maximumShiftDurationMinutes: number | undefined;
       maximumShiftsPerWorker: number | undefined;
+      //minimumShiftsPerWorker: number | undefined;
     };
   };
 
@@ -102,11 +104,30 @@ const ViewEditSchedule = () => {
     },
   });
 
+  const generateScheduleMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetchWithAuth(`/api/schedule/${guid}/generateSchedule`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to generate schedule");
+      }
+
+      return true;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["schedules"] });
+    },
+  });
+
   const [scheduleData, setScheduleData] = React.useState<ScheduleData>({
     name: "",
     shiftTimes: "",
     dates: undefined,
-    dateDays: [{ date: "1/1", day: "Thursday" }] as DateDay[],
     hours: { start: { hour: 9, minute: 0 }, end: { hour: 17, minute: 0 } } as TimeRange,
     pplPerShift: undefined,
     //optional parameters
@@ -115,49 +136,98 @@ const ViewEditSchedule = () => {
   });
 
   React.useEffect(() => {
-    if (!schedule) return;
-
-    const jsDates = schedule.dateCoverage?.map((d: string) => new Date(d)) ?? [];
-    console.log("Fetched schedule:", schedule);
+    if (!data) return;
+    console.log("Fetched schedule:", data);
     setScheduleData({
-      name: schedule.name,
-      shiftTimes: schedule.schedulePreferences?.minutesPerSlot || 15,
-      dates: jsDates,
-      dateDays: convertToDateDays(jsDates),
+      name: data.name,
+      shiftTimes: data.schedulePreferences?.minutesPerSlot || 15,
+      dates:
+        data.dateCoverage?.map((d: string) => {
+          const [year, month, day] = d.split("-").map(Number);
+          return new Date(year, month - 1, day);
+        }) ?? [],
       hours: {
-        start: parseTimeString(schedule.startTime)!,
-        end: parseTimeString(schedule.endTime)!,
+        start: parseTimeString(data.startTime)!,
+        end: parseTimeString(data.endTime)!,
       },
-      pplPerShift: schedule.schedulePreferences?.usersPerShift || 1,
+      pplPerShift: data.schedulePreferences?.usersPerShift || 1,
       maxShiftLength:
-        schedule.schedulePreferences?.maximumShiftDurationMinutes === 0
+        data.schedulePreferences?.maximumShiftDurationMinutes === 0
           ? undefined
-          : schedule.schedulePreferences?.maximumShiftDurationMinutes,
+          : data.schedulePreferences?.maximumShiftDurationMinutes,
       maxShifts:
-        schedule.schedulePreferences?.maximumShiftsPerWorker === 0
+        data.schedulePreferences?.maximumShiftsPerWorker === 0
           ? undefined
-          : schedule.schedulePreferences?.maximumShiftsPerWorker,
+          : data.schedulePreferences?.maximumShiftsPerWorker,
     });
-  }, [schedule]);
+  }, [data]);
+
+  if (!data) return <div>Loading...</div>;
+
+  const availabilityPerTime = getAvailabilityPerTime();
+
+  function getAvailabilityPerTime() {
+    const timeSlots = new Map<string, string[]>();
+    for (const availability of data.availabilities) {
+      for (const slot of availability.availabilitySlots) {
+        if (timeSlots.has(slot)) {
+          timeSlots.get(slot)!.push(availability.userName);
+        } else {
+          timeSlots.set(slot, [availability.userName]);
+        }
+      }
+    }
+
+    return timeSlots;
+  }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
 
     setScheduleData((prev) => {
       if (event.target instanceof HTMLInputElement && event.target.type === "number") {
-        if (value === "") return { ...prev, [name]: undefined };
+        if (value === "") return { ...prev, [name]: null };
 
-        let numericValue = Number(value);
-        const maxValue = event.target.max ? Number(event.target.max) : undefined;
-        const minValue = event.target.min ? Number(event.target.min) : undefined;
-
-        if (maxValue !== undefined && numericValue > maxValue) numericValue = maxValue;
-        if (minValue !== undefined && numericValue < minValue) numericValue = minValue;
+        const numericValue = Number(value);
+        if (Number.isNaN(numericValue)) return prev;
 
         return { ...prev, [name]: numericValue };
       }
       return { ...prev, [name]: value };
     });
+  };
+
+  const handleNumberBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (value === "") return;
+
+    let numericValue = Number(value);
+    if (Number.isNaN(numericValue)) return;
+
+    if (name === "maxShiftLength") {
+      const step = scheduleData.shiftTimes ? Number(scheduleData.shiftTimes) : 60;
+      const min = step;
+      const max = 1440;
+
+      numericValue = snapToStep(numericValue, step, min);
+
+      if (numericValue > max) numericValue = max;
+    }
+
+    setScheduleData((prev) => ({
+      ...prev,
+      [name]: numericValue,
+    }));
+  };
+
+  const snapToStep = (value: number, step: number, min: number) => {
+    if (value < min) return min;
+
+    const remainder = (value - min) % step;
+    const lower = value - remainder;
+    const upper = lower + step;
+
+    return Math.abs(value - lower) <= Math.abs(value - upper) ? lower : upper;
   };
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
@@ -179,9 +249,19 @@ const ViewEditSchedule = () => {
 
   const handleGenerate = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log("Generate Schedule button clicked");
-    //TODO: call backend to generate schedule
-    // Note: when calling generate schedule, use 1440 and 99999 as default values for maxShiftDuration and maxShiftsPerWorker
+
+    if (
+      (scheduleGenerated &&
+        !confirm("Are you sure you want to generate this schedule? This will override the current schedule.")) ||
+      (!scheduleGenerated &&
+        !confirm(
+          "Are you sure you want to generate this schedule? Once it's generated, no new responses will be accepted.",
+        ))
+    ) {
+      return;
+    }
+
+    addToasts(generateScheduleMutation.mutateAsync(), "Generating schedule... This may take a while...");
   };
 
   const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
@@ -192,8 +272,7 @@ const ViewEditSchedule = () => {
     addToasts(deleteScheduleMutation.mutateAsync());
   };
 
-  if (isLoading || !scheduleData) return <div>Loading...</div>;
-  if (isError) return <div>Error loading schedule.</div>;
+  if (!scheduleData) return <div>Loading...</div>;
 
   return (
     <div className="newSchedule">
@@ -205,21 +284,39 @@ const ViewEditSchedule = () => {
       >
         <ArrowLeftIcon className="backIcon" />
         Home
-      </button>{" "}
+      </button>
       <div>
-        <h3 className="pageHeader">{schedule.name}</h3>
-        {/* TODO: actually represent the number of respondents */}
-        <h4 className="pageSubHeader">Respondents: {0}</h4>
+        <div className="scheduleName">
+          <b>{data.name}</b>
+        </div>
+        <h4 className="pageSubHeader">
+          {data.availabilities.length} Respondent{data.availabilities.length !== 1 ? "s" : ""}
+        </h4>
       </div>
       <Calendar
-        Cell={FillableCell}
+        Cell={ColoredCell}
         minutesPerCell={scheduleData.shiftTimes as ValidMinutes}
-        dates={scheduleData.dateDays}
+        dates={scheduleData.dates ?? []}
         range={scheduleData.hours}
-      ></Calendar>
+        colors={calculateColors()}
+        setFocusedCell={setFocusedTime}
+      />
       <div className="submitContainer">
-        <button type="button" className="submitBtn" onClick={handleGenerate}>
-          Generate Schedule
+        <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
+          {scheduleGenerated ? "Generated Schedule" : "Availability Form"}
+        </Link>
+        <button
+          type="button"
+          className="submitBtn"
+          onClick={handleGenerate}
+          disabled={
+            updateScheduleMutation.isPending ||
+            deleteScheduleMutation.isPending ||
+            generateScheduleMutation.isPending ||
+            data.availabilities.length == 0
+          }
+        >
+          {scheduleGenerated ? "Regenerate Schedule" : "Generate Schedule"}
         </button>
       </div>
       <hr />
@@ -229,7 +326,7 @@ const ViewEditSchedule = () => {
       <br />
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="scheduleName">Schedule Name: </label>
+          <label htmlFor="scheduleName">Schedule Name</label>
           <br />
           <input
             className="input"
@@ -242,7 +339,7 @@ const ViewEditSchedule = () => {
           />
         </div>
         <div>
-          <label htmlFor="peoplePerShift">Workers per shift: </label>
+          <label htmlFor="peoplePerShift">Workers per shift</label>
           <br />
           <input
             className="input"
@@ -257,7 +354,7 @@ const ViewEditSchedule = () => {
           />
         </div>
         <div>
-          <label htmlFor="maxShiftLength">Maximum Shift Duration (in minutes):</label>
+          <label htmlFor="maxShiftLength">Maximum Shift Duration (in minutes)</label>
           <br />
           <input
             className="input"
@@ -269,10 +366,11 @@ const ViewEditSchedule = () => {
             max="1440"
             value={scheduleData.maxShiftLength ?? ""}
             onChange={handleInputChange}
+            onBlur={handleNumberBlur}
           />
         </div>
         <div>
-          <label htmlFor="maxShifts">Maximum Shifts per Worker:</label>
+          <label htmlFor="maxShifts">Maximum Shifts per Worker</label>
           <br />
           <input
             className="input"
@@ -288,17 +386,50 @@ const ViewEditSchedule = () => {
         </div>
         <br />
         <div className="submitContainer">
-          <button type="submit" className="submitBtn">
+          <button
+            type="submit"
+            className="submitBtn"
+            disabled={
+              updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+            }
+          >
             Confirm Changes
           </button>
         </div>
         <br />
         <div className="submitContainer">
-          <button type="button" className="deleteBtn" onClick={handleDelete}>
+          <button
+            type="button"
+            className="deleteBtn"
+            onClick={handleDelete}
+            disabled={
+              updateScheduleMutation.isPending || deleteScheduleMutation.isPending || generateScheduleMutation.isPending
+            }
+          >
             Delete Schedule
           </button>
         </div>
       </form>
+      <MousePopup isOpen={!!availabilityPerTime.get(focusedTime ?? "")} width={250}>
+        <div className="availablePeoplePopupRoot">
+          <div className="availablePeoplePopupHeader">
+            {availabilityPerTime.get(focusedTime ?? "")?.length || 0} Available Respondent
+            {availabilityPerTime.get(focusedTime ?? "")?.length !== 1 && "s"}:
+          </div>
+          {availabilityPerTime.get(focusedTime ?? "")?.join(", ") ?? ""}
+          {focusedTime && (
+            <div className="availablePeoplePopupTime">
+              {new Intl.DateTimeFormat("en-US", {
+                weekday: "long",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+                timeZone: "UTC",
+              }).format(new Date(focusedTime!))}
+            </div>
+          )}
+        </div>
+      </MousePopup>
     </div>
   );
 };

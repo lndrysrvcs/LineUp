@@ -1,21 +1,15 @@
-import type { DateDay, Time, TimeRange, ValidMinutes } from "@/types";
+import type { Time, TimeRange, ValidMinutes } from "@/types";
 //import { useAuth0 } from "@auth0/auth0-react";
 import { queryClient, useApi } from "@/utils/api";
 import { addToasts } from "@/utils/db";
-import {
-  convertToDateDays,
-  formatTimeForInput,
-  getValidMinutesForInterval,
-  parseTimeString,
-  toMinutes,
-} from "@/utils/time.ts";
+import { formatTimeForInput, getValidMinutesForInterval, parseTimeString, toMinutes } from "@/utils/time.ts";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import DatePickerModule, { DateObject } from "react-multi-date-picker";
 import { useNavigate } from "react-router";
-import "./newschedule.css";
 import "../dateinput.css";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import "./newSchedule.css";
 
 // This is because importing DatePicker directly didn't work with Vite for some reason
 // Trust me that this is somehow the most elegant solution I could find
@@ -26,7 +20,6 @@ interface ScheduleData {
   name: string; //the name of the event
   shiftTimes: ValidMinutes | "" | undefined; //how the availability intervals are determined
   dates: Date[] | undefined; //the dates being scheduled (js Date version)
-  dateDays: DateDay[]; //the dates being schedules (DateDay version)
   hours: TimeRange; //the hours throughout the day that need covered
   pplPerShift: number | undefined; //how many people should work simultaneously
 
@@ -38,6 +31,8 @@ interface ScheduleData {
 const NewSchedule = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); //needed for the date picker to consider today properly without considering current time
 
   type CreateScheduleProps = {
     name: string;
@@ -79,7 +74,6 @@ const NewSchedule = () => {
     name: "",
     shiftTimes: "",
     dates: undefined,
-    dateDays: [{ date: "1/1", day: "Thursday" }] as DateDay[],
     hours: { start: { hour: 9, minute: 0 }, end: { hour: 17, minute: 0 } } as TimeRange,
     pplPerShift: undefined,
     //optional parameters
@@ -92,14 +86,10 @@ const NewSchedule = () => {
 
     setScheduleData((prev) => {
       if (event.target instanceof HTMLInputElement && event.target.type === "number") {
-        if (value === "") return { ...prev, [name]: undefined };
+        if (value === "") return { ...prev, [name]: null };
 
-        let numericValue = Number(value);
-        const maxValue = event.target.max ? Number(event.target.max) : undefined;
-        const minValue = event.target.min ? Number(event.target.min) : undefined;
-
-        if (maxValue !== undefined && numericValue > maxValue) numericValue = maxValue;
-        if (minValue !== undefined && numericValue < minValue) numericValue = minValue;
+        const numericValue = Number(value);
+        if (Number.isNaN(numericValue)) return prev;
 
         return { ...prev, [name]: numericValue };
       }
@@ -109,6 +99,11 @@ const NewSchedule = () => {
 
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (scheduleData.name.trim() === "") {
+      alert("You must enter a name with letters!");
+      return;
+    }
 
     switch (checkValidTimeRange(scheduleData.shiftTimes, scheduleData.hours)) {
       case 1:
@@ -129,7 +124,7 @@ const NewSchedule = () => {
 
     addToasts(
       createScheduleMutation.mutateAsync({
-        name: scheduleData.name,
+        name: scheduleData.name.trim(),
         dateCoverage: scheduleData.dates?.map((d) => d.toISOString().split("T")[0]) || [],
         startTime: formatTimeForInput(scheduleData.hours.start),
         endTime: formatTimeForInput(scheduleData.hours.end),
@@ -187,12 +182,44 @@ const NewSchedule = () => {
     };
   };
 
+  const handleNumberBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (value === "") return;
+
+    let numericValue = Number(value);
+    if (Number.isNaN(numericValue)) return;
+
+    if (name === "maxShiftLength") {
+      const step = scheduleData.shiftTimes ? Number(scheduleData.shiftTimes) : 60;
+      const min = step;
+      const max = 1440;
+
+      numericValue = snapToStep(numericValue, step, min);
+
+      if (numericValue > max) numericValue = max;
+    }
+
+    setScheduleData((prev) => ({
+      ...prev,
+      [name]: numericValue,
+    }));
+  };
+
+  const snapToStep = (value: number, step: number, min: number) => {
+    if (value < min) return min;
+
+    const remainder = (value - min) % step;
+    const lower = value - remainder;
+    const upper = lower + step;
+
+    return Math.abs(value - lower) <= Math.abs(value - upper) ? lower : upper;
+  };
+
   const handleDateChange = (value: DateObject | DateObject[] | null) => {
     if (!value) {
       setScheduleData((prev) => ({
         ...prev,
         dates: [],
-        dateDays: [],
       }));
       return;
     }
@@ -203,7 +230,6 @@ const NewSchedule = () => {
     setScheduleData((prev) => ({
       ...prev,
       dates: jsDates,
-      dateDays: convertToDateDays(jsDates),
     }));
   };
 
@@ -240,8 +266,8 @@ const NewSchedule = () => {
       <hr />
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="scheduleName">
-            Schedule Name<label className="requiredStar">*</label>:{" "}
+          <label htmlFor="scheduleName" className="required">
+            Schedule Name
           </label>
           <br />
           <input
@@ -255,8 +281,8 @@ const NewSchedule = () => {
           />
         </div>
         <div>
-          <label htmlFor="shiftTimes">
-            Shift Intervals (in minutes)<label className="requiredStar">*</label>:{" "}
+          <label htmlFor="shiftTimes" className="required">
+            Shift Intervals (in minutes)
           </label>
           <br />
           <select
@@ -279,8 +305,8 @@ const NewSchedule = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="scheduleDuration">
-            Schedule Duration<label className="requiredStar">*</label>:{" "}
+          <label htmlFor="scheduleDuration" className="required">
+            Schedule Duration
           </label>
           <br />
           <input
@@ -305,9 +331,7 @@ const NewSchedule = () => {
             required
           />
           <br />
-          <label>
-            Dates<label className="requiredStar">*</label>:{" "}
-          </label>
+          <label className="required">Dates</label>
           <br />
           <DatePicker
             inputClass="input"
@@ -315,14 +339,14 @@ const NewSchedule = () => {
             multiple
             value={scheduleData.dates?.map((d) => new DateObject(d)) || []}
             onChange={handleDateChange}
-            minDate={new Date()}
+            minDate={today}
             required
           />
           <br />
         </div>
         <div>
-          <label htmlFor="peoplePerShift">
-            Workers per shift<label className="requiredStar">*</label>:{" "}
+          <label htmlFor="peoplePerShift" className="required">
+            Workers per shift
           </label>
           <br />
           <input
@@ -338,7 +362,7 @@ const NewSchedule = () => {
           />
         </div>
         <div>
-          <label htmlFor="maxShiftLength">Maximum Shift Duration (in minutes):</label>
+          <label htmlFor="maxShiftLength">Maximum Shift Duration (in minutes)</label>
           <br />
           <input
             className="input"
@@ -350,10 +374,11 @@ const NewSchedule = () => {
             max="1440"
             value={scheduleData.maxShiftLength ?? ""}
             onChange={handleInputChange}
+            onBlur={handleNumberBlur}
           />
         </div>
         <div>
-          <label htmlFor="maxShifts">Maximum Shifts per Worker:</label>
+          <label htmlFor="maxShifts">Maximum Shifts per Worker</label>
           <br />
           <input
             className="input"
@@ -369,7 +394,7 @@ const NewSchedule = () => {
         </div>
         <br />
         <div className="submitContainer">
-          <button type="submit" className="submitBtn">
+          <button type="submit" className="submitBtn" disabled={createScheduleMutation.isPending}>
             Create Schedule
           </button>
         </div>

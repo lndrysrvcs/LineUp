@@ -1,5 +1,12 @@
-import type { DateDay, TimeRange, ValidMinutes } from "@/types";
-import { addMinutesToTime, formatTime, getTimeIncrementLabel, weekdayToNum } from "@/utils/time";
+import type { TimeRange, ValidMinutes } from "@/types";
+import {
+  addMinutesToTime,
+  dayNumberToWeekday,
+  formatTime,
+  getTimeIncrementLabel,
+  rangeIs24Hours,
+  standardizeDateAndTime,
+} from "@/utils/time";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Fragment, useEffect, useState } from "react";
 import "./calendar.css";
@@ -8,21 +15,43 @@ import type { CalendarCellProps } from "./CalendarCells";
 interface CalendarProps {
   Cell: React.ComponentType<CalendarCellProps>;
   minutesPerCell: ValidMinutes;
-  dates: DateDay[];
+  dates: Date[];
   range: TimeRange;
+  colors?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "var(--color)", ...}
+  text?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "Rhyder", ...}
+  setFocusedCell?: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedCells?: string[];
+  setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 // Children are each cell of the calendar
-const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
-  const [selectedCells, setSelectedCells] = useState<string[]>([]);
+const Calendar = ({
+  Cell,
+  minutesPerCell,
+  dates,
+  range,
+  setFocusedCell,
+  colors,
+  text,
+  selectedCells,
+  setSelectedCells,
+}: CalendarProps) => {
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isEnablingCells, setIsEnablingCells] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const numRows = Math.ceil(
-    (range.end.hour - range.start.hour) * (60 / minutesPerCell) +
-      (range.end.minute - range.start.minute) / minutesPerCell,
-  );
+  const numRows = calculateNumRows();
   const pageDates = getPageDates(currentPage);
+
+  function calculateNumRows() {
+    if (rangeIs24Hours(range)) {
+      return 24 * (60 / minutesPerCell);
+    }
+
+    return Math.ceil(
+      (range.end.hour - range.start.hour) * (60 / minutesPerCell) +
+        (range.end.minute - range.start.minute) / minutesPerCell,
+    );
+  }
 
   function calculatePageStarts() {
     const pageStarts = [0];
@@ -31,7 +60,7 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
     }
 
     for (let i = 1; i < dates.length; i++) {
-      if (weekdayToNum(dates[i].day) <= weekdayToNum(dates[i - 1].day)) {
+      if (dates[i].getDay() <= dates[i - 1].getDay()) {
         pageStarts.push(i);
       }
     }
@@ -87,10 +116,10 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
   function needsSpaceAfterCol(col: number) {
     if (col >= pageDates.length - 1) return false;
 
-    if (pageDates[col].day === "Sunday") {
-      return pageDates[col + 1].day !== "Monday";
+    if (pageDates[col].getDay() === 6) {
+      return pageDates[col + 1].getDay() !== 0;
     } else {
-      return weekdayToNum(pageDates[col].day) + 1 !== weekdayToNum(pageDates[col + 1].day);
+      return pageDates[col].getDay() + 1 !== pageDates[col + 1].getDay();
     }
   }
 
@@ -106,8 +135,9 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
   }
 
   useEffect(() => {
-    globalThis.addEventListener("pointerup", () => setIsPointerDown(false));
-    return () => globalThis.removeEventListener("pointerup", () => setIsPointerDown(false));
+    const handler = () => setIsPointerDown(false);
+    globalThis.addEventListener("pointerup", handler);
+    return () => globalThis.removeEventListener("pointerup", handler);
   });
 
   return (
@@ -124,14 +154,22 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
     >
       <div className="pageButtonWrapper">
         {currentPage > 0 ? (
-          <button className="pageButton pageLeft" onClick={() => setCurrentPage((currentPage) => currentPage - 1)}>
+          <button
+            type="button"
+            className="pageButton pageLeft"
+            onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
+          >
             <ArrowLeftIcon className="pageIcon" />
           </button>
         ) : (
           <div />
         )}
         {currentPage < calculatePageStarts().length - 1 ? (
-          <button className="pageButton pageRight" onClick={() => setCurrentPage((currentPage) => currentPage + 1)}>
+          <button
+            type="button"
+            className="pageButton pageRight"
+            onClick={() => setCurrentPage((currentPage) => currentPage + 1)}
+          >
             <ArrowRightIcon className="pageIcon" />
           </button>
         ) : (
@@ -141,10 +179,10 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
 
       <div className="calendarBlankCell" />
       {pageDates.map((date, col) => (
-        <div key={date.date} className="calendarLabel" style={extraColMargin(col)}>
-          {date.day}
+        <div key={date.toISOString()} className="calendarLabel" style={extraColMargin(col)}>
+          {dayNumberToWeekday(date.getDay())}
           <br />
-          {date.date}
+          {`${date.getMonth() + 1}/${date.getDate()}`}
         </div>
       ))}
 
@@ -154,7 +192,17 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
             {getTimeIncrementLabel(row, range.start, minutesPerCell)}
           </div>
           {pageDates.map((date, col) => (
-            <div key={date.date} className={calculateCellClasses(row, col)} style={extraColMargin(col)}>
+            <div
+              key={date.toISOString()}
+              className={calculateCellClasses(row, col)}
+              style={extraColMargin(col)}
+              onPointerEnter={() =>
+                setFocusedCell?.(
+                  standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
+                )
+              }
+              onPointerLeave={() => setFocusedCell?.(null)}
+            >
               <Cell
                 time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
                 date={date}
@@ -164,6 +212,8 @@ const Calendar = ({ Cell, minutesPerCell, dates, range }: CalendarProps) => {
                 setIsPointerDown={setIsPointerDown}
                 isEnablingCells={isEnablingCells}
                 setIsEnablingCells={setIsEnablingCells}
+                colors={colors ?? {}}
+                text={text ?? {}}
               />
             </div>
           ))}

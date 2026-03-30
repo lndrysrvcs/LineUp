@@ -20,5 +20,13 @@ export default defineConfig(({ mode }) => {
         "/api": env.services__api__http__0,
       },
     },
+    test: {
+      environment: "jsdom",
+      coverage: {
+        enabled: true,
+        include: ["src/**/*.{ts,tsx}"],
+        exclude: ["src/**/*.d.ts", "src/api-client/**", "src/utils/api/**", "src/main.tsx"],
+      },
+    },
   };
 });

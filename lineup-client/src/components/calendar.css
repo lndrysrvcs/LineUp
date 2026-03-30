@@ -50,8 +50,8 @@
 }
 
 .calendarCell {
-  cursor: pointer;
   border-right: 1px solid var(--primary);
+  min-width: 0;
 }
 
 .calendarTopBorder {
@@ -75,6 +75,15 @@
   height: 100%;
   padding-left: 1px;
   transition: none;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--background);
+
+  &button {
+    cursor: pointer;
+  }
 
   &.clicked {
     background-color: var(--primary-active-hover);

@@ -1,21 +1,80 @@
+using LineUp.AppHost;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("postgres")
-    .WithDataVolume();
-var postgresdb = postgres.AddDatabase("postgresdb");
+builder.AddDockerComposeEnvironment("env");
 
-var api = builder.AddProject<LineUp_Backend>("api")
-    .WaitFor(postgresdb)
-    .WithReference(postgresdb);
+var postgres = builder.AddPostgres("postgres").WithDataVolume();
 
-var web = builder.AddViteApp("web", "../lineup-client")
-    .WithEnvironment("PORT", "5173")
-    .WithExternalHttpEndpoints()
-    .WithEndpoint("http", endpointAnnotation => endpointAnnotation.Port = 5173)
-    .WithPnpm()
-    .WithReference(api)
-    .WaitFor(api);
+var postgresdb = postgres.AddDatabase("lineupdb");
+
+var migrations = builder
+    .AddProject<LineUp_MigrationService>("migrations")
+    .WithReference(postgresdb)
+    .WaitFor(postgresdb);
+
+var api = builder
+    .AddProject<LineUp_Backend>("api")
+    .WithReference(postgresdb)
+    .WithReference(migrations)
+    .WaitForCompletion(migrations);
+
+if (!builder.ExecutionContext.IsRunMode)
+{
+    api.WithEndpoint(
+        "http",
+        e =>
+        {
+            e.Port = 3010;
+            e.IsExternal = true;
+        }
+    );
+}
+
+IResourceBuilder<IResourceWithEndpoints> web;
+
+if (builder.ExecutionContext.IsRunMode)
+{
+    web = builder
+        .AddViteApp("web", "../lineup-client")
+        .WithPnpm()
+        .WithEnvironment("PORT", "5173")
+        .WithEndpoint("http", endpointAnnotation => endpointAnnotation.Port = 5173)
+        .WithExternalHttpEndpoints()
+        .WithReference(api)
+        .WaitFor(api)
+        .AsDeployableService();
+}
+else
+{
+    web = builder
+        .AddDockerfile("web", "../lineup-client")
+        .WithHttpEndpoint(port: 8080, targetPort: 80, env: "PORT")
+        .WithExternalHttpEndpoints()
+        .WithEnvironment("VITE_API_URL", api.GetEndpoint("http"))
+        .WithReference(api)
+        .WaitFor(api);
+}
+
+builder.Eventing.Subscribe<ResourceEndpointsAllocatedEvent>((e, ct) => {
+    switch (e.Resource.Name)
+    {
+        case "api":
+            {
+                var endpoint = api.GetEndpoint("http");
+                Console.WriteLine($"Backend: {endpoint.Url}");
+                Console.WriteLine($"Scalar: {endpoint.Url}/scalar");
+                break;
+            }
+        case "web":
+            {
+                var endpoint = web.GetEndpoint("http");
+                Console.WriteLine($"Frontend: {endpoint.Url}");
+                break;
+            }
+    }
+    return Task.CompletedTask;
+});
 
 builder.Build().Run();

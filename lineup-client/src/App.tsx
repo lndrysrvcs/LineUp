@@ -1,11 +1,13 @@
 // App.tsx
 import "@/App.css";
 import Topbar from "@/components/Topbar";
+import Availability from "@/pages/Availability";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import NewSchedule from "@/pages/NewSchedule";
-import Schedule from "@/pages/Schedule";
 import ViewEditSchedule from "@/pages/ViewEditSchedule";
+import { queryClient } from "@/utils/api";
+import { loaderQuery } from "@/utils/db";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, type LoaderFunctionArgs } from "react-router";
 
 // Wrap Topbar as a layout route so it wraps all pages
@@ -17,16 +19,12 @@ function Layout() {
   );
 }
 
+async function availabilityLoader({ params }: LoaderFunctionArgs) {
+  return queryClient.ensureQueryData(loaderQuery("/api/schedule/{}", params.guid!));
+}
+
 async function scheduleLoader({ params }: LoaderFunctionArgs) {
-  const res = await fetch(`/api/schedule/${params.guid}`, {
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw new Response("Schedule not found", { status: res.status, statusText: res.statusText });
-  }
-
-  return res.json();
+  return queryClient.ensureQueryData(loaderQuery("/api/schedule/{}/details", params.guid!));
 }
 
 const router = createBrowserRouter([
@@ -51,8 +49,8 @@ const router = createBrowserRouter([
           },
           {
             path: ":guid", // matches /schedule/:guid
-            element: <Schedule />,
-            loader: scheduleLoader,
+            element: <Availability />,
+            loader: availabilityLoader,
           },
           {
             path: ":guid/edit", // matches /schedule/:guid/edit

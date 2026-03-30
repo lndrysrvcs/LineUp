@@ -1,16 +1,18 @@
-import type { DateDay, Time } from "@/types";
-import { formatDate, formatDateTime, formatTime } from "@/utils/time";
+import type { Time } from "@/types";
+import { dayNumberToWeekday, formatTime, standardizeDateAndTime } from "@/utils/time";
 import React from "react";
 
 export interface CalendarCellProps {
   time: Time;
-  date: DateDay;
-  selectedCells: string[];
-  setSelectedCells: React.Dispatch<React.SetStateAction<string[]>>;
+  date: Date;
+  selectedCells?: string[];
+  setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
   isPointerDown: boolean;
   setIsPointerDown: React.Dispatch<React.SetStateAction<boolean>>;
   isEnablingCells: boolean;
   setIsEnablingCells: React.Dispatch<React.SetStateAction<boolean>>;
+  colors: { [key: string]: string };
+  text: { [key: string]: string };
 }
 
 const FillableCell = ({
@@ -23,14 +25,14 @@ const FillableCell = ({
   isEnablingCells,
   setIsEnablingCells,
 }: CalendarCellProps) => {
-  const isClicked = selectedCells.includes(formatDateTime(date.date, time));
+  const dateString = standardizeDateAndTime(date, time);
+  const isClicked = selectedCells?.includes(dateString);
 
   function updateCell() {
-    console.log(`Clicked on ${formatDate(date, time)}`);
     if (isClicked) {
-      setSelectedCells((cells) => cells.filter((cell) => cell !== formatDateTime(date.date, time)));
+      setSelectedCells?.((cells) => cells.filter((cell) => cell !== dateString));
     } else {
-      setSelectedCells((cells) => [...cells, formatDateTime(date.date, time)]);
+      setSelectedCells?.((cells) => [...cells, dateString]);
     }
   }
 
@@ -48,13 +50,28 @@ const FillableCell = ({
 
   return (
     <button
+      type="button"
       onPointerDown={onPointerDown}
       onPointerUp={() => setIsPointerDown(false)}
       onPointerEnter={onPointerEnter}
       className={"unstyledButton calendarInnerCell" + (isClicked ? " clicked" : "")}
-      title={date.day + " " + formatTime(time)}
+      title={dayNumberToWeekday(date.getDay()) + " " + formatTime(time)}
     ></button>
   );
 };
 
-export { FillableCell };
+const ColoredCell = ({ time, date, colors, text }: CalendarCellProps) => {
+  const dateString = standardizeDateAndTime(date, time);
+
+  return (
+    <div
+      className={"calendarInnerCell"}
+      style={{ backgroundColor: colors[dateString] ?? "transparent" }}
+      aria-label={dayNumberToWeekday(date.getDay()) + " " + formatTime(time)}
+    >
+      {text[dateString] ?? ""}
+    </div>
+  );
+};
+
+export { ColoredCell, FillableCell };

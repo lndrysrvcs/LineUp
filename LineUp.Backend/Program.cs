@@ -1,7 +1,8 @@
+using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using LineUp.Backend;
-using LineUp.Backend.Attributes;
 using LineUp.Backend.Support;
+using LineUp.Core.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +55,7 @@ builder.Services.AddAuthorization(options =>
 builder
     .Services.AddControllers()
     .AddJsonOptions(options =>
+    {
         options.JsonSerializerOptions.TypeInfoResolver = (
             options.JsonSerializerOptions.TypeInfoResolver ?? new DefaultJsonTypeInfoResolver()
         ).WithAddedModifier(ti =>
@@ -75,12 +77,14 @@ builder
                     p.ShouldSerialize = (_, _) => false;
                 }
             }
-        })
-    );
+        });
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
-builder.AddNpgsqlDbContext<LineUpContext>("postgresdb");
+builder.AddNpgsqlDbContext<LineUpContext>("lineupdb");
 
 var app = builder.Build();
 
@@ -123,7 +127,7 @@ if (seed)
     var db = scope.ServiceProvider.GetRequiredService<LineUpContext>();
     //TODO DONT DO THIS IN PROD!!!!!!!!!!!!!! :(((((
     db.Database.EnsureDeleted();
-    db.Database.EnsureCreated();
+    db.Database.Migrate();
 
     DbSeeder seeder = new(db);
     seeder.Seed();

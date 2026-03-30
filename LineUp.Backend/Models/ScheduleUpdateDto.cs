@@ -1,3 +1,5 @@
+using LineUp.Core.Models;
+
 namespace LineUp.Backend.Models;
 
 public class ScheduleUpdateDto

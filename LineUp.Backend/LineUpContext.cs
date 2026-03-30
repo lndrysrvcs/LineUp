@@ -1,5 +1,5 @@
-using LineUp.Backend.Models;
-using LineUp.Backend.Models.Forms;
+using LineUp.Core.Models;
+using LineUp.Core.Models.Forms;
 using Microsoft.EntityFrameworkCore;
 
 namespace LineUp.Backend;
@@ -25,5 +25,7 @@ public class LineUpContext : DbContext
             .HasOne(f => f.Form)
             .WithOne(f => f.Schedule)
             .HasForeignKey<Schedule>(f => f.FormId);
+
+        modelBuilder.Entity<Availability>().HasIndex(a => new { a.Id, a.UserEmail }).IsUnique();
     }
 }
