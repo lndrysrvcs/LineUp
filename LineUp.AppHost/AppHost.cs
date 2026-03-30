@@ -57,24 +57,27 @@ else
         .WaitFor(api);
 }
 
-builder.Eventing.Subscribe<ResourceEndpointsAllocatedEvent>((e, ct) => {
-    switch (e.Resource.Name)
+builder.Eventing.Subscribe<ResourceEndpointsAllocatedEvent>(
+    (e, ct) =>
     {
-        case "api":
+        switch (e.Resource.Name)
+        {
+            case "api":
             {
                 var endpoint = api.GetEndpoint("http");
                 Console.WriteLine($"Backend: {endpoint.Url}");
                 Console.WriteLine($"Scalar: {endpoint.Url}/scalar");
                 break;
             }
-        case "web":
+            case "web":
             {
                 var endpoint = web.GetEndpoint("http");
                 Console.WriteLine($"Frontend: {endpoint.Url}");
                 break;
             }
+        }
+        return Task.CompletedTask;
     }
-    return Task.CompletedTask;
-});
+);
 
 builder.Build().Run();
