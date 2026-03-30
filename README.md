@@ -68,6 +68,7 @@ aspire run
 ## Versions
 
 Postgres: 18.1
+Moq: 4.20.72
 
 ## AI Usage
 

@@ -45,7 +45,7 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
     [HttpPatch("{guid:guid}/edit")]
     public async Task<IActionResult> EditAvailability(
         Guid guid,
-        [FromBody] EditAvailabilityDto availability
+        [FromBody] AvailabilityUpdateDTO availability
     )
     {
         var availabilityToUpdate = await context.Availabilities.FirstOrDefaultAsync(a =>
