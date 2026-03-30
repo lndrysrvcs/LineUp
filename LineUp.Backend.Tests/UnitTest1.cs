@@ -13,7 +13,7 @@ namespace LineUp.Backend.Tests;
 
 public class UnitTest1
 {
-        Schedule sampleSchedule = new Schedule
+    Schedule sampleSchedule = new Schedule
     {
         Guid = Guid.Empty,
         Auth0UserId = "always-test-on-schedule",
@@ -36,7 +36,7 @@ public class UnitTest1
         Name = "Test Schedule",
     };
 
-        Availability sampleAvailability = new Availability
+    Availability sampleAvailability = new Availability
     {
         UserName = "Test Availability",
         UserEmail = "test@email.com",
@@ -186,6 +186,54 @@ public class UnitTest1
     }
 
     [Fact]
+    public async Task DeleteSchedule_Test()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<LineUpContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .Options;
+
+        using (var context = new LineUpContext(options))
+        {
+            context.Database.EnsureCreated();
+
+            var controller = new ScheduleController(context);
+
+            // Create a mock ClaimsPrincipal with the required NameIdentifier claim
+            var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
+            var identity = new ClaimsIdentity(claims);
+            var principal = new ClaimsPrincipal(identity);
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = principal },
+            };
+
+            var scheduleDto = new ScheduleDto
+            {
+                DateCoverage = sampleSchedule.DateCoverage,
+                StartTime = sampleSchedule.StartTime,
+                EndTime = sampleSchedule.EndTime,
+                SchedulePreferences = sampleSchedule.SchedulePreferences,
+                Name = sampleSchedule.Name,
+            };
+            var result = await controller.CreateSchedule(scheduleDto);
+            CreatedAtActionResult createdResult = Assert.IsType<CreatedAtActionResult>(result);
+            Schedule returnedSchedule = Assert.IsType<Schedule>(createdResult.Value);
+            Guid guid = returnedSchedule.Guid;
+
+            // Act
+            var deleteResult = await controller.DeleteSchedule(guid);
+
+            // Assert
+            Assert.IsType<NoContentResult>(deleteResult);
+
+            // Verify that only one schedule was actually saved to the database
+            var savedSchedules = await context.Schedules.CountAsync();
+            Assert.Equal(0, savedSchedules);
+        }
+    }
+
+    [Fact]
     public async Task CreateAvailability_Test()
     {
         // Arrange
@@ -303,19 +351,64 @@ public class UnitTest1
             Availability returnedAvailability = Assert.IsType<Availability>(
                 availabilityCreatedResult.Value
             );
-            guid = returnedAvailability.Guid;
+            Guid availabilityGuid = returnedAvailability.Guid;
             // Act
-            var availabilityUpdateResult = await availController.EditAvailability(
-                guid,
-                sampleAvailability
-            );
+
             var failedAvailabilityUpdateResult = await availController.EditAvailability(
                 Guid.Empty,
                 sampleAvailability
             );
 
+            Availability newSampleAvailability = new Availability
+            {
+                Guid = availabilityGuid,
+                UserName = "Test Availability",
+                UserEmail = "test@email.com",
+                AvailabilitySlots =
+                [
+                    // Day 0: 9:00 - 12:00
+                    DateTime.UtcNow.Date.AddHours(9),
+                    DateTime.UtcNow.Date.AddHours(9).AddMinutes(30),
+                    DateTime.UtcNow.Date.AddHours(10),
+                    DateTime.UtcNow.Date.AddHours(10).AddMinutes(30),
+                    DateTime.UtcNow.Date.AddHours(11),
+                    DateTime.UtcNow.Date.AddHours(11).AddMinutes(30),
+                    // Day 1: 13:00 - 17:00
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(13),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(13).AddMinutes(30),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(14),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(14).AddMinutes(30),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(15),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(15).AddMinutes(30),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(16),
+                    DateTime.UtcNow.Date.AddDays(1).AddHours(16).AddMinutes(30),
+                ],
+                Schedule = new Schedule
+                {
+                    Guid = Guid.Empty,
+                    Auth0UserId = "replace this schedule",
+                    DateCoverage = [],
+                    StartTime = new TimeOnly(0, 0),
+                    EndTime = new TimeOnly(0, 0),
+                    SchedulePreferences = new SchedulePreferences
+                    {
+                        MinutesPerSlot = 30,
+                        ShiftIntervals = 30,
+                        UsersPerShift = 1,
+                        MaximumShiftDurationMinutes = 120,
+                        MaximumShiftsPerWorker = 1,
+                    },
+                    Name = "ReplaceThisScheduleWithSampleSchedule",
+                },
+                Preferences = new AvailabilityPreferences(),
+            };
+            newSampleAvailability.Schedule = sampleSchedule;
+            var availabilityUpdateResult = await availController.EditAvailability(
+                availabilityGuid,
+                newSampleAvailability
+            );
             // Assert
-            Assert.IsType<BadRequestResult>(availabilityUpdateResult); //fix this later, chud
+            Assert.IsType<NoContentResult>(availabilityUpdateResult);
             Assert.IsType<BadRequestResult>(failedAvailabilityUpdateResult);
         }
     }

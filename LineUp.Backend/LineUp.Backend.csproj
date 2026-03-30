@@ -16,14 +16,21 @@
     <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
   </PropertyGroup>
 
-  <Target Name="GenerateSpec" AfterTargets="Build" Condition="$(Configuration)=='Gen' Or $(GEN)=='true'">
+  <Target
+    Name="GenerateSpec"
+    AfterTargets="Build"
+    Condition="$(Configuration)=='Gen' Or $(GEN)=='true'"
+  >
     <Message Text="Generating OpenAPI schema file." Importance="high" />
 
     <Exec Command="pnpm gen" WorkingDirectory="../lineup-client" />
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.3.0-preview.1.26167.4" />
+    <PackageReference
+      Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"
+      Version="13.3.0-preview.1.26167.4"
+    />
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
