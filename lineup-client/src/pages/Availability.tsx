@@ -174,6 +174,14 @@ const Availability = () => {
               )}
             </div>
           </MousePopup>
+          <button
+            className="scheduleBtn"
+            onClick={() => {
+              navigate(`/schedule/requestSwap/${guid}`);
+            }}
+          >
+            Request to swap a shift
+          </button>
         </>
       ) : (
         <>
