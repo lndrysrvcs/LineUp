@@ -299,7 +299,10 @@ public class CRUDTests
             Assert.IsType<NotFoundResult>(failedAvailabilityCreateResult);
 
             Assert.Single(emailService.SentAvailabilityConfirmationEmails);
-            Assert.Equal(sampleAvailability.UserEmail, emailService.SentAvailabilityConfirmationEmails[0].UserEmail);
+            Assert.Equal(
+                sampleAvailability.UserEmail,
+                emailService.SentAvailabilityConfirmationEmails[0].UserEmail
+            );
         }
     }
 
@@ -399,9 +402,12 @@ public class CRUDTests
             // Assert
             Assert.IsType<NoContentResult>(availabilityUpdateResult);
             Assert.IsType<NotFoundResult>(failedAvailabilityUpdateResult);
-            
-            Assert.Single(emailService.SentAvailabilityConfirmationEmails);
-            Assert.Equal(sampleAvailability.UserEmail, emailService.SentAvailabilityConfirmationEmails[0].UserEmail);
+
+            Assert.Equal(2, emailService.SentAvailabilityConfirmationEmails.Count);
+            Assert.Equal(
+                sampleAvailability.UserEmail,
+                emailService.SentAvailabilityConfirmationEmails[0].UserEmail
+            );
         }
     }
 }
