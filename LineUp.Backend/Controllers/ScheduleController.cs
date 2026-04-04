@@ -268,6 +268,8 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
         context.Availabilities.Add(availabilityToInsert);
         await context.SaveChangesAsync();
 
+        await emailService.SendAvailabilityConfirmationEmail(availabilityToInsert);
+
         return CreatedAtAction(
             nameof(AvailabilityController.GetAvailability),
             new { guid = availabilityToInsert.Guid },
