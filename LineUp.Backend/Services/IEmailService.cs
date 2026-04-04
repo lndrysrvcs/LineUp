@@ -7,6 +7,8 @@ public interface IEmailService
 {
     Task SendShiftAssignmentEmail(bool updated, Availability availability);
 
+    Task SendAvailabilityConfirmationEmail(Availability availability);
+
     public static string BuildShiftAssignmentLi(Availability availability)
     {
         if (availability.Schedule.ShiftAssignments == null)
@@ -56,7 +58,11 @@ public interface IEmailService
             mergedAssignments.Add(current);
         }
 
-        foreach (IGrouping<DateTime, ShiftAssignment> group in mergedAssignments.GroupBy(sa => sa.StartTime.Date))
+        foreach (
+            IGrouping<DateTime, ShiftAssignment> group in mergedAssignments.GroupBy(sa =>
+                sa.StartTime.Date
+            )
+        )
         {
             //todo: format in availability's TZ
             builder.Append($"<li><strong>{group.Key:dddd, MMMM dd, yyyy}</strong>");
