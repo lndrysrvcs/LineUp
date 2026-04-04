@@ -318,7 +318,7 @@ public class CRUDTests
 
             var emailService = new MockEmailService();
             var controller = new ScheduleController(context, emailService);
-            var availController = new AvailabilityController(context);
+            var availController = new AvailabilityController(context, emailService);
 
             // Create a mock ClaimsPrincipal with the required NameIdentifier claim
             var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
