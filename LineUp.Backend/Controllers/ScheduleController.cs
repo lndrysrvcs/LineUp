@@ -261,4 +261,43 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             availabilityToInsert
         );
     }
+
+    [HttpPost("{guid:guid}/requestSwap")]
+    public IActionResult RequestSwap(Guid guid, [FromBody] List<ShiftAssignment> shiftCollection)
+    {
+        Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
+        if (schedule == null || shiftCollection == null || shiftCollection[0] == null)
+        {
+            return NotFound();
+        }
+        //Sort through the shifts (assume an unsorted list)
+        Availability partyA = shiftCollection[0].Availability;
+        List<ShiftAssignment> partyAShifts = [];
+        Availability partyB = null;
+        List<ShiftAssignment> partyBShifts = [];
+        foreach (ShiftAssignment shift in shiftCollection)
+        {
+            Availability shiftOwner = shift.Availability;
+            if (shiftOwner == partyA)
+                partyAShifts.Append(shift);
+            else if (partyB == null)
+            {
+                partyB = shiftOwner;
+                partyBShifts.Append(shift);
+            }
+            else if (shiftOwner == partyB)
+                partyBShifts.Append(shift);
+            else
+                return BadRequest("More than two parties identified");
+        }
+        SwapRequest swapRequest = new SwapRequest
+        {
+            FromPartyA = partyAShifts,
+            FromPartyB = partyBShifts,
+            Schedule = schedule,
+        };
+        context.SwapRequests.Add(swapRequest);
+        context.SaveChanges();
+        return Ok(swapRequest.Guid);
+    }
 }

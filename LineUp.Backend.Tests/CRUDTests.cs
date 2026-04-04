@@ -237,7 +237,6 @@ public class CRUDTests
     public async Task CreateAvailability_Test()
     {
         // Arrange
-        sampleAvailability.Schedule = sampleSchedule;
         var options = new DbContextOptionsBuilder<LineUpContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
