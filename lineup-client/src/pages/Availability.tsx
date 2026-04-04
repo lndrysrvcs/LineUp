@@ -177,7 +177,7 @@ const Availability = () => {
           <button
             className="scheduleBtn"
             onClick={() => {
-              navigate(`/schedule/requestSwap/${guid}`);
+              navigate(`/schedule/${guid}/requestSwap/`);
             }}
           >
             Request to swap a shift

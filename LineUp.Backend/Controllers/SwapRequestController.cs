@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LineUp.Backend.Controllers;
 
-[Route("api/Swap")]
+[Route("api/swap")]
 [ApiController]
 public class SwapRequestController(LineUpContext context) : ControllerBase
 {
@@ -28,7 +28,7 @@ public class SwapRequestController(LineUpContext context) : ControllerBase
             return NotFound();
         }
         Availability partyA = fromPartyA[0].Availability;
-        Availability partyB = fromPartyA[0].Availability;
+        Availability partyB = fromPartyB[0].Availability;
         foreach (ShiftAssignment shift in fromPartyB)
         {
             shift.Availability = partyA;

@@ -7,6 +7,7 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import NewSchedule from "@/pages/NewSchedule";
 import ViewEditSchedule from "@/pages/ViewEditSchedule";
+import RequestSwap from "@/pages/RequestSwap";
 import { queryClient } from "@/utils/api";
 import { loaderQuery } from "@/utils/db";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, type LoaderFunctionArgs } from "react-router";
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
           {
             path: ":guid/edit", // matches /schedule/:guid/edit
             element: <ViewEditSchedule />,
+            loader: scheduleLoader,
+          },
+          {
+            path: ":guid/requestSwap", // matches /schedule/:guid/edit
+            element: <RequestSwap />,
             loader: scheduleLoader,
           },
         ],
