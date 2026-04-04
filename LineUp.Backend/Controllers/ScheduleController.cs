@@ -174,8 +174,8 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
     }
 
     [HttpGet("{guid:guid}/generateSchedule")]
-    //[Authorize]
-    public async Task<IActionResult> GenerateSchedule(Guid guid)
+    [Authorize]
+    public async Task<IActionResult> GenerateSchedule(Guid guid, [FromQuery] bool random = true)
     {
         var schedule = await context
             .Schedules.Include(schedule => schedule.SchedulePreferences)
@@ -186,13 +186,14 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
         List<Availability> availabilities = await context
             .Availabilities.Where(a => a.Schedule == schedule)
             .ToListAsync();
-        //if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
-        //   return Unauthorized();
+        if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+            return Unauthorized();
 
         var result = Scheduler.Scheduler.RunScheduler(
             schedule,
             availabilities,
-            schedule.SchedulePreferences
+            schedule.SchedulePreferences,
+            random
         );
 
         await context
@@ -267,6 +268,10 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
         context.Availabilities.Add(availabilityToInsert);
         await context.SaveChangesAsync();
 
-        return Ok(availabilityToInsert.Guid);
+        return CreatedAtAction(
+            nameof(AvailabilityController.GetAvailability),
+            new { guid = availabilityToInsert.Guid },
+            availabilityToInsert
+        );
     }
 }

@@ -4,7 +4,7 @@ using LineUp.Core.Models.Forms;
 
 namespace LineUp.Scheduler;
 
-public class Scheduler
+public static class Scheduler
 {
     /// <summary>
     /// Runs the scheduler.
@@ -16,13 +16,103 @@ public class Scheduler
     public static SolverResult RunScheduler(
         Schedule schedule,
         IEnumerable<Availability> availabilities,
-        SchedulePreferences preferences
+        SchedulePreferences preferences,
+        bool random = false
     )
     {
         var cpsatModel = new CpModel();
         var shiftsPerDay = AvailabilityMatrixTools.SlotsPerDay(schedule);
+        if (shiftsPerDay <= 0)
+        {
+            throw new Exception("Schedule has zero or negative slots per day.");
+        }
 
-        // generate placeholder "system" user to inject into the scheduler to take the shift
+        List<Availability> allAvailabilities = GenerateAvailabilitiesWithSystemUser(
+            schedule,
+            availabilities
+        );
+
+        // ALWAYS GO BY THIS OR YOU WILL LOSE TRACK OF THINGS
+        Dictionary<Guid, int> availabilityIndices =
+            AvailabilityMatrixTools.GenerateAvailabilityGuidPointerHashSet(allAvailabilities);
+        Dictionary<TimeOnly, int> timeIndices =
+            AvailabilityMatrixTools.GenerateMatrixTimePointerHashSet(schedule);
+
+        // generate matrices from users' availabilities
+        Dictionary<Guid, int[,]> availabilityMatrices = PrepareAvailabilityMatrices(
+            schedule,
+            allAvailabilities,
+            timeIndices
+        );
+
+        var allShifts = Enumerable.Range(0, shiftsPerDay).ToArray();
+
+        var solverAvailabilityMatrix = PrepareSolverAvailabilityMatrix(
+            schedule,
+            allAvailabilities,
+            shiftsPerDay,
+            availabilityIndices,
+            availabilityMatrices
+        );
+
+        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts = InitializeDecisionVariables(
+            cpsatModel,
+            allAvailabilities,
+            schedule.DateCoverage,
+            allShifts
+        );
+
+        ApplyConstraints(
+            cpsatModel,
+            allAvailabilities,
+            schedule.DateCoverage,
+            allShifts,
+            shifts,
+            preferences,
+            availabilityIndices,
+            solverAvailabilityMatrix,
+            schedule.SchedulePreferences.MinutesPerSlot
+        );
+
+        ApplyObjective(
+            cpsatModel,
+            allAvailabilities,
+            schedule.DateCoverage,
+            allShifts,
+            shifts,
+            availabilityIndices,
+            solverAvailabilityMatrix,
+            random
+        );
+
+        var solver = new CpSolver();
+        if (random)
+        {
+            solver.StringParameters = $"random_seed:{new Random().Next()}";
+        }
+        var status = solver.Solve(cpsatModel);
+        Console.WriteLine($"Solve status: {status}");
+
+        if (status is not (CpSolverStatus.Optimal or CpSolverStatus.Feasible))
+        {
+            throw new Exception("Solver did not find an optimal solution");
+        }
+
+        List<ShiftAssignment> assignments = ConvertToAssignments(
+            solver,
+            shifts,
+            allAvailabilities,
+            schedule
+        );
+
+        return new SolverResult { Status = status, Assignments = assignments };
+    }
+
+    public static List<Availability> GenerateAvailabilitiesWithSystemUser(
+        Schedule schedule,
+        IEnumerable<Availability> availabilities
+    )
+    {
         var systemUser = new Availability
         {
             Guid = Guid.AllBitsSet,
@@ -33,26 +123,23 @@ public class Scheduler
             Preferences = new AvailabilityPreferences(),
             FormAnswers = new List<FormQuestionAnswer>(),
         };
-        availabilities = availabilities.Append(systemUser);
+        return availabilities.Append(systemUser).ToList();
+    }
 
-        availabilities = availabilities.ToList(); // hack to not do multiple enumeration
-
-        // ALWAYS GO BY THIS OR YOU WILL LOSE TRACK OF THINGS
-        Dictionary<Guid, int> availabilityIndices =
-            AvailabilityMatrixTools.GenerateAvailabilityGuidPointerHashSet(availabilities);
-        Dictionary<TimeOnly, int> timeIndices =
-            AvailabilityMatrixTools.GenerateMatrixTimePointerHashSet(schedule);
-
-        // generate matrices from users' availabilities
+    private static Dictionary<Guid, int[,]> PrepareAvailabilityMatrices(
+        Schedule schedule,
+        IEnumerable<Availability> availabilities,
+        Dictionary<TimeOnly, int> timeIndices
+    )
+    {
         Dictionary<Guid, int[,]> availabilityMatrices = new();
         var template = AvailabilityMatrixTools.GenerateEmptyMatrixFromSchedule(schedule);
 
         foreach (var a in availabilities)
         {
-            var output = (int[,])template.Clone(); // cast to satisfy compiler
+            var output = (int[,])template.Clone();
             foreach (var slot in a.AvailabilitySlots)
             {
-                // find index for date from DateCoverage
                 var index = Array.IndexOf(schedule.DateCoverage, DateOnly.FromDateTime(slot));
                 if (index == -1)
                 {
@@ -67,137 +154,227 @@ public class Scheduler
             availabilityMatrices[a.Guid] = output;
         }
 
-        var allShifts = Enumerable.Range(0, shiftsPerDay).ToArray();
+        return availabilityMatrices;
+    }
 
-        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts = new();
+    private static int[,,] PrepareSolverAvailabilityMatrix(
+        Schedule schedule,
+        List<Availability> availabilities,
+        int shiftsPerDay,
+        Dictionary<Guid, int> availabilityIndices,
+        Dictionary<Guid, int[,]> availabilityMatrices
+    )
+    {
         var solverAvailabilityMatrix = new int[
-            availabilities.Count(),
+            availabilities.Count,
             schedule.DateCoverage.Length,
             shiftsPerDay
         ];
 
-        // Assemble availability matrix
         foreach (var a in availabilities)
         {
             var index = availabilityIndices[a.Guid];
             var matrix = availabilityMatrices[a.Guid];
 
-            for (int i = 0; i < schedule.DateCoverage.Length; i++)
+            for (var i = 0; i < schedule.DateCoverage.Length; i++)
             {
-                for (int j = 0; j < shiftsPerDay; j++)
+                for (var j = 0; j < shiftsPerDay; j++)
                 {
                     solverAvailabilityMatrix[index, i, j] = matrix[i, j];
                 }
             }
         }
 
-        // define decision variables so we can reverse out the things later
+        return solverAvailabilityMatrix;
+    }
+
+    private static Dictionary<Tuple<Guid, DateOnly, int>, IntVar> InitializeDecisionVariables(
+        CpModel model,
+        IEnumerable<Availability> availabilities,
+        DateOnly[] dateCoverage,
+        int[] allShifts
+    )
+    {
+        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts = new();
         foreach (var availability in availabilities)
         {
-            foreach (var date in schedule.DateCoverage)
+            foreach (var date in dateCoverage)
             {
                 foreach (var shift in allShifts)
                 {
                     shifts.Add(
                         Tuple.Create(availability.Guid, date, shift),
-                        cpsatModel.NewBoolVar($"shift_{availability.Guid}_{date}_{shift}")
+                        model.NewBoolVar($"shift_{availability.Guid}_{date}_{shift}")
                     );
                 }
             }
         }
+        return shifts;
+    }
 
-        // constraint: each shift should have only UsersPerShift workers
-        foreach (var d in schedule.DateCoverage)
+    private static void ApplyConstraints(
+        CpModel model,
+        List<Availability> availabilities,
+        DateOnly[] dateCoverage,
+        int[] allShifts,
+        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts,
+        SchedulePreferences preferences,
+        Dictionary<Guid, int> availabilityIndices,
+        int[,,] solverAvailabilityMatrix,
+        int minutesPerSlot
+    )
+    {
+        // Each shift should have only UsersPerShift workers
+        foreach (var d in dateCoverage)
         {
             foreach (var s in allShifts)
             {
-                IntVar[] x = new IntVar[availabilities.Count()];
+                IntVar[] x = new IntVar[availabilities.Count];
 
-                for (var i = 0; i < availabilities.Count(); i++)
+                for (var i = 0; i < availabilities.Count; i++)
                 {
-                    var a = availabilities.ElementAt(i).Guid;
+                    var a = availabilities[i].Guid;
                     Tuple<Guid, DateOnly, int> key = Tuple.Create(a, d, s);
-
                     x[i] = shifts[key];
                 }
 
-                cpsatModel.Add(LinearExpr.Sum(x) <= preferences.UsersPerShift);
+                model.Add(LinearExpr.Sum(x) <= preferences.UsersPerShift);
             }
         }
 
-        // constraint: users can only be assigned to slots where they're available
+        // Users can only be assigned to slots where they're available
+        // Enforce max shifts per worker, continuity, and max duration
         foreach (var a in availabilities)
         {
-            foreach (var d in schedule.DateCoverage)
+            if (a.Guid == Guid.AllBitsSet)
             {
+                // System user is always available and has no preferences
+                continue;
+            }
+
+            List<IntVar> userAllShifts = new();
+
+            foreach (var d in dateCoverage)
+            {
+                var dateIndex = Array.IndexOf(dateCoverage, d);
+                List<IntVar> userDayShifts = new();
+
                 foreach (var s in allShifts)
                 {
-                    if (a.Guid == Guid.AllBitsSet)
-                    {
-                        // System user is always available
-                        continue;
-                    }
+                    var shiftVar = shifts[Tuple.Create(a.Guid, d, s)];
+                    userAllShifts.Add(shiftVar);
+                    userDayShifts.Add(shiftVar);
 
-                    if (
-                        solverAvailabilityMatrix[
-                            availabilityIndices[a.Guid],
-                            schedule.DateCoverage.IndexOf(d),
-                            s
-                        ] == 0
-                    )
+                    if (solverAvailabilityMatrix[availabilityIndices[a.Guid], dateIndex, s] == 0)
                     {
-                        cpsatModel.Add(shifts[Tuple.Create(a.Guid, d, s)] == 0);
+                        model.Add(shiftVar == 0);
+                    }
+                }
+
+                // Continuity and MaximumShiftDurationMinutes per day
+                // To enforce at most ONE continuous block:
+                // Let works[t] be the decision variable for slot t.
+                // Let starts[t] be true if works[t] and NOT works[t-1].
+                // Sum(starts[t]) <= 1 ensures at most one block.
+                if (userDayShifts.Count > 0)
+                {
+                    List<IntVar> starts = new();
+                    for (int s = 0; s < userDayShifts.Count; s++)
+                    {
+                        var start = model.NewBoolVar($"{a.Guid}_{d}_starts_{s}");
+                        starts.Add(start);
+                        if (s == 0)
+                        {
+                            // start[0] iff userDayShifts[0]
+                            model.Add(start == userDayShifts[0]);
+                        }
+                        else
+                        {
+                            // start[s] iff userDayShifts[s] AND NOT userDayShifts[s-1]
+                            // This is start[s] >= userDayShifts[s] - userDayShifts[s-1]
+                            // AND start[s] <= userDayShifts[s]
+                            // AND start[s] <= 1 - userDayShifts[s-1]
+                            model.Add(start >= userDayShifts[s] - userDayShifts[s - 1]);
+                        }
+                    }
+                    model.Add(LinearExpr.Sum(starts) <= 1);
+
+                    // Max duration per continuous block (which is now only one block)
+                    if (preferences.MaximumShiftDurationMinutes > 0)
+                    {
+                        int maxSlots = preferences.MaximumShiftDurationMinutes / minutesPerSlot;
+                        model.Add(LinearExpr.Sum(userDayShifts) <= maxSlots);
                     }
                 }
             }
-        }
 
-        // objective: maximize people being assigned to shifts they requested
-        // AND penalize the system user being assigned to a shift
+            // MaximumShiftsPerWorker (total across all days)
+            if (preferences.MaximumShiftsPerWorker > 0)
+            {
+                model.Add(LinearExpr.Sum(userAllShifts) <= preferences.MaximumShiftsPerWorker);
+            }
+        }
+    }
+
+    private static void ApplyObjective(
+        CpModel model,
+        IEnumerable<Availability> availabilities,
+        DateOnly[] dateCoverage,
+        int[] allShifts,
+        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts,
+        Dictionary<Guid, int> availabilityIndices,
+        int[,,] solverAvailabilityMatrix,
+        bool random
+    )
+    {
         List<IntVar> flatShifts = new();
-        List<int> flatShiftRequests = new();
+        List<long> flatShiftRequests = new();
+        Random? rng = random ? new Random() : null;
 
         foreach (var a in availabilities)
         {
-            foreach (var d in schedule.DateCoverage)
+            foreach (var d in dateCoverage)
             {
+                var dateIndex = Array.IndexOf(dateCoverage, d);
                 foreach (var s in allShifts)
                 {
                     flatShifts.Add(shifts[Tuple.Create(a.Guid, d, s)]);
+                    long weight;
                     if (a.Guid == Guid.AllBitsSet)
                     {
                         // penalize system user assignments
-                        flatShiftRequests.Add(-1);
+                        // use a large negative weight to ensure real users are always preferred
+                        weight = -10000;
                     }
                     else
                     {
                         // passthrough existing weight if not system user
-                        flatShiftRequests.Add(
-                            solverAvailabilityMatrix[
-                                availabilityIndices[a.Guid],
-                                schedule.DateCoverage.IndexOf(d),
-                                s
-                            ]
-                        );
+                        // usually this is 1 for available, 0 for unavailable (though unavailable is already constrained to 0)
+                        weight =
+                            solverAvailabilityMatrix[availabilityIndices[a.Guid], dateIndex, s]
+                            * 100;
                     }
+
+                    if (rng != null)
+                    {
+                        // add a small random weight to break ties
+                        weight += rng.Next(1, 10);
+                    }
+                    flatShiftRequests.Add(weight);
                 }
             }
         }
 
-        cpsatModel.Maximize(LinearExpr.WeightedSum(flatShifts, flatShiftRequests));
+        model.Maximize(LinearExpr.WeightedSum(flatShifts, flatShiftRequests));
+    }
 
-        // todo: honor max shift per worker
-        // todo: honor max shift length
-        var solver = new CpSolver();
-        var status = solver.Solve(cpsatModel);
-        Console.WriteLine($"Solve status: {status}");
-
-        if (status is not (CpSolverStatus.Optimal or CpSolverStatus.Feasible))
-        {
-            throw new Exception("Solver did not find an optimal solution");
-        }
-
-        // solver successful, let's convert back to ShiftAssignment objects
+    private static List<ShiftAssignment> ConvertToAssignments(
+        CpSolver solver,
+        Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts,
+        List<Availability> availabilities,
+        Schedule schedule
+    )
+    {
         List<ShiftAssignment> assignments = [];
 
         foreach (var ((guid, date, shiftIndex), var) in shifts)
@@ -235,7 +412,7 @@ public class Scheduler
             );
         }
 
-        return new SolverResult { Status = status, Assignments = assignments };
+        return assignments;
     }
 
     private static DateTime[] GenerateSystemAvailabilitySlots(Schedule schedule)

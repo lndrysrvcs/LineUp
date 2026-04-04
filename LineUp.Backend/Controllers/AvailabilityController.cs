@@ -1,3 +1,4 @@
+using LineUp.Backend.Models;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,9 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
     [HttpGet("{guid:guid}")]
     public async Task<IActionResult> GetAvailability(Guid guid)
     {
-        var result = await context.Availabilities.FirstOrDefaultAsync(a => a.Guid == guid);
+        var result = await context
+            .Availabilities.Include(a => a.Schedule)
+            .FirstOrDefaultAsync(a => a.Guid == guid);
         if (result != null)
             return Ok(result);
         return NotFound();
@@ -42,26 +45,21 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
     [HttpPatch("{guid:guid}/edit")]
     public async Task<IActionResult> EditAvailability(
         Guid guid,
-        [FromBody] Availability availability
+        [FromBody] AvailabilityUpdateDTO availability
     )
     {
-        if (guid != availability.Guid)
-        {
-            return BadRequest();
-        }
-        context.Entry(availability).State = EntityState.Modified;
-        try
-        {
-            await context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!context.Availabilities.Any(a => a.Guid == guid))
-            {
-                return NotFound();
-            }
-            throw;
-        }
+        var availabilityToUpdate = await context.Availabilities.FirstOrDefaultAsync(a =>
+            a.Guid == guid
+        );
+        if (availabilityToUpdate == null)
+            return NotFound();
+
+        availabilityToUpdate.UserName = availability.UserName ?? availabilityToUpdate.UserName;
+        availabilityToUpdate.UserEmail = availability.UserEmail ?? availabilityToUpdate.UserEmail;
+        availabilityToUpdate.AvailabilitySlots =
+            availability.AvailabilitySlots ?? availabilityToUpdate.AvailabilitySlots;
+
+        await context.SaveChangesAsync();
 
         return NoContent();
     }

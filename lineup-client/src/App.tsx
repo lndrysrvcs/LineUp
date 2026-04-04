@@ -2,6 +2,7 @@
 import "@/App.css";
 import Topbar from "@/components/Topbar";
 import Availability from "@/pages/Availability";
+import EditAvailability from "@/pages/EditAvailability";
 import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import NewSchedule from "@/pages/NewSchedule";
@@ -25,6 +26,10 @@ async function availabilityLoader({ params }: LoaderFunctionArgs) {
 
 async function scheduleLoader({ params }: LoaderFunctionArgs) {
   return queryClient.ensureQueryData(loaderQuery("/api/schedule/{}/details", params.guid!));
+}
+
+async function editAvailabilityLoader({ params }: LoaderFunctionArgs) {
+  return queryClient.ensureQueryData(loaderQuery("/api/availability/{}", params.guid!));
 }
 
 const router = createBrowserRouter([
@@ -56,6 +61,21 @@ const router = createBrowserRouter([
             path: ":guid/edit", // matches /schedule/:guid/edit
             element: <ViewEditSchedule />,
             loader: scheduleLoader,
+          },
+        ],
+      },
+      {
+        // or do we want /schedule/:guid/:availabilityguid?
+        path: "/availability",
+        children: [
+          {
+            index: true, // matches exactly /availability
+            element: <Navigate to="/" replace />,
+          },
+          {
+            path: ":guid", // matches /availability/:guid
+            element: <EditAvailability />,
+            loader: editAvailabilityLoader,
           },
         ],
       },
