@@ -2,8 +2,9 @@
  * @vitest-environment jsdom
  */
 import { Calendar } from "@/components/Calendar";
-import { ColoredCell } from "@/components/CalendarCells";
-import { standardizeDateAndTime } from "@/utils/time";
+import { ColoredCell, FillableCell } from "@/components/CalendarCells";
+import type { ValidMinutes } from "@/types";
+import { addMinutesToTime, standardizeDateAndTime } from "@/utils/time";
 import "@testing-library/jest-dom/vitest";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -377,6 +378,101 @@ describe("Calendar component", () => {
       await userEvent.click(pageButtons[0]); // left
       cells = container.querySelectorAll(".calendarLabel:not(.calendarRowLabel)");
       expect(cells).toHaveLength(7);
+    });
+  });
+
+  describe("Column toggling", () => {
+    it("should enable all cells in a column when a label is clicked", async () => {
+      const setSelectedCells = vi.fn();
+
+      const { container } = render(
+        <Calendar
+          Cell={FillableCell}
+          minutesPerCell={30}
+          dates={dates}
+          range={{
+            start: { hour: 9, minute: 0 },
+            end: { hour: 17, minute: 0 },
+          }}
+          setSelectedCells={setSelectedCells}
+        />,
+      );
+      const cells = container.querySelectorAll(".calendarInnerCell");
+      [...cells].forEach((cell) => {
+        expect(cell).not.toHaveClass("clicked");
+      });
+      expect(setSelectedCells).not.toHaveBeenCalled();
+
+      const labelButtons = container.querySelectorAll("button.calendarLabel");
+      await userEvent.click(labelButtons[0]);
+
+      const setSelectedCellsUpdater = setSelectedCells.mock.calls[0][0];
+      expect(setSelectedCellsUpdater([])).toHaveLength(16); // one for every row
+    });
+
+    it("should only toggle disabled cells if they exist", async () => {
+      const setSelectedCells = vi.fn();
+
+      const { container } = render(
+        <Calendar
+          Cell={FillableCell}
+          minutesPerCell={30}
+          dates={dates}
+          range={{
+            start: { hour: 9, minute: 0 },
+            end: { hour: 17, minute: 0 },
+          }}
+          selectedCells={[standardizeDateAndTime(dates[0], { hour: 9, minute: 0 })]}
+          setSelectedCells={setSelectedCells}
+        />,
+      );
+      const cells = container.querySelectorAll(".calendarInnerCell");
+      [...cells].forEach((cell, i) => {
+        if (i === 0) {
+          expect(cell).toHaveClass("clicked");
+        } else {
+          expect(cell).not.toHaveClass("clicked");
+        }
+      });
+      expect(setSelectedCells).not.toHaveBeenCalled();
+
+      const labelButtons = container.querySelectorAll("button.calendarLabel");
+      await userEvent.click(labelButtons[0]);
+
+      const setSelectedCellsUpdater = setSelectedCells.mock.calls[0][0];
+      expect(setSelectedCellsUpdater([])).toHaveLength(16); // one for every row, not removing the one already selected
+    });
+
+    it("should disable all cells if they're all selected", async () => {
+      const setSelectedCells = vi.fn();
+      const allCells = Array.from({ length: 16 }, (_, i) =>
+        standardizeDateAndTime(dates[0], addMinutesToTime({ hour: 9, minute: 0 }, (i * 30) as ValidMinutes)),
+      );
+
+      const { container } = render(
+        <Calendar
+          Cell={FillableCell}
+          minutesPerCell={30}
+          dates={dates}
+          range={{
+            start: { hour: 9, minute: 0 },
+            end: { hour: 17, minute: 0 },
+          }}
+          selectedCells={allCells}
+          setSelectedCells={setSelectedCells}
+        />,
+      );
+      const cells = container.querySelectorAll(".calendarInnerCell");
+      [...cells].forEach((cell) => {
+        expect(cell).toHaveClass("clicked");
+      });
+      expect(setSelectedCells).not.toHaveBeenCalled();
+
+      const labelButtons = container.querySelectorAll("button.calendarLabel");
+      await userEvent.click(labelButtons[0]);
+
+      const setSelectedCellsUpdater = setSelectedCells.mock.calls[0][0];
+      expect(setSelectedCellsUpdater(allCells)).toHaveLength(0);
     });
   });
 

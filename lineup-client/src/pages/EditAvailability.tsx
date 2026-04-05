@@ -5,7 +5,7 @@ import { addToasts, loaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 const EditAvailability = () => {
   const navigate = useNavigate();
@@ -38,12 +38,12 @@ const EditAvailability = () => {
   useEffect(() => {
     if (!availabilityData) return;
 
-    console.log("Fetched availability:", availabilityData);
-
     if (!storedForm.name && !storedForm.email && !storedForm.selectedCells) {
-      setName(availabilityData.userName);
-      setEmail(availabilityData.userEmail);
-      setSelectedCells(availabilityData.availabilitySlots ?? []);
+      setTimeout(() => {
+        setName(availabilityData.userName);
+        setEmail(availabilityData.userEmail);
+        setSelectedCells(availabilityData.availabilitySlots ?? []);
+      }, 0);
     }
   }, [availabilityData]);
 
