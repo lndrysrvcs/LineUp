@@ -113,13 +113,12 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             return NotFound();
         if (scheduleToDelete.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
-        if (
-            scheduleToDelete.ShiftAssignments != null
-            && scheduleToDelete.ShiftAssignments.Count != 0
-        )
-        {
-            return Forbid("Cannot delete schedule with assigned shifts");
-        }
+
+        IQueryable<ShiftAssignment> shiftAssignments = context.ShiftAssignments.Where(sa =>
+            sa.ScheduleId == scheduleToDelete.Id
+        );
+        context.ShiftAssignments.RemoveRange(shiftAssignments);
+
         context.Schedules.Remove(scheduleToDelete);
         await context.SaveChangesAsync();
         return NoContent();
