@@ -56,7 +56,6 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         {
             foreach (var shiftAssignment in schedule.ShiftAssignments)
             {
-                //TODO CREATE DTO FOR AVAILABILITY TO NOT EXPOSE GUID
                 await context.Entry(shiftAssignment).Reference(sa => sa.Availability).LoadAsync();
             }
         }
