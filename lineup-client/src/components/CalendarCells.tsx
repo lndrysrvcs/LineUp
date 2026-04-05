@@ -24,6 +24,7 @@ const FillableCell = ({
   setIsPointerDown,
   isEnablingCells,
   setIsEnablingCells,
+  text,
 }: CalendarCellProps) => {
   const dateString = standardizeDateAndTime(date, time);
   const isClicked = selectedCells?.includes(dateString);
@@ -56,7 +57,9 @@ const FillableCell = ({
       onPointerEnter={onPointerEnter}
       className={"unstyledButton calendarInnerCell" + (isClicked ? " clicked" : "")}
       title={dayNumberToWeekday(date.getDay()) + " " + formatTime(time)}
-    ></button>
+    >
+      {text[dateString] ?? ""}
+    </button>
   );
 };
 

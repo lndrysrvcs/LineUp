@@ -1,7 +1,7 @@
 import { Calendar } from "@/components/Calendar";
 import { ColoredCell, FillableCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
-import { queryClient, useApi } from "@/utils/api";
+import { useApi } from "@/utils/api";
 import { addToasts, loaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -12,49 +12,219 @@ const RequestSwap = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid } = useParams();
-  const { data } = useQuery(loaderQuery("/api/schedule/{}/requestSwap", guid!));
+  const { data } = useQuery(loaderQuery("/api/schedule/{}", guid!));
   const [focusedTime, setFocusedTime] = useState<string | null>(null);
-  //   const storageKey = `availability-${guid}`;
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
   console.log(backgroundColors);
 
   console.log(data);
 
-  type SwapRequestProps = {
-    //define what will be sent to the backend function ScheduleController.cs/RequestSwap()
-    shifts: string[]; //List<ShiftAssignment>;
-    // userName: string;
-    // userEmail: string;
-    // availabilitySlots: string[]; // full of ISO strings
-  };
+  const [email, setEmail] = useState<string>("");
+  const [selectedCells, setSelectedCells] = useState<string[]>([]);
+  const [userFound, setUserFound] = useState<boolean>(false);
 
-  const updateAvailabilityMutation = useMutation({
-    mutationFn: async (updatedAvailability: SwapRequestProps) => {
+  const confirmEmailmutation = useMutation({
+    //
+    mutationFn: async (email: string) => {
+      const res = await fetchWithAuth(`/api/schedule/${guid}/getByEmail?email=${email}`, {
+        method: "GET",
+      });
+
+      if (res.status == 406) {
+        throw new Error("Availability Not Found");
+      } else if (!res.ok) {
+        throw new Error("Failed to send Swap Request");
+      }
+      return res;
+    },
+    onSuccess: (res) => {
+      console.log("Email Mutation:" + res.json);
+      setUserFound(true);
+      setSelectedCells(["H"]); //res.json
+      //.Availability.Availiabilityslots  --- note
+    },
+  });
+
+  const CreateSwapRequestMutation = useMutation({
+    //creates a SwapRequest in the DB
+    mutationFn: async (shifts: string[]) => {
       const res = await fetchWithAuth(`/api/schedule/${guid}/requestSwap`, {
         method: "POST",
-        body: JSON.stringify(updatedAvailability),
+        body: JSON.stringify(shifts),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
+      shifts.forEach((element) => {
+        //note each shift assignment
+        console.log(element);
+      });
+
       if (!res.ok) {
-        throw new Error("Failed to edit availability");
+        throw new Error("Failed to create Swap Request");
       }
 
-      return true;
+      return res;
     },
-    // onSuccess: () => {
-    //   try {
-    //     localStorage.removeItem(storageKey);
-    //   } catch {
-    //     // ignore storage errors
-    //   }
-    //   queryClient.invalidateQueries({ queryKey: ["availability"] });
-    //   navigate("/");
-    // },
+    onSuccess: () => {},
   });
-  return <div>hello :wave:</div>;
+
+  if (!data) return <div>Loading...</div>;
+
+  const scheduleGenerated = true;
+  const [assignmentColors, assignmentText] = mapAssignments();
+
+  function mapAssignments() {
+    const colors: { [key: string]: string } = {};
+    const text: { [key: string]: string } = {};
+    const nameToColor: { [key: string]: string } = {};
+
+    if (!scheduleGenerated) {
+      return [colors, text];
+    }
+
+    for (const availability of data.shiftAssignments) {
+      if (availability.startTime in text) {
+        text[availability.startTime] = text[availability.startTime] + ", " + availability.userName;
+      } else {
+        text[availability.startTime] = availability.userName;
+      }
+    }
+
+    let numColors = 0;
+    for (const time of Object.keys(text)) {
+      if (text[time] in nameToColor) {
+        colors[time] = nameToColor[text[time]];
+      } else {
+        nameToColor[text[time]] = backgroundColors[numColors % backgroundColors.length];
+        colors[time] = backgroundColors[numColors % backgroundColors.length];
+        numColors++;
+      }
+    }
+    return [colors, text];
+  }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { value } = event.target;
+    setEmail(value);
+  };
+
+  return (
+    <div className="availabilityRoot">
+      <>
+        <div className="scheduleName">
+          Schedule for <b>{data.name}</b>
+        </div>
+        {userFound ? (
+          <>
+            <div>
+              <em>Please select the shifts that you would like to swap.</em>
+            </div>
+            <br />
+
+            <form
+              onSubmit={(event: React.SubmitEvent<HTMLFormElement>) => {
+                event.preventDefault();
+                addToasts(
+                  CreateSwapRequestMutation.mutateAsync(selectedCells),
+                  undefined,
+                  "Request created! Please check your email to authenticate this request.",
+                ); //remove success message
+              }}
+            >
+              <Calendar
+                Cell={FillableCell}
+                selectedCells={selectedCells}
+                setSelectedCells={(cells) => {
+                  const next = typeof cells === "function" ? cells(selectedCells) : cells;
+                  setSelectedCells(next);
+                }}
+                minutesPerCell={data.schedulePreferences?.minutesPerSlot || 15}
+                dates={
+                  data.dateCoverage?.map((d: string) => {
+                    const [year, month, day] = d.split("-").map(Number);
+                    return new Date(year, month - 1, day);
+                  }) ?? []
+                }
+                range={{
+                  start: parseTimeString(data.startTime)!,
+                  end: parseTimeString(data.endTime)!,
+                }}
+                colors={assignmentColors}
+                text={assignmentText}
+                setFocusedCell={setFocusedTime}
+              />
+              <div>
+                <button type="submit" className="scheduleBtn swapBtn">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <>
+            <Calendar
+              Cell={ColoredCell}
+              minutesPerCell={data.schedulePreferences?.minutesPerSlot || 15}
+              dates={
+                data.dateCoverage?.map((d: string) => {
+                  const [year, month, day] = d.split("-").map(Number);
+                  return new Date(year, month - 1, day);
+                }) ?? []
+              }
+              range={{
+                start: parseTimeString(data.startTime)!,
+                end: parseTimeString(data.endTime)!,
+              }}
+              colors={assignmentColors}
+              text={assignmentText}
+              setFocusedCell={setFocusedTime}
+            />
+            <MousePopup isOpen={focusedTime !== null && focusedTime in assignmentText} width={250}>
+              <div className="availablePeoplePopupRoot">
+                <div className="availablePeoplePopupHeader">{focusedTime && assignmentText[focusedTime]}</div>
+                {focusedTime && (
+                  <div className="availablePeoplePopupTime">
+                    {new Intl.DateTimeFormat("en-US", {
+                      weekday: "long",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                      timeZone: "UTC",
+                    }).format(new Date(focusedTime))}
+                  </div>
+                )}
+              </div>
+            </MousePopup>
+            <form
+              onSubmit={(event: React.SubmitEvent<HTMLFormElement>) => {
+                event.preventDefault();
+                addToasts(confirmEmailmutation.mutateAsync(email));
+              }}
+            >
+              <label htmlFor="email">Please input the email address you used to input your availability.</label>
+              <div>
+                <input
+                  className="input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={handleInputChange}
+                  placeholder="name@example.com..."
+                  required
+                />
+                <button type="submit" className="scheduleBtn swapBtn" disabled={confirmEmailmutation.isPending}>
+                  Submit
+                </button>
+              </div>
+            </form>
+          </>
+        )}
+      </>
+    </div>
+  );
 };
 
 export default RequestSwap;

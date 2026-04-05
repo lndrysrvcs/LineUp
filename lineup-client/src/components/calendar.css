@@ -81,11 +81,17 @@
   text-overflow: ellipsis;
   color: var(--background);
 
-  &button {
-    cursor: pointer;
-  }
-
   &.clicked {
     background-color: var(--primary-active-hover);
+  }
+}
+
+button.calendarInnerCell {
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 12px;
+
+  &.clicked {
+    color: var(--background);
   }
 }

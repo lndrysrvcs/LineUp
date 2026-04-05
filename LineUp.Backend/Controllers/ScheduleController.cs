@@ -262,6 +262,17 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         );
     }
 
+    [HttpGet("{guid:guid}/getByEmail")]
+    public async Task<IActionResult> GetAvailability(Guid guid, [FromQuery] string email)
+    {
+        var result = await context
+            .Availabilities.Include(a => a.Schedule)
+            .FirstOrDefaultAsync(a => a.UserEmail == email && a.Schedule.Guid == guid);
+        if (result != null)
+            return Ok(result);
+        return StatusCode(StatusCodes.Status406NotAcceptable);
+    }
+
     [HttpPost("{guid:guid}/requestSwap")]
     public IActionResult RequestSwap(Guid guid, [FromBody] List<ShiftAssignment> shiftCollection)
     {
