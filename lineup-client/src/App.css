@@ -201,3 +201,8 @@
 .swapBtn {
   margin-left: 1em;
 }
+
+.swapPartnerLabel {
+  display: flex;
+  align-items: left;
+}

@@ -15,13 +15,15 @@ const RequestSwap = () => {
   const { data } = useQuery(loaderQuery("/api/schedule/{}", guid!));
   const [focusedTime, setFocusedTime] = useState<string | null>(null);
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
-  console.log(backgroundColors);
+  // console.log(backgroundColors);
 
-  console.log(data);
+  // console.log(data);
 
   const [email, setEmail] = useState<string>("");
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const [userFound, setUserFound] = useState<boolean>(false);
+  const [swapPartner, setSwapPartner] = useState<string>("");
+  const [swapPartnerGuid, setSwapPartnerGuid] = useState<string>("");
 
   const confirmEmailmutation = useMutation({
     //
@@ -35,13 +37,12 @@ const RequestSwap = () => {
       } else if (!res.ok) {
         throw new Error("Failed to send Swap Request");
       }
-      return res;
+      const resJson = await res.json();
+      return resJson;
     },
-    onSuccess: (res) => {
-      console.log("Email Mutation:" + res.json);
+    onSuccess: (resJson) => {
       setUserFound(true);
-      setSelectedCells(["H"]); //res.json
-      //.Availability.Availiabilityslots  --- note
+      // setSelectedCells(resJson.availabilitySlots); //This would make all the availiability light up at the start, but that feels confusing if others have shifts at that time.
     },
   });
 
@@ -110,6 +111,20 @@ const RequestSwap = () => {
     setEmail(value);
   };
 
+  const renderPartnerSelect = (name: string, guid: string) => (
+    <>
+      <button
+        className="scheduleBtn"
+        onClick={() => {
+          setSwapPartner(name);
+          setSwapPartnerGuid(guid);
+        }}
+      >
+        {name}
+      </button>
+    </>
+  );
+
   return (
     <div className="availabilityRoot">
       <>
@@ -156,6 +171,13 @@ const RequestSwap = () => {
                 setFocusedCell={setFocusedTime}
               />
               <div>
+                <div className="swapPartnerLabel">
+                  <label>Swapping with:</label>
+                  <label>
+                    {/* {data.shiftAssignments.map(() => renderPartnerSelect())}
+                    {renderPartnerSelect(data.shiftAssignments.name, data.shiftAssignments.AvailabilityDbId)} */}
+                  </label>
+                </div>
                 <button type="submit" className="scheduleBtn swapBtn">
                   Submit
                 </button>
