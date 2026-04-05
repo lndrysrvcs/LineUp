@@ -1,11 +1,8 @@
 # LineUp
 
 LineUp is a scheduling tool for when you need 100% coverage over a period of time.
+It is designed to help teams ensure that everyone is available to work during any given period of time, whether for staffing a table or scheduling radio shows.
 
-## Project Structure
-
-- **`LineUp.Backend/`** - .NET backend API
-- **`lineup-client/`** - React frontend with auto-generated API client
 
 ## Quickstart
 
@@ -50,6 +47,19 @@ LineUp is a scheduling tool for when you need 100% coverage over a period of tim
 
 Note: On subsequent runs, do not use the `SEED` flag, unless you want to re-seed the database (which will delete all existing data).
 
+### Testing
+To run the backend tests:
+```bash
+dotnet test
+```
+in the root of the repository.
+
+To run the frontend tests:
+```bash
+pnpm test
+```
+in the `lineup-client` directory.
+
 #### API Client Generation
 
 To regenerate the API client after backend changes:
@@ -65,9 +75,37 @@ $env:GEN = "true"
 aspire run
 ```
 
+## Project Structure
+- **`lineup-client/`** - React frontend
+- **`LineUp.Backend/`** - .NET backend API
+
+
+- **`LineUp.Core/`** - Shared models and utilities
+- **`LineUp.Scheduler/`** - Scheduler logic
+- **`LineUp.EndToEndTests/`** - End-to-end tests
+- **`LineUp.MigrationService/`** - Database migration service (needed for Aspire)
+- **`LineUp.ServiceDefaults/`** - Shared service defaults and logic for Aspire
+- **`LineUp.AppHost/`** - Aspire app host
+
+```mermaid
+flowchart TB
+    ReactFrontend["React Frontend"] -- Manager CRUDs schedule --> DotNetBackend[".NET Backend"]
+    ReactFrontend -- User defines availability --> DotNetBackend
+    ReactFrontend -- Manager generates schedule --> DotNetBackend
+    DotNetBackend -- CRUD schedules --> PostgresDB[("Postgres Database")]
+    DotNetBackend -- CRUD user availability --> PostgresDB
+    DotNetBackend -- Send availabilites --> Scheduler["Scheduler"]
+    Scheduler -- Send Generated Schedule --> DotNetBackend
+    DotNetBackend -- Return Generated Schedule --> ReactFrontend
+    DotNetBackend -- Send email to users upon schedule generation --> ResendApi["Resend API"]
+    Auth0Api["Auth0 API"] <-- Verify authenticated user --> DotNetBackend
+    Auth0Api <-- Authenticate with Google --> ReactFrontend
+```
+
 ## Versions
 
 Postgres: 18.1
+
 Moq: 4.20.72
 
 ## AI Usage
