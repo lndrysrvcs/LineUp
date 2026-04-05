@@ -16,9 +16,6 @@ const Availability = () => {
   const [focusedTime, setFocusedTime] = useState<string | null>(null);
   const storageKey = `availability-${guid}`;
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
-  console.log(backgroundColors);
-
-  console.log(data);
 
   const storedForm = (() => {
     try {
