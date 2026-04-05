@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Azure;
 using LineUp.Backend.Controllers;
 using LineUp.Backend.Models;
+using LineUp.Backend.Services;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

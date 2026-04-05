@@ -88,16 +88,25 @@ builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 builder.AddNpgsqlDbContext<LineUpContext>("lineupdb");
 
-builder.Services.AddHttpClient<ResendClient>();
-builder.Services.Configure<ResendClientOptions>(o =>
-{
-    o.ApiToken =
-        builder.Configuration["Parameters:resend-api-key"]
-        ?? Environment.GetEnvironmentVariable("RESEND_APITOKEN");
-});
-builder.Services.AddTransient<IResend, ResendClient>();
+var resendApiKey = builder.Configuration["Parameters:resend-api-key"] ?? Environment.GetEnvironmentVariable("RESEND_APITOKEN");
 
-builder.Services.AddScoped<IEmailService, ResendEmailService>();
+if (string.IsNullOrEmpty(resendApiKey))
+{
+    builder.Services.AddScoped<IEmailService, MockEmailService>();
+    Console.WriteLine("WARNING: No RESEND_APITOKEN environment variable or Parameters:resend-api-key user secret set. Mocking email service.");
+}
+else
+{
+    builder.Services.AddHttpClient<ResendClient>();
+    builder.Services.Configure<ResendClientOptions>(o =>
+    {
+        o.ApiToken = resendApiKey;
+    });
+    builder.Services.AddTransient<IResend, ResendClient>();
+
+    builder.Services.AddScoped<IEmailService, ResendEmailService>();
+}
+
 
 var app = builder.Build();
 

@@ -1,7 +1,6 @@
-using LineUp.Backend.Services;
 using LineUp.Core.Models;
 
-namespace LineUp.Backend.Tests;
+namespace LineUp.Backend.Services;
 
 public class MockEmailService : IEmailService
 {
