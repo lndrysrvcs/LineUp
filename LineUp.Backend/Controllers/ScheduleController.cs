@@ -256,6 +256,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
 
         return CreatedAtAction(
             nameof(AvailabilityController.GetAvailability),
+            "Availability",
             new { guid = availabilityToInsert.Guid },
             availabilityToInsert
         );
