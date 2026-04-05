@@ -54,7 +54,11 @@ const Availability = () => {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to create availability");
+        if (res.statusText && res.status === 409) {
+          throw new Error("Someone with this name or email has already submitted availability!");
+        } else {
+          throw new Error("Failed to create availability");
+        }
       }
 
       return res;
