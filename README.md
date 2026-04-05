@@ -24,6 +24,12 @@ LineUp is a scheduling tool for when you need 100% coverage over a period of tim
    ```bash
    dotnet restore
    ```
+   You will need to set the Resend API key with:
+   ```bash
+   aspire secret set Parameters:resend-api-key re_keygobbeldygook
+   ```
+   
+   The app will still work but will not send emails.
 
 2. **Install frontend dependencies**
 
