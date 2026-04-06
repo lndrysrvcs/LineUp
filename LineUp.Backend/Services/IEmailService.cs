@@ -13,7 +13,7 @@ public interface IEmailService
     {
         if (availability.Schedule.ShiftAssignments == null)
             return string.Empty;
-        
+
         List<ShiftAssignment> myAssignments = availability
             .Schedule.ShiftAssignments.Where(sa => sa.AvailabilityDbId == availability.Id)
             .OrderBy(sa => sa.StartTime)

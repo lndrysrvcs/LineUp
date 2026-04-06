@@ -189,10 +189,9 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
         if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
 
-        var updated = await context
-            .ShiftAssignments.AnyAsync(shiftAssignment =>
-                shiftAssignment.ScheduleId == schedule.Id
-            );
+        var updated = await context.ShiftAssignments.AnyAsync(shiftAssignment =>
+            shiftAssignment.ScheduleId == schedule.Id
+        );
 
         var result = Scheduler.Scheduler.RunScheduler(
             schedule,
@@ -220,7 +219,7 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
 
             await transaction.CommitAsync();
         });
-        
+
         schedule.ShiftAssignments = result.Assignments;
 
         availabilities = await context
@@ -232,10 +231,7 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
             availability.Schedule = schedule;
             if (availability.UserEmail != null)
             {
-                await emailService.SendShiftAssignmentEmail(
-                    updated,
-                    availability
-                );
+                await emailService.SendShiftAssignmentEmail(updated, availability);
             }
         }
 
