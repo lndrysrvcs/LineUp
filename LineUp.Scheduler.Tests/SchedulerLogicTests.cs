@@ -186,6 +186,7 @@ public class SchedulerLogicTests
         {
             Guid = Guid.NewGuid(),
             UserName = "John",
+            UserEmail = "john@example.com",
             AvailabilitySlots = slots.ToArray(),
             Schedule = schedule,
             Preferences = new AvailabilityPreferences(),
@@ -242,6 +243,7 @@ public class SchedulerLogicTests
         {
             Guid = Guid.NewGuid(),
             UserName = "John",
+            UserEmail = "john@example.com",
             AvailabilitySlots = [new DateTime(2025, 1, 1, 9, 0, 0, DateTimeKind.Utc)], // Wrong year
             Schedule = schedule,
             Preferences = new AvailabilityPreferences(),

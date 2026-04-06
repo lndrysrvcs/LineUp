@@ -9,7 +9,12 @@
   text-align: center;
   font-weight: bold;
   line-height: 1.2em;
-  margin-bottom: 0.2em;
+  padding-bottom: 0.2em;
+
+  &:disabled {
+    cursor: default;
+    color: inherit;
+  }
 }
 
 .calendarRowLabel {
@@ -52,6 +57,7 @@
 .calendarCell {
   border-right: 1px solid var(--primary);
   min-width: 0;
+  touch-action: pinch-zoom;
 }
 
 .calendarTopBorder {

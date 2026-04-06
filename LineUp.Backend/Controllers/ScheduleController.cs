@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using LineUp.Backend.Models;
+using LineUp.Backend.Services;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace LineUp.Backend.Controllers;
 
 [Route("api/schedule")]
 [ApiController]
-public class ScheduleController(LineUpContext context) : ControllerBase
+public class ScheduleController(LineUpContext context, IEmailService emailService) : ControllerBase
 {
     [HttpGet("{guid:guid}/details")]
     [Authorize]
@@ -56,7 +57,6 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         {
             foreach (var shiftAssignment in schedule.ShiftAssignments)
             {
-                //TODO CREATE DTO FOR AVAILABILITY TO NOT EXPOSE GUID
                 await context.Entry(shiftAssignment).Reference(sa => sa.Availability).LoadAsync();
             }
         }
@@ -113,13 +113,12 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             return NotFound();
         if (scheduleToDelete.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
-        if (
-            scheduleToDelete.ShiftAssignments != null
-            && scheduleToDelete.ShiftAssignments.Count != 0
-        )
-        {
-            return Forbid("Cannot delete schedule with assigned shifts");
-        }
+
+        IQueryable<ShiftAssignment> shiftAssignments = context.ShiftAssignments.Where(sa =>
+            sa.ScheduleId == scheduleToDelete.Id
+        );
+        context.ShiftAssignments.RemoveRange(shiftAssignments);
+
         context.Schedules.Remove(scheduleToDelete);
         await context.SaveChangesAsync();
         return NoContent();
@@ -178,6 +177,7 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     {
         var schedule = await context
             .Schedules.Include(schedule => schedule.SchedulePreferences)
+            .Include(schedule => schedule.ShiftAssignments)
             .FirstOrDefaultAsync(s => s.Guid == guid);
         if (schedule == null)
             return NotFound();
@@ -202,6 +202,17 @@ public class ScheduleController(LineUpContext context) : ControllerBase
             await context.ShiftAssignments.AddRangeAsync(result.Assignments);
 
         await context.SaveChangesAsync();
+
+        foreach (var availability in availabilities)
+        {
+            if (availability.UserEmail != null)
+            {
+                await emailService.SendShiftAssignmentEmail(
+                    (schedule.ShiftAssignments ?? []).Count != 0,
+                    availability
+                );
+            }
+        }
 
         return Ok(result);
     }
@@ -255,6 +266,13 @@ public class ScheduleController(LineUpContext context) : ControllerBase
         context.Availabilities.Add(availabilityToInsert);
         await context.SaveChangesAsync();
 
-        return Ok(availabilityToInsert.Guid);
+        await emailService.SendAvailabilityConfirmationEmail(availabilityToInsert);
+
+        return CreatedAtAction(
+            nameof(AvailabilityController.GetAvailability),
+            "Availability",
+            new { guid = availabilityToInsert.Guid },
+            availabilityToInsert
+        );
     }
 }

@@ -80,7 +80,6 @@ public static class Scheduler
             schedule.DateCoverage,
             allShifts,
             shifts,
-            preferences,
             availabilityIndices,
             solverAvailabilityMatrix,
             random
@@ -323,7 +322,6 @@ public static class Scheduler
         DateOnly[] dateCoverage,
         int[] allShifts,
         Dictionary<Tuple<Guid, DateOnly, int>, IntVar> shifts,
-        SchedulePreferences preferences,
         Dictionary<Guid, int> availabilityIndices,
         int[,,] solverAvailabilityMatrix,
         bool random
@@ -332,47 +330,6 @@ public static class Scheduler
         List<IntVar> flatShifts = new();
         List<long> flatShiftRequests = new();
         Random? rng = random ? new Random() : null;
-
-        // Coverage indicators: 1 if at least one real user is assigned to (date, shift), 0 otherwise
-        Dictionary<Tuple<DateOnly, int>, IntVar> coverageIndicators = new();
-
-        foreach (var d in dateCoverage)
-        {
-            foreach (var s in allShifts)
-            {
-                var coverageVar = model.NewBoolVar($"coverage_{d}_{s}");
-                coverageIndicators[Tuple.Create(d, s)] = coverageVar;
-
-                List<IntVar> realUserShiftsForSlot = new();
-                foreach (var a in availabilities)
-                {
-                    if (a.Guid == Guid.AllBitsSet)
-                        continue;
-                    realUserShiftsForSlot.Add(shifts[Tuple.Create(a.Guid, d, s)]);
-                }
-
-                // coverageVar == 1 iff sum(realUserShiftsForSlot) >= 1
-                // We use constraints to enforce this:
-                // sum(realUserShiftsForSlot) >= coverageVar
-                // sum(realUserShiftsForSlot) <= coverageVar * UsersPerShift
-                if (realUserShiftsForSlot.Count > 0)
-                {
-                    model.Add(LinearExpr.Sum(realUserShiftsForSlot) >= coverageVar);
-                    model.Add(
-                        LinearExpr.Sum(realUserShiftsForSlot)
-                            <= coverageVar * preferences.UsersPerShift
-                    );
-                }
-                else
-                {
-                    model.Add(coverageVar == 0);
-                }
-
-                // Highly prioritize coverage
-                flatShifts.Add(coverageVar);
-                flatShiftRequests.Add(10000);
-            }
-        }
 
         foreach (var a in availabilities)
         {
@@ -392,8 +349,7 @@ public static class Scheduler
                     else
                     {
                         // passthrough existing weight if not system user
-                        // usually this is 1 for available, 0 for unavailable
-                        // We use a smaller weight than coverage to prioritize coverage first.
+                        // usually this is 1 for available, 0 for unavailable (though unavailable is already constrained to 0)
                         weight =
                             solverAvailabilityMatrix[availabilityIndices[a.Guid], dateIndex, s]
                             * 100;

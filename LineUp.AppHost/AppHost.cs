@@ -14,10 +14,13 @@ var migrations = builder
     .WithReference(postgresdb)
     .WaitFor(postgresdb);
 
+var resendKey = builder.AddParameter("resend-api-key", secret: true);
+
 var api = builder
     .AddProject<LineUp_Backend>("api")
     .WithReference(postgresdb)
     .WithReference(migrations)
+    .WithEnvironment("Parameters__resend-api-key", resendKey)
     .WaitForCompletion(migrations);
 
 if (!builder.ExecutionContext.IsRunMode)

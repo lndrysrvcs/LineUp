@@ -134,6 +134,17 @@ const Calendar = ({
     return style;
   }
 
+  function colClicked(date: Date) {
+    const colCells = Array.from({ length: numRows }, (_, i) =>
+      standardizeDateAndTime(date, addMinutesToTime(range.start, (i * minutesPerCell) as ValidMinutes)),
+    );
+    if (colCells.every((cell) => selectedCells?.includes(cell))) {
+      setSelectedCells?.((cells) => cells.filter((cell) => !colCells.includes(cell)));
+    } else {
+      setSelectedCells?.((cells) => [...new Set([...cells, ...colCells])]); // set avoids duplicates
+    }
+  }
+
   useEffect(() => {
     const handler = () => setIsPointerDown(false);
     globalThis.addEventListener("pointerup", handler);
@@ -179,11 +190,18 @@ const Calendar = ({
 
       <div className="calendarBlankCell" />
       {pageDates.map((date, col) => (
-        <div key={date.toISOString()} className="calendarLabel" style={extraColMargin(col)}>
+        <button
+          type="button"
+          key={date.toISOString()}
+          className="calendarLabel unstyledButton"
+          style={extraColMargin(col)}
+          onClick={() => colClicked(date)}
+          disabled={!setSelectedCells}
+        >
           {dayNumberToWeekday(date.getDay())}
           <br />
           {`${date.getMonth() + 1}/${date.getDate()}`}
-        </div>
+        </button>
       ))}
 
       {Array.from({ length: numRows }).map((_, row) => (
