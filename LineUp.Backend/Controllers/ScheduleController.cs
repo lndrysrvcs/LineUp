@@ -189,6 +189,11 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
         if (schedule.Auth0UserId != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
             return Unauthorized();
 
+        var updated = await context
+            .ShiftAssignments.AnyAsync(shiftAssignment =>
+                shiftAssignment.ScheduleId == schedule.Id
+            );
+
         var result = Scheduler.Scheduler.RunScheduler(
             schedule,
             availabilities,
@@ -228,7 +233,7 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
             if (availability.UserEmail != null)
             {
                 await emailService.SendShiftAssignmentEmail(
-                    result.Assignments != null,
+                    updated,
                     availability
                 );
             }
