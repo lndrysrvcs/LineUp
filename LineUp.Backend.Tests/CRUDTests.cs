@@ -392,4 +392,83 @@ public class CRUDTests
             Assert.IsType<NotFoundResult>(failedAvailabilityUpdateResult);
         }
     }
+
+    [Fact]
+    public async Task CreateRandomSchedule_Test()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<LineUpContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .Options;
+
+        Random random = new Random();
+
+        List<DateOnly> randomCoverage = new List<DateOnly>();
+
+        for (int i = 0; i < random.Next(10); i++)
+        {
+            randomCoverage.Add(DateOnly.FromDateTime(DateTime.UtcNow.AddDays(i)));
+        }
+
+        Schedule randomSchedule = new Schedule
+        {
+            Guid = Guid.Empty,
+            Auth0UserId = "always-test-on-schedule",
+            DateCoverage = randomCoverage.ToArray(),
+            StartTime = new TimeOnly(9, 0),
+            EndTime = new TimeOnly(17, 0),
+            SchedulePreferences = new SchedulePreferences
+            {
+                MinutesPerSlot = 30,
+                ShiftIntervals = 30,
+                UsersPerShift = 1,
+                MaximumShiftDurationMinutes = 120,
+                MaximumShiftsPerWorker = 1,
+            },
+            Name = "Test Schedule",
+        };
+
+        using (var context = new LineUpContext(options))
+        {
+            context.Database.EnsureCreated();
+
+            var controller = new ScheduleController(context);
+
+            // Create a mock ClaimsPrincipal with the required NameIdentifier claim
+            var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
+            var identity = new ClaimsIdentity(claims);
+            var principal = new ClaimsPrincipal(identity);
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = principal },
+            };
+
+            var scheduleDto = new ScheduleDto
+            {
+                DateCoverage = randomSchedule.DateCoverage,
+                StartTime = randomSchedule.StartTime,
+                EndTime = randomSchedule.EndTime,
+                SchedulePreferences = randomSchedule.SchedulePreferences,
+                Name = randomSchedule.Name,
+            };
+
+            // Act
+            var result = await controller.CreateSchedule(scheduleDto);
+
+            // Assert
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result);
+            Assert.Equal(nameof(ScheduleController.GetSchedule), createdResult.ActionName);
+            Assert.NotNull(createdResult.Value);
+
+            var returnedSchedule = Assert.IsType<Schedule>(createdResult.Value);
+            Assert.Equal("test-user-123", returnedSchedule.Auth0UserId);
+            Assert.Equal(randomSchedule.Name, returnedSchedule.Name);
+            Assert.Equal(randomSchedule.StartTime, returnedSchedule.StartTime);
+            Assert.Equal(randomSchedule.EndTime, returnedSchedule.EndTime);
+
+            // Verify that the schedule was actually saved to the database
+            var savedSchedules = await context.Schedules.CountAsync();
+            Assert.Equal(1, savedSchedules);
+        }
+    }
 }
