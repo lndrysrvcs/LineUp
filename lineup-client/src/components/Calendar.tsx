@@ -42,6 +42,7 @@ const Calendar = ({
   const numRows = calculateNumRows();
   const pageDates = getPageDates(currentPage);
 
+  // Calculates the number of rows a calender should have based on the time range and minutes per cell
   function calculateNumRows() {
     if (rangeIs24Hours(range)) {
       return 24 * (60 / minutesPerCell);
@@ -53,6 +54,8 @@ const Calendar = ({
     );
   }
 
+  // Calculates the starting index of each page in pagination based on the included dates
+  // Weeks (and therefore pages) start on Sundays
   function calculatePageStarts() {
     const pageStarts = [0];
     if (dates.length <= 7) {
@@ -67,6 +70,7 @@ const Calendar = ({
     return pageStarts;
   }
 
+  // Gets the dates that should be included on the current page number based on the included dates and page starts
   function getPageDates(page?: number) {
     if (dates.length <= 7) {
       return dates;
@@ -76,6 +80,7 @@ const Calendar = ({
     return dates.slice(pageStarts[page], pageStarts[page + 1]);
   }
 
+  // Determines the appropriate classes to apply to a cell based on its position
   function calculateCellClasses(row: number, col: number) {
     let output = "calendarCell";
 
@@ -113,6 +118,7 @@ const Calendar = ({
     return output;
   }
 
+  // Helper function to determine if there is a gap between days that should be visibly represented
   function needsSpaceAfterCol(col: number) {
     if (col >= pageDates.length - 1) return false;
 
@@ -123,6 +129,7 @@ const Calendar = ({
     }
   }
 
+  // Applies extra space between days when there is a gap in the dates
   function extraColMargin(col: number) {
     const style: React.CSSProperties = {};
     if (col > 0 && needsSpaceAfterCol(col - 1)) {
@@ -134,6 +141,7 @@ const Calendar = ({
     return style;
   }
 
+  // Toggles all cells in a column when the corresponding label is clicked
   function colClicked(date: Date) {
     const colCells = Array.from({ length: numRows }, (_, i) =>
       standardizeDateAndTime(date, addMinutesToTime(range.start, (i * minutesPerCell) as ValidMinutes)),
@@ -145,6 +153,7 @@ const Calendar = ({
     }
   }
 
+  // Tracks the pointer to allow for sweeping across multiple cells for mass selection/deselection
   useEffect(() => {
     const handler = () => setIsPointerDown(false);
     globalThis.addEventListener("pointerup", handler);

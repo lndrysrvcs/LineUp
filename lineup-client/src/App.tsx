@@ -65,7 +65,6 @@ const router = createBrowserRouter([
         ],
       },
       {
-        // or do we want /schedule/:guid/:availabilityguid?
         path: "/availability",
         children: [
           {

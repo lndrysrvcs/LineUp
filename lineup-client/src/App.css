@@ -15,6 +15,9 @@
 
 .home {
   margin: 2rem;
+  background-color: var(--background);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 .inlineButton {
@@ -26,6 +29,7 @@
   border: none;
   text-decoration: underline;
   transition: color 0.25s;
+  background-color: transparent;
 
   &:hover {
     color: var(--primary-hover);
@@ -155,6 +159,9 @@
   text-align: left;
   margin: 1rem;
   font-size: 90%;
+  background-color: var(--background);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 .inputGroup {
@@ -196,6 +203,18 @@
 .generatedScheduleLink {
   font-size: 0.75rem;
   margin-right: 1em;
+}
+
+.availabilityRoot {
+  background-color: var(--background);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.errorPage {
+  background-color: var(--background);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 /* Make sure this is always last (so others can override) */

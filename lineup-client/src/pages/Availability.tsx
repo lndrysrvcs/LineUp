@@ -17,6 +17,8 @@ const Availability = () => {
   const storageKey = `availability-${guid}`;
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
 
+  // Locally store any information the user has entered so that the information can be prefilled if they
+  // refresh the page or navigate away
   const storedForm = (() => {
     try {
       return JSON.parse(localStorage.getItem(storageKey) ?? "{}");
@@ -29,6 +31,7 @@ const Availability = () => {
   const [email, setEmail] = useState<string>(storedForm.email ?? "");
   const [selectedCells, setSelectedCells] = useState<string[]>(storedForm.selectedCells ?? []);
 
+  // Stores the given information in local storage with the given storageKey, if available
   const persistToStorage = (nextName: string, nextEmail: string, nextCells: string[]) => {
     try {
       localStorage.setItem(storageKey, JSON.stringify({ name: nextName, email: nextEmail, selectedCells: nextCells }));
@@ -38,11 +41,12 @@ const Availability = () => {
   };
 
   type CreateAvailabilityProps = {
-    userName: string;
-    userEmail: string;
+    userName: string; // Not a 'username', but the user's input name
+    userEmail: string; // The user's input email
     availabilitySlots: string[]; // full of ISO strings
   };
 
+  // Mutation for creating a new availability from the user's input
   const createAvailabilityMutation = useMutation({
     mutationFn: async (newAvailability: CreateAvailabilityProps) => {
       const res = await fetchWithAuth(`/api/schedule/${guid}/createAvailability`, {
@@ -64,6 +68,7 @@ const Availability = () => {
       return res;
     },
     onSuccess: () => {
+      // Clear the local storage for this form and invalidate the availability query, then navigate to the homepage
       try {
         localStorage.removeItem(storageKey);
       } catch {
@@ -74,11 +79,14 @@ const Availability = () => {
     },
   });
 
+  // If the data is still loading, show a loading message
   if (!data) return <div>Loading...</div>;
 
   const scheduleGenerated = data.shiftAssignments.length > 0;
   const [assignmentColors, assignmentText] = mapAssignments();
 
+  // Maps the shift assignments to colors and text for displaying on the generated schedule
+  // Assigns unique colors to each unique combination of people assigned to a shift
   function mapAssignments() {
     const colors: { [key: string]: string } = {};
     const text: { [key: string]: string } = {};
@@ -109,6 +117,7 @@ const Availability = () => {
     return [colors, text];
   }
 
+  // Called when the user submits the form, calls the create availability mutation after verifying input
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -133,6 +142,10 @@ const Availability = () => {
 
   return (
     <div className="availabilityRoot">
+      {
+        // if a schedule has been generated, show the generated schedule
+        // if not, show the form to add availability
+      }
       {scheduleGenerated ? (
         <>
           <div className="scheduleName">

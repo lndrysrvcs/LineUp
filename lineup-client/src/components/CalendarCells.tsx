@@ -15,6 +15,7 @@ export interface CalendarCellProps {
   text: { [key: string]: string };
 }
 
+// A cell type that can be selected/deselected to indicate availability
 const FillableCell = ({
   time,
   date,
@@ -28,6 +29,7 @@ const FillableCell = ({
   const dateString = standardizeDateAndTime(date, time);
   const isClicked = selectedCells?.includes(dateString);
 
+  // Toggle whether this cell is selected
   function updateCell() {
     if (isClicked) {
       setSelectedCells?.((cells) => cells.filter((cell) => cell !== dateString));
@@ -36,12 +38,14 @@ const FillableCell = ({
     }
   }
 
+  // When the pointer goes down, track whether or not we are enabling cells for a sweeping selection
   function onPointerDown() {
     setIsPointerDown(true);
     setIsEnablingCells(!isClicked);
     updateCell();
   }
 
+  // Used for tracking sweeping across multiple cells to select/deselect them without individually clicking each one
   function onPointerEnter() {
     if (isPointerDown && isClicked !== isEnablingCells) {
       updateCell();
@@ -60,6 +64,8 @@ const FillableCell = ({
   );
 };
 
+// A cell type that is colored based on the provided input and includes text information, but cannot be clicked
+// Used for displaying the generated schedule with the proper shift assignments, sorted by color
 const ColoredCell = ({ time, date, colors, text }: CalendarCellProps) => {
   const dateString = standardizeDateAndTime(date, time);
 

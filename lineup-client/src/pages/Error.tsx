@@ -6,13 +6,15 @@ export default function ErrorPage() {
   const error = useRouteError();
   console.log(error);
 
+  // Remove any toasts if this page is loaded
   useEffect(() => {
     toast.dismiss();
   }, []);
 
+  // Handle route errors with status codes
   if (isRouteErrorResponse(error)) {
     return (
-      <div>
+      <div className="errorPage">
         <h1>
           {error.status} - {error.statusText || error.data}
         </h1>
@@ -24,7 +26,7 @@ export default function ErrorPage() {
 
   // Fallback for unexpected errors
   return (
-    <div>
+    <div className="errorPage">
       <h1>Oops! Something went wrong.</h1>
     </div>
   );

@@ -15,6 +15,8 @@ const EditAvailability = () => {
   const { data: scheduleData } = useQuery(loaderQuery("/api/schedule/{}", availabilityData?.scheduleGuid ?? ""));
   const storageKey = `editAvailability-${availabilityGuid}`;
 
+  // Locally store any information the user has entered so that the information can be prefilled if they
+  // refresh the page or navigate away
   const storedForm = (() => {
     try {
       return JSON.parse(localStorage.getItem(storageKey) ?? "{}");
@@ -27,6 +29,7 @@ const EditAvailability = () => {
   const [email, setEmail] = useState<string>(storedForm.email ?? "");
   const [selectedCells, setSelectedCells] = useState<string[]>(storedForm.selectedCells ?? []);
 
+  // Stores the given information in local storage with the given storageKey, if available
   const persistToStorage = (nextName: string, nextEmail: string, nextCells: string[]) => {
     try {
       localStorage.setItem(storageKey, JSON.stringify({ name: nextName, email: nextEmail, selectedCells: nextCells }));
@@ -35,6 +38,9 @@ const EditAvailability = () => {
     }
   };
 
+  // Collects the user's currently known availability information to prefill the form
+  // If the user has started editing the form and has any information in local storage,
+  // prefills with that instead
   useEffect(() => {
     if (!availabilityData) return;
 
@@ -48,11 +54,12 @@ const EditAvailability = () => {
   }, [availabilityData]);
 
   type EditAvailabilityProps = {
-    userName: string;
-    userEmail: string;
-    availabilitySlots: string[];
+    userName: string; // Not a 'username', but the user's input name
+    userEmail: string; // The user's input email
+    availabilitySlots: string[]; // full of ISO strings
   };
 
+  // Mutation for editing an existing availability with the user's input
   const updateAvailabilityMutation = useMutation({
     mutationFn: async (updatedAvailability: EditAvailabilityProps) => {
       const res = await fetchWithAuth(`/api/availability/${availabilityGuid}/edit`, {
@@ -70,6 +77,7 @@ const EditAvailability = () => {
       return true;
     },
     onSuccess: () => {
+      // Clear the local storage for this form and invalidate the availability query, then navigate to the homepage
       try {
         localStorage.removeItem(storageKey);
       } catch {
@@ -80,12 +88,14 @@ const EditAvailability = () => {
     },
   });
 
+  // If the availability or schedule data is still loading, show a loading message
   if (!availabilityData || !scheduleData) {
     return <div>Loading...</div>;
   }
 
   const scheduleGenerated = scheduleData.shiftAssignments.length > 0;
 
+  // Called when the user submits the form, calls the update availability mutation after verifying input
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -110,6 +120,10 @@ const EditAvailability = () => {
 
   return (
     <div className="availabilityRoot">
+      {
+        // if a schedule has been generated, show a message stating so with a link to the generated schedule
+        // if not, show the form to edit availability
+      }
       {scheduleGenerated ? (
         <div>
           <div>Schedule already generated. Editing availability is closed</div>
@@ -142,22 +156,6 @@ const EditAvailability = () => {
                   }}
                   required
                 />
-              </div>
-              <div>
-                {/*
-                <label htmlFor="email" className="required">
-                  Email
-                </label>
-                <br />
-                <input
-                  className="input"
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                */}
               </div>
             </div>
             <div>
