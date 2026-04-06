@@ -7,13 +7,13 @@ public interface IEmailService
 {
     Task SendShiftAssignmentEmail(bool updated, Availability availability);
 
-    Task SendAvailabilityConfirmationEmail(Availability availability);
+    Task SendAvailabilityConfirmationEmail(bool updated, Availability availability);
 
     public static string BuildShiftAssignmentLi(Availability availability)
     {
         if (availability.Schedule.ShiftAssignments == null)
             return string.Empty;
-
+        
         List<ShiftAssignment> myAssignments = availability
             .Schedule.ShiftAssignments.Where(sa => sa.AvailabilityDbId == availability.Id)
             .OrderBy(sa => sa.StartTime)
@@ -69,9 +69,7 @@ public interface IEmailService
             builder.Append("<ul>");
             foreach (var assignment in group)
             {
-                builder.Append(
-                    $"<li>{assignment.StartTime:HH:mm} - {assignment.EndTime:HH:mm}</li>"
-                );
+                builder.Append($"<li>{assignment.StartTime:t} - {assignment.EndTime:t}</li>");
             }
             builder.Append("</ul></li>");
         }

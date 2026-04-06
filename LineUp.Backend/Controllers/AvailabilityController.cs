@@ -50,7 +50,7 @@ public class AvailabilityController(LineUpContext context, IEmailService emailSe
         availabilityToUpdate.AvailabilitySlots =
             availability.AvailabilitySlots ?? availabilityToUpdate.AvailabilitySlots;
 
-        await emailService.SendAvailabilityConfirmationEmail(availabilityToUpdate);
+        await emailService.SendAvailabilityConfirmationEmail(true, availabilityToUpdate);
 
         await context.SaveChangesAsync();
 

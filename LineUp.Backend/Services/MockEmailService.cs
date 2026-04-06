@@ -13,7 +13,7 @@ public class MockEmailService : IEmailService
         return Task.CompletedTask;
     }
 
-    public Task SendAvailabilityConfirmationEmail(Availability availability)
+    public Task SendAvailabilityConfirmationEmail(bool updated, Availability availability)
     {
         SentAvailabilityConfirmationEmails.Add(availability);
         return Task.CompletedTask;

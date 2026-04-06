@@ -18,7 +18,8 @@ public class ResendEmailService(IResend resend) : IEmailService
         {
             From = from,
             To = { availability.UserEmail },
-            Subject = $"Your shift assignments for {availability.Schedule.Name}",
+            Subject =
+                $"Your shift {(updated ? "changes" : "assignments")} for {availability.Schedule.Name}",
             Template = new EmailMessageTemplate
             {
                 TemplateId = new Guid("c8b5577b-739e-4e13-9b4d-18fd42d9d79d"),
@@ -36,7 +37,7 @@ public class ResendEmailService(IResend resend) : IEmailService
         Console.WriteLine("Email sent successfully!");
     }
 
-    public async Task SendAvailabilityConfirmationEmail(Availability availability)
+    public async Task SendAvailabilityConfirmationEmail(bool updated, Availability availability)
     {
         if (availability.UserEmail == null)
             return;
@@ -45,7 +46,8 @@ public class ResendEmailService(IResend resend) : IEmailService
         {
             From = from,
             To = { availability.UserEmail },
-            Subject = $"{availability.Schedule.Name} - Submission confirmation",
+            Subject =
+                $"{availability.Schedule.Name} - Submission {(updated ? "edited" : "confirmation")}",
             Template = new EmailMessageTemplate
             {
                 TemplateId = new Guid("dd88efc4-8d9c-45e1-aa70-b7fe8a0e41c3"),
