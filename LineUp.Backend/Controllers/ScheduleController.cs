@@ -198,6 +198,8 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
             .ShiftAssignments.Where(shiftAssignment => shiftAssignment.ScheduleId == schedule.Id)
             .ExecuteDeleteAsync();
 
+        await context.SaveChangesAsync();
+
         if (result.Assignments != null)
             await context.ShiftAssignments.AddRangeAsync(result.Assignments);
 
