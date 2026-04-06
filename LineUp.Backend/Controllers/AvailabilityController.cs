@@ -31,15 +31,6 @@ public class AvailabilityController(LineUpContext context, IEmailService emailSe
         if (result == null)
             return NotFound();
 
-        if (
-            await context.ShiftAssignments.AnyAsync(sa =>
-                sa.Availability != null && sa.Availability.Id == result.Id
-            )
-        )
-        {
-            return Forbid();
-        }
-
         return Ok(result);
     }
 

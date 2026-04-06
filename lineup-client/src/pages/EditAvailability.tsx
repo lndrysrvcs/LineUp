@@ -114,7 +114,7 @@ const EditAvailability = () => {
         <div>
           <div>Schedule already generated. Editing availability is closed</div>
           <div>
-            <Link to={`/schedule/${scheduleData.guid}`} className="generatedScheduleLink">
+            <Link to={`/schedule/${availabilityData.scheduleGuid}`} className="generatedScheduleLink">
               View Schedule
             </Link>
           </div>
