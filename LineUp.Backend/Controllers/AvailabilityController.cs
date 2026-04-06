@@ -39,9 +39,9 @@ public class AvailabilityController(LineUpContext context, IEmailService emailSe
         [FromBody] AvailabilityUpdateDTO availability
     )
     {
-        var availabilityToUpdate = await context.Availabilities.FirstOrDefaultAsync(a =>
-            a.Guid == guid
-        );
+        var availabilityToUpdate = await context
+            .Availabilities.Include(a => a.Schedule)
+            .FirstOrDefaultAsync(a => a.Guid == guid);
         if (availabilityToUpdate == null)
             return NotFound();
 
