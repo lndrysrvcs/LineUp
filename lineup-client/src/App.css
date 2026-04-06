@@ -14,7 +14,7 @@
 }
 
 .home {
-  margin: 2rem;
+  margin: 1rem;
   background-color: var(--background);
   border-radius: 1rem;
   padding: 1rem;
@@ -209,6 +209,7 @@
   background-color: var(--background);
   border-radius: 1rem;
   padding: 1rem;
+  margin: 1rem;
 }
 
 .errorPage {
