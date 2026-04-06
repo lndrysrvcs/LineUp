@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using LineUp.Backend;
+using LineUp.Backend.Services;
 using LineUp.Backend.Support;
 using LineUp.Core.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Resend;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -85,6 +87,26 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 builder.AddNpgsqlDbContext<LineUpContext>("lineupdb");
+
+var resendApiKey = builder.Configuration["Parameters:resend-api-key"] ?? Environment.GetEnvironmentVariable("RESEND_APITOKEN");
+
+if (string.IsNullOrEmpty(resendApiKey))
+{
+    builder.Services.AddScoped<IEmailService, MockEmailService>();
+    Console.WriteLine("WARNING: No RESEND_APITOKEN environment variable or Parameters:resend-api-key user secret set. Mocking email service.");
+}
+else
+{
+    builder.Services.AddHttpClient<ResendClient>();
+    builder.Services.Configure<ResendClientOptions>(o =>
+    {
+        o.ApiToken = resendApiKey;
+    });
+    builder.Services.AddTransient<IResend, ResendClient>();
+
+    builder.Services.AddScoped<IEmailService, ResendEmailService>();
+}
+
 
 var app = builder.Build();
 

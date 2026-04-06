@@ -1,4 +1,5 @@
 using LineUp.Backend.Models;
+using LineUp.Backend.Services;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,19 +8,9 @@ namespace LineUp.Backend.Controllers;
 
 [Route("api/availability")]
 [ApiController]
-public class AvailabilityController(LineUpContext context) : ControllerBase
+public class AvailabilityController(LineUpContext context, IEmailService emailService)
+    : ControllerBase
 {
-    [HttpGet("public")]
-    public IActionResult Public()
-    {
-        return Ok(
-            new
-            {
-                Message = "Hello from a public endpoint! You don't need to be authenticated to see this.",
-            }
-        );
-    }
-
     [HttpGet("{guid:guid}/exists")]
     public IActionResult Exists(Guid guid)
     {
@@ -58,6 +49,8 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         availabilityToUpdate.UserEmail = availability.UserEmail ?? availabilityToUpdate.UserEmail;
         availabilityToUpdate.AvailabilitySlots =
             availability.AvailabilitySlots ?? availabilityToUpdate.AvailabilitySlots;
+
+        await emailService.SendAvailabilityConfirmationEmail(availabilityToUpdate);
 
         await context.SaveChangesAsync();
 

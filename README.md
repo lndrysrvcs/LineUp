@@ -21,6 +21,12 @@ It is designed to help teams ensure that everyone is available to work during an
    ```bash
    dotnet restore
    ```
+   You will need to set the Resend API key with:
+   ```bash
+   aspire secret set Parameters:resend-api-key re_keygobbeldygook
+   ```
+   
+   The app will still work but will not send emails.
 
 2. **Install frontend dependencies**
 
