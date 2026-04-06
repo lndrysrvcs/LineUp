@@ -271,6 +271,7 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
 
         return CreatedAtAction(
             nameof(AvailabilityController.GetAvailability),
+            "Availability",
             new { guid = availabilityToInsert.Guid },
             availabilityToInsert
         );
