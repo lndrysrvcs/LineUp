@@ -28,9 +28,19 @@ public class AvailabilityController(LineUpContext context, IEmailService emailSe
         var result = await context
             .Availabilities.Include(a => a.Schedule)
             .FirstOrDefaultAsync(a => a.Guid == guid);
-        if (result != null)
-            return Ok(result);
-        return NotFound();
+        if (result == null)
+            return NotFound();
+
+        if (
+            await context.ShiftAssignments.AnyAsync(sa =>
+                sa.Availability != null && sa.Availability.Id == result.Id
+            )
+        )
+        {
+            return Forbid();
+        }
+
+        return Ok(result);
     }
 
     [HttpPatch("{guid:guid}/edit")]
@@ -44,6 +54,15 @@ public class AvailabilityController(LineUpContext context, IEmailService emailSe
         );
         if (availabilityToUpdate == null)
             return NotFound();
+
+        if (
+            await context.ShiftAssignments.AnyAsync(sa =>
+                sa.Availability != null && sa.Availability.Id == availabilityToUpdate.Id
+            )
+        )
+        {
+            return Forbid();
+        }
 
         availabilityToUpdate.UserName = availability.UserName ?? availabilityToUpdate.UserName;
         availabilityToUpdate.UserEmail = availability.UserEmail ?? availabilityToUpdate.UserEmail;
