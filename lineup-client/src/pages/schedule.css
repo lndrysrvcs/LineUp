@@ -31,3 +31,36 @@
     border-color: var(--required);
   }
 }
+
+.respondentList ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+  list-style-type: none;
+  padding: 0rem 0.5rem 0.2rem 0.5rem;
+}
+
+.respondentList li {
+  background-color: var(--background-alt);
+  margin-bottom: 0.1rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.8em;
+  overflow-wrap: break-word;
+  cursor: pointer;
+  transition: color 0.25s;
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+}
+
+.respondentList li.selectedRespondent {
+  color: var(--primary-hover);
+  background-color: var(--primary-active);
+  font-weight: 800;
+
+  &:hover {
+    background-color: var(--primary-active-hover);
+  }
+}

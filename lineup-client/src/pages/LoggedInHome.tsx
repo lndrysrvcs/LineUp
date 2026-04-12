@@ -103,16 +103,18 @@ const LoggedInHome = () => {
               New Schedule
             </button>{" "}
           </div>
-          {schedules.length > 0 ? (
-            <Table
-              headers={headers}
-              data={schedules}
-              renderRow={renderRow}
-              columnWidths={["25%", "15%", "", "16%", "13.5%"]}
-            />
-          ) : (
-            <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
-          )}{" "}
+          <div className="tableWrapper">
+            {schedules.length > 0 ? (
+              <Table
+                headers={headers}
+                data={schedules}
+                renderRow={renderRow}
+                columnWidths={["25%", "15%", "", "16%", "13.5%"]}
+              />
+            ) : (
+              <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
+            )}{" "}
+          </div>
         </>
       )}
     </div>

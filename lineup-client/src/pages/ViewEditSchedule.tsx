@@ -1,5 +1,4 @@
 import type { TimeRange, ValidMinutes } from "@/types";
-//import { useAuth0 } from "@auth0/auth0-react";
 import { Calendar } from "@/components/Calendar";
 import { ColoredCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
@@ -31,6 +30,7 @@ const ViewEditSchedule = () => {
   const { guid } = useParams<{ guid: string }>();
   const { data } = useQuery(loaderQuery("/api/schedule/{}/details", guid!));
   const [focusedTime, setFocusedTime] = React.useState<string | null>(null);
+  const [selectedRespondent, setSelectedRespondent] = React.useState<string | null>(null);
   const scheduleGenerated = data.shiftAssignments.length > 0;
 
   // Determines the maximum number of respondents available for a given timeslot
@@ -51,8 +51,20 @@ const ViewEditSchedule = () => {
     const colors: { [key: string]: string } = {};
     const maxAvailability = getMaxAvailability();
     for (const slot of availabilityPerTime.keys()) {
-      colors[slot] =
-        `color-mix(in srgb, var(--primary-active) ${(availabilityPerTime.get(slot)!.length / maxAvailability) * 100}%, transparent)`;
+      // If a respondent is selected, only show their availability
+      // Otherwise, color cells based on number of respondents available for that timeslot
+      if (selectedRespondent) {
+        const userSlots = availabilityByUser.get(selectedRespondent);
+
+        if (userSlots?.has(slot)) {
+          colors[slot] = "var(--primary-active)";
+        } else {
+          colors[slot] = "transparent";
+        }
+      } else {
+        colors[slot] =
+          `color-mix(in srgb, var(--primary-active) ${(availabilityPerTime.get(slot)!.length / maxAvailability) * 100}%, transparent)`;
+      }
     }
     return colors;
   }
@@ -177,7 +189,11 @@ const ViewEditSchedule = () => {
   // If the schedule data is still loading, show a loading message
   if (!data) return <div>Loading...</div>;
 
+  // The list of respondents available for each timeslot
   const availabilityPerTime = getAvailabilityPerTime();
+
+  // The list of all current respondents
+  const respondentNames = Array.from(new Set((data.availabilities as { userName: string }[]).map((a) => a.userName)));
 
   // Helper function to determine how many respondents are available for each timeslot based on the
   // fetched availability data
@@ -194,6 +210,21 @@ const ViewEditSchedule = () => {
     }
 
     return timeSlots;
+  }
+
+  // The list of timeslots for which a certain user is available
+  const availabilityByUser = getAvailabilityByUser();
+
+  // Helper function to determine which timeslots a given respondent is available for based on the
+  // fetched availability data
+  function getAvailabilityByUser() {
+    const map = new Map<string, Set<string>>();
+
+    for (const availability of data.availabilities) {
+      map.set(availability.userName, new Set(availability.availabilitySlots));
+    }
+
+    return map;
   }
 
   // Handles changes to text and number inputs, updating the scheduleData accordingly
@@ -318,9 +349,6 @@ const ViewEditSchedule = () => {
         <div className="scheduleName">
           <b>{data.name}</b>
         </div>
-        <h4 className="pageSubHeader">
-          {data.availabilities.length} Respondent{data.availabilities.length !== 1 ? "s" : ""}
-        </h4>
       </div>
       {
         // calendar showing the respondents' availabilities
@@ -333,6 +361,30 @@ const ViewEditSchedule = () => {
         colors={calculateColors()}
         setFocusedCell={setFocusedTime}
       />
+      <div className="respondentList">
+        {
+          // display a list of respondents, if there are any, in a grid format
+          // clicking on a respondent filters the calendar to only show their availability
+        }
+        <h4 className="pageSubHeader">
+          {data.availabilities.length} Respondent{data.availabilities.length !== 1 ? "s" : ""}
+        </h4>
+        {respondentNames.length > 0 ? (
+          <ul>
+            {respondentNames.map((name) => (
+              <li
+                key={name}
+                className={selectedRespondent === name ? "selectedRespondent" : ""}
+                onClick={() => setSelectedRespondent((prev) => (prev === name ? null : name))}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="pageSubHeader">No respondents yet.</div>
+        )}
+      </div>
       <div className="submitContainer">
         {
           // if a schedule is generated, show a link to the generated schedule

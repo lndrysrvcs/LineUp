@@ -1,5 +1,4 @@
 import type { Time, TimeRange, ValidMinutes } from "@/types";
-//import { useAuth0 } from "@auth0/auth0-react";
 import { queryClient, useApi } from "@/utils/api";
 import { addToasts } from "@/utils/db";
 import { formatTimeForInput, getValidMinutesForInterval, parseTimeString, toMinutes } from "@/utils/time.ts";
