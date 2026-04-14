@@ -3,6 +3,9 @@
   font-family: sans-serif;
   font-size: 0.75rem;
   margin: auto;
+
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .calendarLabel {
@@ -57,7 +60,7 @@
 .calendarCell {
   border-right: 1px solid var(--primary);
   min-width: 0;
-  touch-action: pinch-zoom;
+  touch-action: pan-x;
 }
 
 .calendarTopBorder {

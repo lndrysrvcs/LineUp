@@ -52,12 +52,30 @@ const FillableCell = ({
     }
   }
 
+  const lastProcessedCell = React.useRef<string | null>(null);
+
+  function onPointerMove(e: React.PointerEvent) {
+    if (!isPointerDown) return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const button = el?.closest<HTMLElement>("[data-cell-key]");
+    if (!button || button === e.currentTarget) return;
+    const cellKey = button.dataset.cellKey!;
+    if (cellKey === lastProcessedCell.current) return;
+    lastProcessedCell.current = cellKey;
+    const isSelected = selectedCells?.includes(cellKey);
+    if (isSelected !== isEnablingCells) {
+      setSelectedCells?.((cells) => (isEnablingCells ? [...cells, cellKey] : cells.filter((c) => c !== cellKey)));
+    }
+  }
+
   return (
     <button
       type="button"
+      data-cell-key={dateString}
       onPointerDown={onPointerDown}
       onPointerUp={() => setIsPointerDown(false)}
       onPointerEnter={onPointerEnter}
+      onPointerMove={onPointerMove}
       className={"unstyledButton calendarInnerCell" + (isClicked ? " clicked" : "")}
       title={dayNumberToWeekday(date.getDay()) + " " + formatTime(time)}
     ></button>

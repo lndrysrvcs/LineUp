@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useCallback, useEffect } from "react";
-import { registerGetToken } from "./auth-token";
+import { registerGetToken, registerLogout } from "./auth-token";
 import { AuthContext, type AuthContextValue } from "./context";
 
 async function fetchWithoutAuth(path: string, init?: RequestInit) {
@@ -26,7 +26,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       registerGetToken(() => Promise.resolve(""));
     }
-  }, [isAuthenticated, getAccessTokenSilently, isLoading]);
+    registerLogout(logout);
+  }, [isAuthenticated, getAccessTokenSilently, isLoading, logout]);
 
   const fetchWithAuth = useCallback(
     async (path: string, init?: RequestInit) => {
@@ -53,7 +54,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             },
           });
 
-          return new Response(null, { status: 401 });
+          throw new Response(null, { status: 401 });
         }
 
         throw err;

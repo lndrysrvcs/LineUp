@@ -278,6 +278,7 @@ const NewSchedule = () => {
       {
         // button to navigate back home
       }
+      <title>New Schedule - LineUp</title>
       <button
         className="returnButton"
         onClick={() => {

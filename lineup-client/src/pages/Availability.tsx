@@ -2,7 +2,7 @@ import { Calendar } from "@/components/Calendar";
 import { ColoredCell, FillableCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
 import { queryClient, useApi } from "@/utils/api";
-import { addToasts, loaderQuery } from "@/utils/db";
+import { addToasts, unauthorizedLoaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -12,7 +12,7 @@ const Availability = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid } = useParams();
-  const { data } = useQuery(loaderQuery("/api/schedule/{}", guid!));
+  const { data } = useQuery(unauthorizedLoaderQuery("/api/schedule/{}", guid!));
   const [focusedTime, setFocusedTime] = useState<string | null>(null);
   const storageKey = `availability-${guid}`;
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
@@ -148,6 +148,7 @@ const Availability = () => {
         // if a schedule has been generated, show the generated schedule
         // if not, show the form to add availability
       }
+      <title>{data.name + " - LineUp"}</title>
       {scheduleGenerated ? (
         <>
           <div className="scheduleName">
@@ -196,7 +197,7 @@ const Availability = () => {
           <div className="scheduleName">
             Add availability for <b>{data.name}</b>
           </div>
-          <form onSubmit={handleSubmit} className="newSchedule">
+          <form onSubmit={handleSubmit} className="scheduleForm">
             <div className="inputGroup">
               <div>
                 <label htmlFor="name" className="required">

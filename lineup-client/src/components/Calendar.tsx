@@ -161,17 +161,7 @@ const Calendar = ({
   });
 
   return (
-    <div
-      className="calendarWrapper"
-      style={{
-        maxWidth: pageDates.length * 200,
-        gridTemplateColumns: `auto repeat(${pageDates.length}, 1fr)`,
-        gridTemplateRows:
-          minutesPerCell < 40
-            ? `auto auto repeat(${numRows + 1}, 1em) auto`
-            : `auto auto repeat(${numRows + 1}, 1.5em)`,
-      }}
-    >
+    <div className="calendarSuperWrapper">
       <div className="pageButtonWrapper">
         {currentPage > 0 ? (
           <button
@@ -196,57 +186,68 @@ const Calendar = ({
           <div />
         )}
       </div>
+      <div
+        className="calendarWrapper"
+        style={{
+          maxWidth: pageDates.length * 200,
+          gridTemplateColumns: `95px repeat(${pageDates.length}, minmax(95px, 1fr))`,
+          gridTemplateRows:
+            minutesPerCell < 40
+              ? `auto auto repeat(${numRows + 1}, 1em) auto`
+              : `auto auto repeat(${numRows}, 1.5em) auto`,
+        }}
+      >
+        <div className="calendarBlankCell" />
+        {pageDates.map((date, col) => (
+          <button
+            type="button"
+            key={date.toISOString()}
+            className="calendarLabel unstyledButton"
+            style={extraColMargin(col)}
+            onClick={() => colClicked(date)}
+            disabled={!setSelectedCells}
+          >
+            {dayNumberToWeekday(date.getDay())}
+            <br />
+            {`${date.getMonth() + 1}/${date.getDate()}`}
+          </button>
+        ))}
 
-      <div className="calendarBlankCell" />
-      {pageDates.map((date, col) => (
-        <button
-          type="button"
-          key={date.toISOString()}
-          className="calendarLabel unstyledButton"
-          style={extraColMargin(col)}
-          onClick={() => colClicked(date)}
-          disabled={!setSelectedCells}
-        >
-          {dayNumberToWeekday(date.getDay())}
-          <br />
-          {`${date.getMonth() + 1}/${date.getDate()}`}
-        </button>
-      ))}
-
-      {Array.from({ length: numRows }).map((_, row) => (
-        <Fragment key={row}>
-          <div className="calendarLabel calendarRowLabel">
-            {getTimeIncrementLabel(row, range.start, minutesPerCell)}
-          </div>
-          {pageDates.map((date, col) => (
-            <div
-              key={date.toISOString()}
-              className={calculateCellClasses(row, col)}
-              style={extraColMargin(col)}
-              onPointerEnter={() =>
-                setFocusedCell?.(
-                  standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
-                )
-              }
-              onPointerLeave={() => setFocusedCell?.(null)}
-            >
-              <Cell
-                time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
-                date={date}
-                selectedCells={selectedCells}
-                setSelectedCells={setSelectedCells}
-                isPointerDown={isPointerDown}
-                setIsPointerDown={setIsPointerDown}
-                isEnablingCells={isEnablingCells}
-                setIsEnablingCells={setIsEnablingCells}
-                colors={colors ?? {}}
-                text={text ?? {}}
-              />
+        {Array.from({ length: numRows }).map((_, row) => (
+          <Fragment key={row}>
+            <div className="calendarLabel calendarRowLabel">
+              {getTimeIncrementLabel(row, range.start, minutesPerCell)}
             </div>
-          ))}
-        </Fragment>
-      ))}
-      <div className="calendarLabel calendarRowLabel">{formatTime(range.end)}</div>
+            {pageDates.map((date, col) => (
+              <div
+                key={date.toISOString()}
+                className={calculateCellClasses(row, col)}
+                style={extraColMargin(col)}
+                onPointerEnter={() =>
+                  setFocusedCell?.(
+                    standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
+                  )
+                }
+                onPointerLeave={() => setFocusedCell?.(null)}
+              >
+                <Cell
+                  time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
+                  date={date}
+                  selectedCells={selectedCells}
+                  setSelectedCells={setSelectedCells}
+                  isPointerDown={isPointerDown}
+                  setIsPointerDown={setIsPointerDown}
+                  isEnablingCells={isEnablingCells}
+                  setIsEnablingCells={setIsEnablingCells}
+                  colors={colors ?? {}}
+                  text={text ?? {}}
+                />
+              </div>
+            ))}
+          </Fragment>
+        ))}
+        <div className="calendarLabel calendarRowLabel">{formatTime(range.end)}</div>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Calendar } from "@/components/Calendar";
 import { ColoredCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
 import { queryClient, useApi } from "@/utils/api";
-import { addToasts, loaderQuery } from "@/utils/db";
+import { addToasts, authorizedLoaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time.ts";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -28,7 +28,7 @@ const ViewEditSchedule = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid } = useParams<{ guid: string }>();
-  const { data } = useQuery(loaderQuery("/api/schedule/{}/details", guid!));
+  const { data } = useQuery(authorizedLoaderQuery("/api/schedule/{}/details", guid!));
   const [focusedTime, setFocusedTime] = React.useState<string | null>(null);
   const [selectedRespondent, setSelectedRespondent] = React.useState<string | null>(null);
   const scheduleGenerated = data.shiftAssignments.length > 0;
@@ -336,6 +336,7 @@ const ViewEditSchedule = () => {
       {
         // button to navigate back home
       }
+      <title>{scheduleData.name + " - LineUp"}</title>
       <button
         className="returnButton"
         onClick={() => {

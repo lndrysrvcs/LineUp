@@ -1,4 +1,3 @@
-// App.tsx
 import "@/App.css";
 import Topbar from "@/components/Topbar";
 import Availability from "@/pages/Availability";
@@ -8,7 +7,7 @@ import Home from "@/pages/Home";
 import NewSchedule from "@/pages/NewSchedule";
 import ViewEditSchedule from "@/pages/ViewEditSchedule";
 import { queryClient } from "@/utils/api";
-import { loaderQuery } from "@/utils/db";
+import { authorizedLoaderQuery, unauthorizedLoaderQuery } from "@/utils/db";
 import { createBrowserRouter, Navigate, Outlet, RouterProvider, type LoaderFunctionArgs } from "react-router";
 
 // Wrap Topbar as a layout route so it wraps all pages
@@ -21,15 +20,15 @@ function Layout() {
 }
 
 async function availabilityLoader({ params }: LoaderFunctionArgs) {
-  return queryClient.ensureQueryData(loaderQuery("/api/schedule/{}", params.guid!));
+  return queryClient.ensureQueryData(unauthorizedLoaderQuery("/api/schedule/{}", params.guid!));
 }
 
 async function scheduleLoader({ params }: LoaderFunctionArgs) {
-  return queryClient.ensureQueryData(loaderQuery("/api/schedule/{}/details", params.guid!));
+  return queryClient.ensureQueryData(authorizedLoaderQuery("/api/schedule/{}/details", params.guid!));
 }
 
 async function editAvailabilityLoader({ params }: LoaderFunctionArgs) {
-  return queryClient.ensureQueryData(loaderQuery("/api/availability/{}", params.guid!));
+  return queryClient.ensureQueryData(unauthorizedLoaderQuery("/api/availability/{}", params.guid!));
 }
 
 const router = createBrowserRouter([
