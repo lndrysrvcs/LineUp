@@ -1,17 +1,16 @@
 import type { TimeRange, ValidMinutes } from "@/types";
-//import { useAuth0 } from "@auth0/auth0-react";
 import { Calendar } from "@/components/Calendar";
 import { ColoredCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
 import { queryClient, useApi } from "@/utils/api";
-import { addToasts, loaderQuery } from "@/utils/db";
+import { addToasts, authorizedLoaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time.ts";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { type MouseEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import "../dateinput.css";
-import "./newSchedule.css";
+import "./schedule.css";
 
 interface ScheduleData {
   name: string; //the name of the event
@@ -29,10 +28,13 @@ const ViewEditSchedule = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid } = useParams<{ guid: string }>();
-  const { data } = useQuery(loaderQuery("/api/schedule/{}/details", guid!));
+  const { data } = useQuery(authorizedLoaderQuery("/api/schedule/{}/details", guid!));
   const [focusedTime, setFocusedTime] = React.useState<string | null>(null);
+  const [selectedRespondent, setSelectedRespondent] = React.useState<string | null>(null);
   const scheduleGenerated = data.shiftAssignments.length > 0;
 
+  // Determines the maximum number of respondents available for a given timeslot
+  // Used in calculating the color intensity for each cell in the calendar
   function getMaxAvailability() {
     let max = 0;
     for (const slot of availabilityPerTime.values()) {
@@ -43,12 +45,26 @@ const ViewEditSchedule = () => {
     return max;
   }
 
+  // Calculates the color of the cell based on how many respondents are available
+  // for the corresponding timeslot
   function calculateColors() {
     const colors: { [key: string]: string } = {};
     const maxAvailability = getMaxAvailability();
     for (const slot of availabilityPerTime.keys()) {
-      colors[slot] =
-        `color-mix(in srgb, var(--primary-active) ${(availabilityPerTime.get(slot)!.length / maxAvailability) * 100}%, transparent)`;
+      // If a respondent is selected, only show their availability
+      // Otherwise, color cells based on number of respondents available for that timeslot
+      if (selectedRespondent) {
+        const userSlots = availabilityByUser.get(selectedRespondent);
+
+        if (userSlots?.has(slot)) {
+          colors[slot] = "var(--primary-active)";
+        } else {
+          colors[slot] = "transparent";
+        }
+      } else {
+        colors[slot] =
+          `color-mix(in srgb, var(--primary-active) ${(availabilityPerTime.get(slot)!.length / maxAvailability) * 100}%, transparent)`;
+      }
     }
     return colors;
   }
@@ -65,6 +81,7 @@ const ViewEditSchedule = () => {
     };
   };
 
+  // Mutation for editing the schedule preferences with the user's input
   const updateScheduleMutation = useMutation({
     mutationFn: async (updatedSchedule: EditScheduleProps) => {
       const res = await fetchWithAuth(`/api/schedule/${guid}`, {
@@ -82,10 +99,13 @@ const ViewEditSchedule = () => {
       return true;
     },
     onSuccess: () => {
+      // Invalidate the schedules query to update the schedule data with the new preferences
+      // Does not send the user back to the homescreen
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
     },
   });
 
+  // Mutation for deleting the schedule
   const deleteScheduleMutation = useMutation({
     mutationFn: async () => {
       const res = await fetchWithAuth(`/api/schedule/${guid}`, {
@@ -99,11 +119,13 @@ const ViewEditSchedule = () => {
       return true;
     },
     onSuccess: () => {
+      // Invalidate the schedules query and navigate back home since this schedule no longer exists
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
       navigate("/");
     },
   });
 
+  // Mutation for generating the schedule based on the current preferences and responses
   const generateScheduleMutation = useMutation({
     mutationFn: async () => {
       const res = await fetchWithAuth(`/api/schedule/${guid}/generateSchedule`, {
@@ -120,6 +142,8 @@ const ViewEditSchedule = () => {
       return true;
     },
     onSuccess: () => {
+      // Invalidate the schedules query
+      // Does not send the user back to the homescreen
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
     },
   });
@@ -135,9 +159,9 @@ const ViewEditSchedule = () => {
     maxShifts: undefined,
   });
 
+  // When the page is loaded, fill in information about the schedule based on the fetched data
   React.useEffect(() => {
     if (!data) return;
-    console.log("Fetched schedule:", data);
     setScheduleData({
       name: data.name,
       shiftTimes: data.schedulePreferences?.minutesPerSlot || 15,
@@ -162,10 +186,17 @@ const ViewEditSchedule = () => {
     });
   }, [data]);
 
+  // If the schedule data is still loading, show a loading message
   if (!data) return <div>Loading...</div>;
 
+  // The list of respondents available for each timeslot
   const availabilityPerTime = getAvailabilityPerTime();
 
+  // The list of all current respondents
+  const respondentNames = Array.from(new Set((data.availabilities as { userName: string }[]).map((a) => a.userName)));
+
+  // Helper function to determine how many respondents are available for each timeslot based on the
+  // fetched availability data
   function getAvailabilityPerTime() {
     const timeSlots = new Map<string, string[]>();
     for (const availability of data.availabilities) {
@@ -181,6 +212,22 @@ const ViewEditSchedule = () => {
     return timeSlots;
   }
 
+  // The list of timeslots for which a certain user is available
+  const availabilityByUser = getAvailabilityByUser();
+
+  // Helper function to determine which timeslots a given respondent is available for based on the
+  // fetched availability data
+  function getAvailabilityByUser() {
+    const map = new Map<string, Set<string>>();
+
+    for (const availability of data.availabilities) {
+      map.set(availability.userName, new Set(availability.availabilitySlots));
+    }
+
+    return map;
+  }
+
+  // Handles changes to text and number inputs, updating the scheduleData accordingly
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
 
@@ -197,6 +244,8 @@ const ViewEditSchedule = () => {
     });
   };
 
+  // Handles numeric input on blur to emulate the same snapping behavior as the time inputs
+  // Specifically used for the max shift length input, which must snap to a multiple of the shift interval
   const handleNumberBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (value === "") return;
@@ -220,6 +269,7 @@ const ViewEditSchedule = () => {
     }));
   };
 
+  // Helper function that snaps a number to the nearest valid value based on a step and minimum value
   const snapToStep = (value: number, step: number, min: number) => {
     if (value < min) return min;
 
@@ -230,6 +280,7 @@ const ViewEditSchedule = () => {
     return Math.abs(value - lower) <= Math.abs(value - upper) ? lower : upper;
   };
 
+  // Called when the user submits the form, calls the update schedule mutation
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -247,6 +298,9 @@ const ViewEditSchedule = () => {
     );
   };
 
+  // Called when the user clicks the generate schedule button, calls the generate schedule mutation
+  // after confirming with the user
+  // Also allows for re-generating the schedule if one has already been generated
   const handleGenerate = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -264,6 +318,8 @@ const ViewEditSchedule = () => {
     addToasts(generateScheduleMutation.mutateAsync(), "Generating schedule... This may take a while...");
   };
 
+  // Called when the user clicks the delete schedule button, calls the delete schedule mutation
+  // after confirming with the user
   const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -272,10 +328,15 @@ const ViewEditSchedule = () => {
     addToasts(deleteScheduleMutation.mutateAsync());
   };
 
+  // If the schedule data is still loading, show a loading message
   if (!scheduleData) return <div>Loading...</div>;
 
   return (
     <div className="newSchedule">
+      {
+        // button to navigate back home
+      }
+      <title>{scheduleData.name + " - LineUp"}</title>
       <button
         className="returnButton"
         onClick={() => {
@@ -289,10 +350,10 @@ const ViewEditSchedule = () => {
         <div className="scheduleName">
           <b>{data.name}</b>
         </div>
-        <h4 className="pageSubHeader">
-          {data.availabilities.length} Respondent{data.availabilities.length !== 1 ? "s" : ""}
-        </h4>
       </div>
+      {
+        // calendar showing the respondents' availabilities
+      }
       <Calendar
         Cell={ColoredCell}
         minutesPerCell={scheduleData.shiftTimes as ValidMinutes}
@@ -301,10 +362,41 @@ const ViewEditSchedule = () => {
         colors={calculateColors()}
         setFocusedCell={setFocusedTime}
       />
+      <div className="respondentList">
+        {
+          // display a list of respondents, if there are any, in a grid format
+          // clicking on a respondent filters the calendar to only show their availability
+        }
+        <h4 className="pageSubHeader">
+          {data.availabilities.length} Respondent{data.availabilities.length !== 1 ? "s" : ""}
+        </h4>
+        {respondentNames.length > 0 ? (
+          <ul>
+            {respondentNames.map((name) => (
+              <li
+                key={name}
+                className={selectedRespondent === name ? "selectedRespondent" : ""}
+                onClick={() => setSelectedRespondent((prev) => (prev === name ? null : name))}
+              >
+                {name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="pageSubHeader">No respondents yet.</div>
+        )}
+      </div>
       <div className="submitContainer">
+        {
+          // if a schedule is generated, show a link to the generated schedule
+          // otherwise, show a link to the availability form
+        }
         <Link to={`/schedule/${guid}`} className="generatedScheduleLink">
           {scheduleGenerated ? "Generated Schedule" : "Availability Form"}
         </Link>
+        {
+          // button to (re)generate the schedule
+        }
         <button
           type="button"
           className="submitBtn"

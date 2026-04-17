@@ -5,7 +5,7 @@ import { ColoredCell, FillableCell } from "@/components/CalendarCells";
 import type { Time } from "@/types";
 import { standardizeDateAndTime } from "@/utils/time";
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -125,6 +125,7 @@ describe("CalendarCells component", () => {
     });
 
     it("toggles state on pointer enter when pointer is down", async () => {
+      document.elementFromPoint = vi.fn().mockReturnValue(null);
       const user = userEvent.setup();
 
       render(
@@ -153,6 +154,47 @@ describe("CalendarCells component", () => {
       expect(setSelectedCells).not.toHaveBeenCalled();
 
       await user.pointer({ target: cell });
+      expect(setSelectedCells).toHaveBeenCalled();
+    });
+
+    it("toggles state on pointermove when pointer is down", async () => {
+      render(
+        <>
+          <FillableCell
+            time={time}
+            date={date}
+            selectedCells={[]}
+            setSelectedCells={setSelectedCells}
+            isPointerDown={true}
+            setIsPointerDown={setIsPointerDown}
+            isEnablingCells={true}
+            setIsEnablingCells={setIsEnablingCells}
+            colors={colors}
+            text={text}
+          />
+          <FillableCell
+            time={time}
+            date={new Date("2026-01-02")}
+            selectedCells={[]}
+            setSelectedCells={setSelectedCells}
+            isPointerDown={true}
+            setIsPointerDown={setIsPointerDown}
+            isEnablingCells={true}
+            setIsEnablingCells={setIsEnablingCells}
+            colors={colors}
+            text={text}
+          />
+        </>,
+      );
+
+      const [cell1, cell2] = screen.getAllByRole("button");
+      document.elementFromPoint = vi.fn().mockImplementation(() => {
+        fireEvent.pointerEnter(cell2);
+        return cell2;
+      });
+
+      fireEvent.pointerMove(cell1, { clientX: 100, clientY: 100 });
+
       expect(setSelectedCells).toHaveBeenCalled();
     });
 

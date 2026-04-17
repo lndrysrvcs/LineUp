@@ -1,9 +1,11 @@
 import { WEEKDAYS, type Time, type TimeRange, type ValidHours, type ValidMinutes, type Weekday } from "@/types";
 
+// Checks if two Time objects represent the same time
 function timesAreEqual(time1: Time, time2: Time): boolean {
   return time1.hour === time2.hour && time1.minute === time2.minute;
 }
 
+// Adds a given amount of minutes to a Time object and returns the resulting Time
 function addMinutesToTime(time: Time, minutes: ValidMinutes): Time {
   const addedMinutes = time.minute + minutes;
   const addedHours = time.hour + Math.floor(addedMinutes / 60);
@@ -13,6 +15,7 @@ function addMinutesToTime(time: Time, minutes: ValidMinutes): Time {
   };
 }
 
+// Formats a Time object into 12H format with AM/PM
 function formatTime(time: Time): string {
   let hourString = "";
   let isPM = false;
@@ -31,10 +34,12 @@ function formatTime(time: Time): string {
   );
 }
 
+// Formats a Date object and a Time object into a readable string with the date and time
 function formatDate(date: Date, time: Time): string {
   return `${date.toLocaleDateString()}, ${formatTime(time)}`;
 }
 
+// Returns the label to be shown on a given row of the calendar, based on the row, starting time, and minutes per cell
 function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: ValidMinutes): string {
   const time = addMinutesToTime(rangeStart, (minutesPerCell * row) as ValidMinutes);
 
@@ -49,10 +54,12 @@ function getTimeIncrementLabel(row: number, rangeStart: Time, minutesPerCell: Va
   return "";
 }
 
+// Converts a number representing a day of the week (0-6) to the corresponding weekday string ("Sunday"-"Saturday")
 function dayNumberToWeekday(num: number): Weekday {
   return WEEKDAYS[num];
 }
 
+// Converts a weekday string ("Sunday"-"Saturday") to the corresponding number (0-6)
 function weekdayToNum(weekday: Weekday): number {
   return WEEKDAYS.indexOf(weekday);
 }
@@ -103,6 +110,7 @@ function toMinutes(time: Time, isEnd = false): number {
   return time.hour * 60 + time.minute;
 }
 
+// Returns true if the given TimeRange represents a 24 hour range starting and ending at midnight, false otherwise
 function rangeIs24Hours(range: TimeRange): boolean {
   if (range.start.hour === 0 && range.end.hour === 0) {
     if (range.start.minute === 0 && range.end.minute === 0) {
@@ -112,12 +120,14 @@ function rangeIs24Hours(range: TimeRange): boolean {
   return false;
 }
 
+// Adds a Time object to a Date object, returning a new Date object with the combined date and time
 function addTimeToDate(date: Date, time: Time): Date {
   const newDate = new Date(date);
   newDate.setHours(time.hour, time.minute, 0, 0);
   return newDate;
 }
 
+// Takes a Date and Time and converts it to a standardized ISO string in UTC, with the format "YYYY-MM-DDTHH:MM"
 function standardizeDateAndTime(date: Date, time: Time): string {
   const dateWithTime = addTimeToDate(date, time);
   const utcDate = new Date(dateWithTime.getTime() - dateWithTime.getTimezoneOffset() * 60 * 1000);

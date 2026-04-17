@@ -36,6 +36,7 @@ public class SchedulerRegressionTests
         {
             Guid = new Guid("11111111-1111-1111-1111-111111111111"),
             UserName = "Alice",
+            UserEmail = "email@example.com",
             Schedule = schedule,
             AvailabilitySlots =
             [
@@ -51,6 +52,7 @@ public class SchedulerRegressionTests
         {
             Guid = new Guid("22222222-2222-2222-2222-222222222222"),
             UserName = "Bob",
+            UserEmail = "bob@example.com",
             Schedule = schedule,
             AvailabilitySlots =
             [

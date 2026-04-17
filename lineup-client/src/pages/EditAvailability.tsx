@@ -1,20 +1,24 @@
 import { Calendar } from "@/components/Calendar";
 import { FillableCell } from "@/components/CalendarCells";
 import { queryClient, useApi } from "@/utils/api";
-import { addToasts, loaderQuery } from "@/utils/db";
+import { addToasts, unauthorizedLoaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 const EditAvailability = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid: availabilityGuid } = useParams<{ guid: string }>();
-  const { data: availabilityData } = useQuery(loaderQuery("/api/availability/{}", availabilityGuid!));
-  const { data: scheduleData } = useQuery(loaderQuery("/api/schedule/{}", availabilityData?.scheduleGuid ?? ""));
+  const { data: availabilityData } = useQuery(unauthorizedLoaderQuery("/api/availability/{}", availabilityGuid!));
+  const { data: scheduleData } = useQuery(
+    unauthorizedLoaderQuery("/api/schedule/{}", availabilityData?.scheduleGuid ?? ""),
+  );
   const storageKey = `editAvailability-${availabilityGuid}`;
 
+  // Locally store any information the user has entered so that the information can be prefilled if they
+  // refresh the page or navigate away
   const storedForm = (() => {
     try {
       return JSON.parse(localStorage.getItem(storageKey) ?? "{}");
@@ -27,6 +31,7 @@ const EditAvailability = () => {
   const [email, setEmail] = useState<string>(storedForm.email ?? "");
   const [selectedCells, setSelectedCells] = useState<string[]>(storedForm.selectedCells ?? []);
 
+  // Stores the given information in local storage with the given storageKey, if available
   const persistToStorage = (nextName: string, nextEmail: string, nextCells: string[]) => {
     try {
       localStorage.setItem(storageKey, JSON.stringify({ name: nextName, email: nextEmail, selectedCells: nextCells }));
@@ -35,24 +40,28 @@ const EditAvailability = () => {
     }
   };
 
+  // Collects the user's currently known availability information to prefill the form
+  // If the user has started editing the form and has any information in local storage,
+  // prefills with that instead
   useEffect(() => {
     if (!availabilityData) return;
 
-    console.log("Fetched availability:", availabilityData);
-
     if (!storedForm.name && !storedForm.email && !storedForm.selectedCells) {
-      setName(availabilityData.userName);
-      setEmail(availabilityData.userEmail);
-      setSelectedCells(availabilityData.availabilitySlots ?? []);
+      setTimeout(() => {
+        setName(availabilityData.userName);
+        setEmail(availabilityData.userEmail);
+        setSelectedCells(availabilityData.availabilitySlots ?? []);
+      }, 0);
     }
   }, [availabilityData]);
 
   type EditAvailabilityProps = {
-    userName: string;
-    userEmail: string;
-    availabilitySlots: string[];
+    userName: string; // Not a 'username', but the user's input name
+    userEmail: string; // The user's input email
+    availabilitySlots: string[]; // full of ISO strings
   };
 
+  // Mutation for editing an existing availability with the user's input
   const updateAvailabilityMutation = useMutation({
     mutationFn: async (updatedAvailability: EditAvailabilityProps) => {
       const res = await fetchWithAuth(`/api/availability/${availabilityGuid}/edit`, {
@@ -70,6 +79,7 @@ const EditAvailability = () => {
       return true;
     },
     onSuccess: () => {
+      // Clear the local storage for this form and invalidate the availability query, then navigate to the homepage
       try {
         localStorage.removeItem(storageKey);
       } catch {
@@ -80,12 +90,14 @@ const EditAvailability = () => {
     },
   });
 
+  // If the availability or schedule data is still loading, show a loading message
   if (!availabilityData || !scheduleData) {
     return <div>Loading...</div>;
   }
 
   const scheduleGenerated = scheduleData.shiftAssignments.length > 0;
 
+  // Called when the user submits the form, calls the update availability mutation after verifying input
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -110,11 +122,16 @@ const EditAvailability = () => {
 
   return (
     <div className="availabilityRoot">
+      {
+        // if a schedule has been generated, show a message stating so with a link to the generated schedule
+        // if not, show the form to edit availability
+      }
+      <title>{scheduleData.name + " - LineUp"}</title>
       {scheduleGenerated ? (
         <div>
-          <div>Schedule already generated. Editing availability is closed</div>
+          <div>The schedule is already generated. You can no longer edit your availability.</div>
           <div>
-            <Link to={`/schedule/${scheduleData.guid}`} className="generatedScheduleLink">
+            <Link to={`/schedule/${availabilityData.scheduleGuid}`} className="generatedScheduleLink">
               View Schedule
             </Link>
           </div>
@@ -124,7 +141,7 @@ const EditAvailability = () => {
           <div className="scheduleName">
             Edit <b>{availabilityData.userName}</b>'s availability for <b>{scheduleData.name}</b>
           </div>
-          <form onSubmit={handleSubmit} className="newSchedule">
+          <form onSubmit={handleSubmit} className="scheduleForm">
             <div className="inputGroup">
               <div>
                 <label htmlFor="name" className="required">
@@ -142,22 +159,6 @@ const EditAvailability = () => {
                   }}
                   required
                 />
-              </div>
-              <div>
-                {/*
-                <label htmlFor="email" className="required">
-                  Email
-                </label>
-                <br />
-                <input
-                  className="input"
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                */}
               </div>
             </div>
             <div>

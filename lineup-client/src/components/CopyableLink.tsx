@@ -8,6 +8,7 @@ interface CopyableLinkProps {
 const CopyableLink = ({ url, display }: CopyableLinkProps) => {
   const [copied, setCopied] = useState(false);
 
+  // Copies the URL to the clipboard and shows a "Copied" state for 1.5 seconds
   const handleCopy = async () => {
     await navigator.clipboard.writeText(url);
     setCopied(true);

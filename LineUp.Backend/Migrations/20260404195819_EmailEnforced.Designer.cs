@@ -3,6 +3,7 @@ using System;
 using LineUp.Backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LineUp.Backend.Migrations
 {
     [DbContext(typeof(LineUpContext))]
-    partial class LineUpContextModelSnapshot : ModelSnapshot
+    [Migration("20260404195819_EmailEnforced")]
+    partial class EmailEnforced
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,46 +271,13 @@ namespace LineUp.Backend.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("SwapRequestId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SwapRequestId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AvailabilityId");
 
                     b.HasIndex("ScheduleId");
 
-                    b.HasIndex("SwapRequestId");
-
-                    b.HasIndex("SwapRequestId1");
-
                     b.ToTable("ShiftAssignments");
-                });
-
-            modelBuilder.Entity("LineUp.Core.Models.SwapRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("ScheduleId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Guid");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("SwapRequests");
                 });
 
             modelBuilder.Entity("LineUp.Core.Models.Availability", b =>
@@ -383,26 +353,7 @@ namespace LineUp.Backend.Migrations
                         .WithMany("ShiftAssignments")
                         .HasForeignKey("ScheduleId");
 
-                    b.HasOne("LineUp.Core.Models.SwapRequest", null)
-                        .WithMany("FromPartyA")
-                        .HasForeignKey("SwapRequestId");
-
-                    b.HasOne("LineUp.Core.Models.SwapRequest", null)
-                        .WithMany("FromPartyB")
-                        .HasForeignKey("SwapRequestId1");
-
                     b.Navigation("Availability");
-                });
-
-            modelBuilder.Entity("LineUp.Core.Models.SwapRequest", b =>
-                {
-                    b.HasOne("LineUp.Core.Models.Schedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("LineUp.Core.Models.Availability", b =>
@@ -426,13 +377,6 @@ namespace LineUp.Backend.Migrations
             modelBuilder.Entity("LineUp.Core.Models.Schedule", b =>
                 {
                     b.Navigation("ShiftAssignments");
-                });
-
-            modelBuilder.Entity("LineUp.Core.Models.SwapRequest", b =>
-                {
-                    b.Navigation("FromPartyA");
-
-                    b.Navigation("FromPartyB");
                 });
 #pragma warning restore 612, 618
         }

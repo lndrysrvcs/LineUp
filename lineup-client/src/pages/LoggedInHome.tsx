@@ -8,12 +8,13 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 interface TableData {
-  name: string;
-  respondents: number;
-  isGenerated: boolean;
-  guid: string;
+  name: string; // The name of the schedule
+  respondents: number; // The current number of respondents to the schedule
+  isGenerated: boolean; // Whether or not the schedule has been generated
+  guid: string; // The schedule's guid, used for constructing links
 }
 
+// Schedule table headers
 const headers = ["Name", "Responses", "Availability Link", "Generated?", "Schedule"];
 
 const LoggedInHome = () => {
@@ -21,6 +22,8 @@ const LoggedInHome = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
 
+  // Retrieve the manager's schedules to display in a table on their homepage
+  // If the fetch fails, show an error toast
   const {
     data: schedules,
     isLoading,
@@ -46,6 +49,9 @@ const LoggedInHome = () => {
       }),
   });
 
+  // Used to render each row of the schedule table
+  // Includes name, number of respondents, a copyable link to the availability form, whether or not the
+  // schedule has been generated, and a button to view/edit the schedule
   const renderRow = (row: TableData) => (
     <>
       <td className="tableShrinkCol">{row.name}</td>
@@ -70,6 +76,7 @@ const LoggedInHome = () => {
     </>
   );
 
+  // Show a loading toast while fetching schedules, and an error toast if the fetch fails
   useEffect(() => {
     if (!schedules) {
       toast.loading("Fetching schedules...", { id: "fetch-schedules-error", duration: Infinity });
@@ -96,16 +103,18 @@ const LoggedInHome = () => {
               New Schedule
             </button>{" "}
           </div>
-          {schedules.length > 0 ? (
-            <Table
-              headers={headers}
-              data={schedules}
-              renderRow={renderRow}
-              columnWidths={["25%", "15%", "", "16%", "13.5%"]}
-            />
-          ) : (
-            <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
-          )}{" "}
+          <div className="tableWrapper">
+            {schedules.length > 0 ? (
+              <Table
+                headers={headers}
+                data={schedules}
+                renderRow={renderRow}
+                columnWidths={["25%", "15%", "", "16%", "13.5%"]}
+              />
+            ) : (
+              <div>You don't have any schedules yet! Click "New Schedule" to create your first one.</div>
+            )}{" "}
+          </div>
         </>
       )}
     </div>

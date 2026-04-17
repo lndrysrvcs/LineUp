@@ -1,4 +1,5 @@
 using LineUp.Backend.Models;
+using LineUp.Backend.Services;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,19 +8,9 @@ namespace LineUp.Backend.Controllers;
 
 [Route("api/availability")]
 [ApiController]
-public class AvailabilityController(LineUpContext context) : ControllerBase
+public class AvailabilityController(LineUpContext context, IEmailService emailService)
+    : ControllerBase
 {
-    [HttpGet("public")]
-    public IActionResult Public()
-    {
-        return Ok(
-            new
-            {
-                Message = "Hello from a public endpoint! You don't need to be authenticated to see this.",
-            }
-        );
-    }
-
     [HttpGet("{guid:guid}/exists")]
     public IActionResult Exists(Guid guid)
     {
@@ -37,9 +28,10 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         var result = await context
             .Availabilities.Include(a => a.Schedule)
             .FirstOrDefaultAsync(a => a.Guid == guid);
-        if (result != null)
-            return Ok(result);
-        return NotFound();
+        if (result == null)
+            return NotFound();
+
+        return Ok(result);
     }
 
     [HttpPatch("{guid:guid}/edit")]
@@ -48,16 +40,27 @@ public class AvailabilityController(LineUpContext context) : ControllerBase
         [FromBody] AvailabilityUpdateDTO availability
     )
     {
-        var availabilityToUpdate = await context.Availabilities.FirstOrDefaultAsync(a =>
-            a.Guid == guid
-        );
+        var availabilityToUpdate = await context
+            .Availabilities.Include(a => a.Schedule)
+            .FirstOrDefaultAsync(a => a.Guid == guid);
         if (availabilityToUpdate == null)
             return NotFound();
+
+        if (
+            await context.ShiftAssignments.AnyAsync(sa =>
+                sa.Availability != null && sa.Availability.Id == availabilityToUpdate.Id
+            )
+        )
+        {
+            return Forbid();
+        }
 
         availabilityToUpdate.UserName = availability.UserName ?? availabilityToUpdate.UserName;
         availabilityToUpdate.UserEmail = availability.UserEmail ?? availabilityToUpdate.UserEmail;
         availabilityToUpdate.AvailabilitySlots =
             availability.AvailabilitySlots ?? availabilityToUpdate.AvailabilitySlots;
+
+        await emailService.SendAvailabilityConfirmationEmail(true, availabilityToUpdate);
 
         await context.SaveChangesAsync();
 

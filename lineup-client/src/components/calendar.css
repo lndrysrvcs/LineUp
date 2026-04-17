@@ -3,13 +3,21 @@
   font-family: sans-serif;
   font-size: 0.75rem;
   margin: auto;
+
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .calendarLabel {
   text-align: center;
   font-weight: bold;
   line-height: 1.2em;
-  margin-bottom: 0.2em;
+  padding-bottom: 0.2em;
+
+  &:disabled {
+    cursor: default;
+    color: inherit;
+  }
 }
 
 .calendarRowLabel {
@@ -52,6 +60,7 @@
 .calendarCell {
   border-right: 1px solid var(--primary);
   min-width: 0;
+  touch-action: pan-x;
 }
 
 .calendarTopBorder {

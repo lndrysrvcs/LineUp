@@ -42,6 +42,7 @@ const Calendar = ({
   const numRows = calculateNumRows();
   const pageDates = getPageDates(currentPage);
 
+  // Calculates the number of rows a calender should have based on the time range and minutes per cell
   function calculateNumRows() {
     if (rangeIs24Hours(range)) {
       return 24 * (60 / minutesPerCell);
@@ -53,6 +54,8 @@ const Calendar = ({
     );
   }
 
+  // Calculates the starting index of each page in pagination based on the included dates
+  // Weeks (and therefore pages) start on Sundays
   function calculatePageStarts() {
     const pageStarts = [0];
     if (dates.length <= 7) {
@@ -67,6 +70,7 @@ const Calendar = ({
     return pageStarts;
   }
 
+  // Gets the dates that should be included on the current page number based on the included dates and page starts
   function getPageDates(page?: number) {
     if (dates.length <= 7) {
       return dates;
@@ -76,6 +80,7 @@ const Calendar = ({
     return dates.slice(pageStarts[page], pageStarts[page + 1]);
   }
 
+  // Determines the appropriate classes to apply to a cell based on its position
   function calculateCellClasses(row: number, col: number) {
     let output = "calendarCell";
 
@@ -113,6 +118,7 @@ const Calendar = ({
     return output;
   }
 
+  // Helper function to determine if there is a gap between days that should be visibly represented
   function needsSpaceAfterCol(col: number) {
     if (col >= pageDates.length - 1) return false;
 
@@ -123,6 +129,7 @@ const Calendar = ({
     }
   }
 
+  // Applies extra space between days when there is a gap in the dates
   function extraColMargin(col: number) {
     const style: React.CSSProperties = {};
     if (col > 0 && needsSpaceAfterCol(col - 1)) {
@@ -134,6 +141,19 @@ const Calendar = ({
     return style;
   }
 
+  // Toggles all cells in a column when the corresponding label is clicked
+  function colClicked(date: Date) {
+    const colCells = Array.from({ length: numRows }, (_, i) =>
+      standardizeDateAndTime(date, addMinutesToTime(range.start, (i * minutesPerCell) as ValidMinutes)),
+    );
+    if (colCells.every((cell) => selectedCells?.includes(cell))) {
+      setSelectedCells?.((cells) => cells.filter((cell) => !colCells.includes(cell)));
+    } else {
+      setSelectedCells?.((cells) => [...new Set([...cells, ...colCells])]); // set avoids duplicates
+    }
+  }
+
+  // Tracks the pointer to allow for sweeping across multiple cells for mass selection/deselection
   useEffect(() => {
     const handler = () => setIsPointerDown(false);
     globalThis.addEventListener("pointerup", handler);
@@ -141,17 +161,7 @@ const Calendar = ({
   });
 
   return (
-    <div
-      className="calendarWrapper"
-      style={{
-        maxWidth: pageDates.length * 200,
-        gridTemplateColumns: `auto repeat(${pageDates.length}, 1fr)`,
-        gridTemplateRows:
-          minutesPerCell < 40
-            ? `auto auto repeat(${numRows + 1}, 1em) auto`
-            : `auto auto repeat(${numRows + 1}, 1.5em)`,
-      }}
-    >
+    <div className="calendarSuperWrapper">
       <div className="pageButtonWrapper">
         {currentPage > 0 ? (
           <button
@@ -176,50 +186,68 @@ const Calendar = ({
           <div />
         )}
       </div>
+      <div
+        className="calendarWrapper"
+        style={{
+          maxWidth: pageDates.length * 200,
+          gridTemplateColumns: `95px repeat(${pageDates.length}, minmax(95px, 1fr))`,
+          gridTemplateRows:
+            minutesPerCell < 40
+              ? `auto auto repeat(${numRows + 1}, 1em) auto`
+              : `auto auto repeat(${numRows}, 1.5em) auto`,
+        }}
+      >
+        <div className="calendarBlankCell" />
+        {pageDates.map((date, col) => (
+          <button
+            type="button"
+            key={date.toISOString()}
+            className="calendarLabel unstyledButton"
+            style={extraColMargin(col)}
+            onClick={() => colClicked(date)}
+            disabled={!setSelectedCells}
+          >
+            {dayNumberToWeekday(date.getDay())}
+            <br />
+            {`${date.getMonth() + 1}/${date.getDate()}`}
+          </button>
+        ))}
 
-      <div className="calendarBlankCell" />
-      {pageDates.map((date, col) => (
-        <div key={date.toISOString()} className="calendarLabel" style={extraColMargin(col)}>
-          {dayNumberToWeekday(date.getDay())}
-          <br />
-          {`${date.getMonth() + 1}/${date.getDate()}`}
-        </div>
-      ))}
-
-      {Array.from({ length: numRows }).map((_, row) => (
-        <Fragment key={row}>
-          <div className="calendarLabel calendarRowLabel">
-            {getTimeIncrementLabel(row, range.start, minutesPerCell)}
-          </div>
-          {pageDates.map((date, col) => (
-            <div
-              key={date.toISOString()}
-              className={calculateCellClasses(row, col)}
-              style={extraColMargin(col)}
-              onPointerEnter={() =>
-                setFocusedCell?.(
-                  standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
-                )
-              }
-              onPointerLeave={() => setFocusedCell?.(null)}
-            >
-              <Cell
-                time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
-                date={date}
-                selectedCells={selectedCells}
-                setSelectedCells={setSelectedCells}
-                isPointerDown={isPointerDown}
-                setIsPointerDown={setIsPointerDown}
-                isEnablingCells={isEnablingCells}
-                setIsEnablingCells={setIsEnablingCells}
-                colors={colors ?? {}}
-                text={text ?? {}}
-              />
+        {Array.from({ length: numRows }).map((_, row) => (
+          <Fragment key={row}>
+            <div className="calendarLabel calendarRowLabel">
+              {getTimeIncrementLabel(row, range.start, minutesPerCell)}
             </div>
-          ))}
-        </Fragment>
-      ))}
-      <div className="calendarLabel calendarRowLabel">{formatTime(range.end)}</div>
+            {pageDates.map((date, col) => (
+              <div
+                key={date.toISOString()}
+                className={calculateCellClasses(row, col)}
+                style={extraColMargin(col)}
+                onPointerEnter={() =>
+                  setFocusedCell?.(
+                    standardizeDateAndTime(date, addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)),
+                  )
+                }
+                onPointerLeave={() => setFocusedCell?.(null)}
+              >
+                <Cell
+                  time={addMinutesToTime(range.start, (minutesPerCell * row) as ValidMinutes)}
+                  date={date}
+                  selectedCells={selectedCells}
+                  setSelectedCells={setSelectedCells}
+                  isPointerDown={isPointerDown}
+                  setIsPointerDown={setIsPointerDown}
+                  isEnablingCells={isEnablingCells}
+                  setIsEnablingCells={setIsEnablingCells}
+                  colors={colors ?? {}}
+                  text={text ?? {}}
+                />
+              </div>
+            ))}
+          </Fragment>
+        ))}
+        <div className="calendarLabel calendarRowLabel">{formatTime(range.end)}</div>
+      </div>
     </div>
   );
 };

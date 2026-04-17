@@ -1,5 +1,4 @@
 import type { Time, TimeRange, ValidMinutes } from "@/types";
-//import { useAuth0 } from "@auth0/auth0-react";
 import { queryClient, useApi } from "@/utils/api";
 import { addToasts } from "@/utils/db";
 import { formatTimeForInput, getValidMinutesForInterval, parseTimeString, toMinutes } from "@/utils/time.ts";
@@ -9,7 +8,7 @@ import React from "react";
 import DatePickerModule, { DateObject } from "react-multi-date-picker";
 import { useNavigate } from "react-router";
 import "../dateinput.css";
-import "./newSchedule.css";
+import "./schedule.css";
 
 // This is because importing DatePicker directly didn't work with Vite for some reason
 // Trust me that this is somehow the most elegant solution I could find
@@ -48,6 +47,7 @@ const NewSchedule = () => {
     };
   };
 
+  // Mutation for creating a new schedule with the user's input
   const createScheduleMutation = useMutation({
     mutationFn: async (newSchedule: CreateScheduleProps) => {
       const res = await fetchWithAuth(`/api/schedule`, {
@@ -65,6 +65,7 @@ const NewSchedule = () => {
       return res.json();
     },
     onSuccess: () => {
+      // Invalidate the schedules query then navigate home
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
       navigate("/");
     },
@@ -81,6 +82,7 @@ const NewSchedule = () => {
     maxShifts: undefined,
   });
 
+  // Handles changes to text and number inputs, updating the scheduleData accordingly
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
 
@@ -97,6 +99,7 @@ const NewSchedule = () => {
     });
   };
 
+  // Called when the user submits the form, validates the input and calls the create schedule mutation
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -139,6 +142,7 @@ const NewSchedule = () => {
     );
   };
 
+  // Helper function to format a Date object as "YYYY-MM-DD" for the API
   const formatDateLocal = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -146,6 +150,8 @@ const NewSchedule = () => {
     return `${year}-${month}-${day}`;
   };
 
+  // Handles changes to the start time input, snapping the time to the nearest valid time based on the
+  // shift interval
   const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const parsed = parseTimeString(event.target.value);
     if (!parsed) return;
@@ -161,6 +167,8 @@ const NewSchedule = () => {
     }));
   };
 
+  // Handles changes to the end time input, snapping the time to the nearest valid time based on the
+  // shift interval
   const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const parsed = parseTimeString(event.target.value);
     if (!parsed) return;
@@ -176,6 +184,7 @@ const NewSchedule = () => {
     }));
   };
 
+  // Helper function that snaps a given time to the nearest valid time based on the shift interval
   const snapToInterval = (time: Time, interval: number): Time => {
     const validMinutes = getValidMinutesForInterval(interval);
 
@@ -189,6 +198,8 @@ const NewSchedule = () => {
     };
   };
 
+  // Handles numeric input on blur to emulate the same snapping behavior as the time inputs
+  // Specifically used for the max shift length input, which must snap to a multiple of the shift interval
   const handleNumberBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (value === "") return;
@@ -212,6 +223,7 @@ const NewSchedule = () => {
     }));
   };
 
+  // Helper function that snaps a number to the nearest valid value based on a step and minimum value
   const snapToStep = (value: number, step: number, min: number) => {
     if (value < min) return min;
 
@@ -222,6 +234,7 @@ const NewSchedule = () => {
     return Math.abs(value - lower) <= Math.abs(value - upper) ? lower : upper;
   };
 
+  // Handles changes to the date picker, updating scheduleData with the selected dates
   const handleDateChange = (value: DateObject | DateObject[] | null) => {
     if (!value) {
       setScheduleData((prev) => ({
@@ -240,6 +253,10 @@ const NewSchedule = () => {
     }));
   };
 
+  // Helper function to validate the schedule duration inputs
+  // Verifies the end time is after the start time, both times are compatible with the shift interval, and
+  // that the total duration is a multiple of the shift interval
+  // Returns a case number based on the type of error, or 0 if the inputs are valid
   const checkValidTimeRange = (intervalLength: ValidMinutes | "" | undefined, hours: TimeRange): number => {
     if (!intervalLength) return 0;
 
@@ -258,6 +275,10 @@ const NewSchedule = () => {
 
   return (
     <div className="newSchedule">
+      {
+        // button to navigate back home
+      }
+      <title>New Schedule - LineUp</title>
       <button
         className="returnButton"
         onClick={() => {

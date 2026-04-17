@@ -14,6 +14,7 @@ export function MousePopup({ isOpen, width, height, fadeDuration = 150, children
   const [mounted, setMounted] = useState(isOpen);
   const [visible, setVisible] = useState(isOpen);
 
+  // Handles the mounting and visibility of the popup based on the isOpen and fadeDuration props
   useEffect(() => {
     if (isOpen) {
       const t1 = setTimeout(() => setMounted(true), 0);
@@ -32,6 +33,7 @@ export function MousePopup({ isOpen, width, height, fadeDuration = 150, children
     }
   }, [isOpen, fadeDuration]);
 
+  // Don't render anything if not mounted
   if (!mounted) return null;
 
   return (

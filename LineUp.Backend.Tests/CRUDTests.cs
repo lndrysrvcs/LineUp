@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Azure;
 using LineUp.Backend.Controllers;
 using LineUp.Backend.Models;
+using LineUp.Backend.Services;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -91,7 +92,8 @@ public class CRUDTests
         {
             context.Database.EnsureCreated();
 
-            var controller = new ScheduleController(context);
+            var emailService = new MockEmailService();
+            var controller = new ScheduleController(context, emailService);
 
             // Create a mock ClaimsPrincipal with the required NameIdentifier claim
             var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
@@ -143,7 +145,8 @@ public class CRUDTests
         {
             context.Database.EnsureCreated();
 
-            var controller = new ScheduleController(context);
+            var emailService = new MockEmailService();
+            var controller = new ScheduleController(context, emailService);
 
             // Create a mock ClaimsPrincipal with the required NameIdentifier claim
             var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
@@ -197,7 +200,8 @@ public class CRUDTests
         {
             context.Database.EnsureCreated();
 
-            var controller = new ScheduleController(context);
+            var emailService = new MockEmailService();
+            var controller = new ScheduleController(context, emailService);
 
             // Create a mock ClaimsPrincipal with the required NameIdentifier claim
             var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
@@ -245,7 +249,8 @@ public class CRUDTests
         {
             context.Database.EnsureCreated();
 
-            var controller = new ScheduleController(context);
+            var emailService = new MockEmailService();
+            var controller = new ScheduleController(context, emailService);
 
             // Create a mock ClaimsPrincipal with the required NameIdentifier claim
             var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
@@ -292,6 +297,12 @@ public class CRUDTests
             // Assert
             Assert.IsType<CreatedAtActionResult>(availabilityCreateResult);
             Assert.IsType<NotFoundResult>(failedAvailabilityCreateResult);
+
+            Assert.Single(emailService.SentAvailabilityConfirmationEmails);
+            Assert.Equal(
+                sampleAvailability.UserEmail,
+                emailService.SentAvailabilityConfirmationEmails[0].UserEmail
+            );
         }
     }
 
@@ -308,8 +319,9 @@ public class CRUDTests
         {
             context.Database.EnsureCreated();
 
-            var controller = new ScheduleController(context);
-            var availController = new AvailabilityController(context);
+            var emailService = new MockEmailService();
+            var controller = new ScheduleController(context, emailService);
+            var availController = new AvailabilityController(context, emailService);
 
             // Create a mock ClaimsPrincipal with the required NameIdentifier claim
             var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "test-user-123") };
@@ -390,6 +402,12 @@ public class CRUDTests
             // Assert
             Assert.IsType<NoContentResult>(availabilityUpdateResult);
             Assert.IsType<NotFoundResult>(failedAvailabilityUpdateResult);
+
+            Assert.Equal(2, emailService.SentAvailabilityConfirmationEmails.Count);
+            Assert.Equal(
+                sampleAvailability.UserEmail,
+                emailService.SentAvailabilityConfirmationEmails[0].UserEmail
+            );
         }
     }
 
