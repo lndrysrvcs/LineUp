@@ -400,6 +400,21 @@ const NewSchedule = () => {
             onChange={handleInputChange}
           />
         </div>
+        {/* <div>
+          <label htmlFor="AllowSwaps">Allow workers to swap shifts?</label>
+          <br />
+          <input
+            className="input"
+            type="number"
+            id="maxShifts"
+            name="maxShifts"
+            step="1"
+            min="1"
+            max="99999"
+            value={scheduleData.maxShifts ?? ""}
+            onChange={handleInputChange}
+          />
+        </div>  ========== use this to let the schedule creator enable a swap ====*/}
         <br />
         <div className="submitContainer">
           <button type="submit" className="submitBtn" disabled={createScheduleMutation.isPending}>

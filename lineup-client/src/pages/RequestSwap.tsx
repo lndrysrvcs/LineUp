@@ -17,13 +17,13 @@ const RequestSwap = () => {
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
   // console.log(backgroundColors);
 
-  // console.log(data);
+  console.log(data);
 
   const [email, setEmail] = useState<string>("");
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const [userFound, setUserFound] = useState<boolean>(false);
   const [swapPartner, setSwapPartner] = useState<string>("");
-  const [swapPartnerGuid, setSwapPartnerGuid] = useState<string>("");
+  const [swapPartnerAvailabilityId, setSwapPartnerAvailabilityId] = useState<number>(-1);
 
   const confirmEmailmutation = useMutation({
     //
@@ -57,10 +57,10 @@ const RequestSwap = () => {
         },
       });
 
-      shifts.forEach((element) => {
-        //note each shift assignment
-        console.log(element);
-      });
+      // shifts.forEach((element) => {
+      //   //note each shift assignment
+      //   console.log(element);
+      // });
 
       if (!res.ok) {
         throw new Error("Failed to create Swap Request");
@@ -111,19 +111,25 @@ const RequestSwap = () => {
     setEmail(value);
   };
 
-  const renderPartnerSelect = (name: string, guid: string) => (
+  const renderPartnerSelect = (name: string, id: number) => (
     <>
       <button
         className="scheduleBtn"
         onClick={() => {
           setSwapPartner(name);
-          setSwapPartnerGuid(guid);
+          setSwapPartnerAvailabilityId(id);
         }}
       >
         {name}
       </button>
+      {console.log("name = " + name + " and id = " + id)}
     </>
   );
+
+  type AvailabilityObject = {
+    name: string;
+    AvailabilityDbId: number;
+  };
 
   return (
     <div className="availabilityRoot">
@@ -174,8 +180,14 @@ const RequestSwap = () => {
                 <div className="swapPartnerLabel">
                   <label>Swapping with:</label>
                   <label>
-                    {/* {data.shiftAssignments.map(() => renderPartnerSelect())}
-                    {renderPartnerSelect(data.shiftAssignments.name, data.shiftAssignments.AvailabilityDbId)} */}
+                    {data.shiftAssignments.map((availabilityDbId: number, username: string) =>
+                      renderPartnerSelect(username, availabilityDbId),
+                    )}
+                    {/* {data.shiftAssignments.forEach((element) => {
+                      //note each shift assignment
+                      renderPartnerSelect(element.username, element.availabilityDbId);
+                      console.log(element);
+                    })} */}
                   </label>
                 </div>
                 <button type="submit" className="scheduleBtn swapBtn">

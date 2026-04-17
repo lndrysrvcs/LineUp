@@ -1,9 +1,12 @@
+using System.Diagnostics;
 using System.Security.Claims;
 using LineUp.Backend.Models;
 using LineUp.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
+using SQLitePCL;
 
 namespace LineUp.Backend.Controllers;
 
@@ -274,29 +277,60 @@ public class ScheduleController(LineUpContext context) : ControllerBase
     }
 
     [HttpPost("{guid:guid}/requestSwap")]
-    public IActionResult RequestSwap(Guid guid, [FromBody] List<ShiftAssignment> shiftCollection)
+    public async Task<IActionResult> RequestSwap(Guid guid, [FromBody] DateTime[] shiftStartTimes)
     {
         Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
-        if (schedule == null || shiftCollection == null || shiftCollection[0] == null)
+        if (schedule == null || shiftStartTimes == null || !shiftStartTimes.Any())
         {
             return NotFound();
         }
+        List<ShiftAssignment> shiftCollection = new List<ShiftAssignment>();
+        var scheduleResult = await context.Schedules.FirstOrDefaultAsync(s => s.Guid == guid);
+
+        if (scheduleResult == null)
+            return BadRequest("The provided schedule could not be found.");
+        int scheduleID = scheduleResult.Id;
+
+        try
+        { //Attempt to find the shift assignments from the backend.
+            foreach (DateTime start in shiftStartTimes)
+            {
+                var result = await context
+                    .ShiftAssignments.Include(a => a.AvailabilityDbId)
+                    .FirstOrDefaultAsync(s => s.StartTime == start && s.ScheduleId == scheduleID); //**TODO: This will not work if there is more than one worker per shift.**
+                Console.WriteLine(result.ToJson());
+                if (result == null || result is not ShiftAssignment) // throw an error if no shift assigned at that time
+                    throw new FileNotFoundException();
+                else
+                    shiftCollection.Add(result);
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            return UnprocessableEntity(
+                "The database did not recognize one or more of the times as shifts."
+            );
+        }
+        if (shiftCollection.Count < 1)
+            return UnprocessableEntity("No shift assignments were found for the time specified.");
+
         //Sort through the shifts (assume an unsorted list)
-        Availability partyA = shiftCollection[0].Availability;
+        Console.WriteLine(shiftCollection.ToJson());
+        int partyAId = (int)shiftCollection[0].AvailabilityDbId;
         List<ShiftAssignment> partyAShifts = [];
-        Availability partyB = null;
+        int partyBId = -1;
         List<ShiftAssignment> partyBShifts = [];
         foreach (ShiftAssignment shift in shiftCollection)
         {
-            Availability shiftOwner = shift.Availability;
-            if (shiftOwner == partyA)
-                partyAShifts.Append(shift);
-            else if (partyB == null)
+            int shiftOwner = (int)shift.AvailabilityDbId;
+            if (shiftOwner == partyAId)
+                partyAShifts.Add(shift);
+            else if (partyBId == -1)
             {
-                partyB = shiftOwner;
-                partyBShifts.Append(shift);
+                partyBId = shiftOwner;
+                partyBShifts.Add(shift);
             }
-            else if (shiftOwner == partyB)
+            else if (shiftOwner == partyBId)
                 partyBShifts.Append(shift);
             else
                 return BadRequest("More than two parties identified");
