@@ -2,9 +2,10 @@ import { Calendar } from "@/components/Calendar";
 import { ColoredCell, FillableCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
 import { useApi } from "@/utils/api";
-import { addToasts, loaderQuery } from "@/utils/db";
+import { addToasts, unauthorizedLoaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import React from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
@@ -12,18 +13,17 @@ const RequestSwap = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
   const { guid } = useParams();
-  const { data } = useQuery(loaderQuery("/api/schedule/{}", guid!));
+  const { data } = useQuery(unauthorizedLoaderQuery("/api/schedule/{}", guid!));
   const [focusedTime, setFocusedTime] = useState<string | null>(null);
   const backgroundColors = Array.from({ length: 10 }, (_, i) => `hsl(${Math.round((360 / 10) * i)}, 100%, 80%)`);
   // console.log(backgroundColors);
 
-  console.log(data);
+  // console.log(data);
 
   const [email, setEmail] = useState<string>("");
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
-  const [userFound, setUserFound] = useState<boolean>(false);
-  const [swapPartner, setSwapPartner] = useState<string>("");
-  const [swapPartnerAvailabilityId, setSwapPartnerAvailabilityId] = useState<number>(-1);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [selectedSwapPartnerAvailabilityId, setSelectedSwapPartnerAvailabilityId] = useState<number | null>(null);
 
   const confirmEmailmutation = useMutation({
     //
@@ -41,7 +41,7 @@ const RequestSwap = () => {
       return resJson;
     },
     onSuccess: (resJson) => {
-      setUserFound(true);
+      setUserId(resJson.id);
       // setSelectedCells(resJson.availabilitySlots); //This would make all the availiability light up at the start, but that feels confusing if others have shifts at that time.
     },
   });
@@ -111,33 +111,35 @@ const RequestSwap = () => {
     setEmail(value);
   };
 
-  const renderPartnerSelect = (name: string, id: number) => (
-    <>
-      <button
-        className="scheduleBtn"
-        onClick={() => {
-          setSwapPartner(name);
-          setSwapPartnerAvailabilityId(id);
-        }}
-      >
-        {name}
-      </button>
-      {console.log("name = " + name + " and id = " + id)}
-    </>
+  // const respondentNames = Array.from(
+  //   new Set(
+  //     (data.shiftAssignments as { userName: string; availabilityDbId: number }[]).map((shift) => ({
+  //       userName: shift.userName,
+  //       id: shift.availabilityDbId,
+  //     })),
+  //   ),
+  // );
+
+  const respondentNames: { name: string; id: number }[] = data.shiftAssignments.reduce(
+    (nameSet: { name: string; id: number }[], assignment: any) => {
+      if (
+        nameSet.every(
+          (existingName) => existingName.id !== assignment.availabilityDbId,
+        ) /*&& assignment.availabilityDbId != */
+      ) {
+        nameSet.push({ name: assignment.userName, id: assignment.availabilityDbId });
+      }
+      return nameSet;
+    },
+    [],
   );
-
-  type AvailabilityObject = {
-    name: string;
-    AvailabilityDbId: number;
-  };
-
   return (
     <div className="availabilityRoot">
       <>
         <div className="scheduleName">
           Schedule for <b>{data.name}</b>
         </div>
-        {userFound ? (
+        {userId !== null ? (
           <>
             <div>
               <em>Please select the shifts that you would like to swap.</em>
@@ -179,16 +181,29 @@ const RequestSwap = () => {
               <div>
                 <div className="swapPartnerLabel">
                   <label>Swapping with:</label>
-                  <label>
+                  {/* <label>
                     {data.shiftAssignments.map((availabilityDbId: number, username: string) =>
                       renderPartnerSelect(username, availabilityDbId),
                     )}
-                    {/* {data.shiftAssignments.forEach((element) => {
-                      //note each shift assignment
-                      renderPartnerSelect(element.username, element.availabilityDbId);
-                      console.log(element);
-                    })} */}
-                  </label>
+                  </label> */}
+                  <div className="respondentList">
+                    <ul>
+                      {respondentNames.map((shift) => (
+                        <li
+                          key={shift.id}
+                          className={selectedSwapPartnerAvailabilityId === shift.id ? "selectedRespondent" : ""}
+                          onClick={() => {
+                            setSelectedSwapPartnerAvailabilityId((prev) => {
+                              console.log(`selected name: ${shift.name}, selected id: ${shift.id}`);
+                              return prev === shift.id ? null : shift.id;
+                            });
+                          }}
+                        >
+                          {shift.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
                 <button type="submit" className="scheduleBtn swapBtn">
                   Submit
