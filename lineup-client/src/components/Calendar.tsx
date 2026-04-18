@@ -22,6 +22,7 @@ interface CalendarProps {
   setFocusedCell?: React.Dispatch<React.SetStateAction<string | null>>;
   selectedCells?: string[];
   setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
+  selectableCells?: string[];
 }
 
 // Children are each cell of the calendar
@@ -35,12 +36,19 @@ const Calendar = ({
   text,
   selectedCells,
   setSelectedCells,
+  selectableCells,
 }: CalendarProps) => {
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isEnablingCells, setIsEnablingCells] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const numRows = calculateNumRows();
   const pageDates = getPageDates(currentPage);
+
+  useEffect(() => {
+    if (setSelectedCells && selectableCells) {
+      setSelectedCells((cells) => cells.filter((cell) => selectableCells.includes(cell)));
+    }
+  }, [selectableCells, setSelectedCells]);
 
   // Calculates the number of rows a calender should have based on the time range and minutes per cell
   function calculateNumRows() {
@@ -205,7 +213,7 @@ const Calendar = ({
             className="calendarLabel unstyledButton"
             style={extraColMargin(col)}
             onClick={() => colClicked(date)}
-            disabled={!setSelectedCells}
+            disabled={!setSelectedCells || selectableCells !== undefined}
           >
             {dayNumberToWeekday(date.getDay())}
             <br />
@@ -235,6 +243,7 @@ const Calendar = ({
                   date={date}
                   selectedCells={selectedCells}
                   setSelectedCells={setSelectedCells}
+                  selectableCells={selectableCells}
                   isPointerDown={isPointerDown}
                   setIsPointerDown={setIsPointerDown}
                   isEnablingCells={isEnablingCells}
