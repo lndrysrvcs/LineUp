@@ -24,6 +24,7 @@ const RequestSwap = () => {
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
   const [selectedSwapPartnerAvailabilityId, setSelectedSwapPartnerAvailabilityId] = useState<number | null>(null);
+  const [selectedSwapPartner, setSelectedSwapPartner] = useState<string | null>(null);
 
   const confirmEmailmutation = useMutation({
     //
@@ -46,21 +47,27 @@ const RequestSwap = () => {
     },
   });
 
+  type CreateSwapRequestProps = {
+    shiftStartTimes: string[];
+    requesterId: number;
+    recipientId: number | null;
+  };
+
   const CreateSwapRequestMutation = useMutation({
     //creates a SwapRequest in the DB
-    mutationFn: async (shifts: string[]) => {
+    mutationFn: async (swapRequest: CreateSwapRequestProps) => {
+      if (swapRequest.recipientId == null) {
+        throw new Error("Failed to create Swap Request: Recipient not specified");
+      }
       const res = await fetchWithAuth(`/api/schedule/${guid}/requestSwap`, {
         method: "POST",
-        body: JSON.stringify(shifts),
+        body: JSON.stringify(swapRequest),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      // shifts.forEach((element) => {
-      //   //note each shift assignment
-      //   console.log(element);
-      // });
+      // console.log(JSON.stringify(swapRequest));
 
       if (!res.ok) {
         throw new Error("Failed to create Swap Request");
@@ -75,6 +82,7 @@ const RequestSwap = () => {
 
   const scheduleGenerated = true;
   const [assignmentColors, assignmentText] = mapAssignments();
+  const selectionColors = mapSelectionColors();
 
   function mapAssignments() {
     const colors: { [key: string]: string } = {};
@@ -106,6 +114,37 @@ const RequestSwap = () => {
     return [colors, text];
   }
 
+  function mapSelectionColors() {
+    const colors: { [key: string]: string } = {};
+
+    if (userId === null) {
+      return colors;
+    }
+
+    return colors;
+
+    /*
+    // this needs to be based on AvailDbIds instead of off of strings :D
+    for (const time of Object.keys(assignmentText)) {
+      // if it's mine make it a thing and if its another's make it diff
+      if (assignmentText[time] == ) {
+        colors[time] = `hsl(${Math.round((360 / 10) * 1)}, 100%, 80%)`;
+      } else if (assignmentText[time] == selectedSwapPartner) {
+        colors[time] = `hsl(${Math.round((360 / 10) * 2)}, 100%, 80%)`;
+      }
+
+      // if (text[time] in nameToColor) {
+      //   colors[time] = nameToColor[text[time]];
+      // } else {
+      //   nameToColor[text[time]] = backgroundColors[numColors % backgroundColors.length];
+      //   colors[time] = backgroundColors[numColors % backgroundColors.length];
+      //   numColors++;
+      // }
+    }
+    return colors;
+      //*/
+  }
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { value } = event.target;
     setEmail(value);
@@ -123,9 +162,8 @@ const RequestSwap = () => {
   const respondentNames: { name: string; id: number }[] = data.shiftAssignments.reduce(
     (nameSet: { name: string; id: number }[], assignment: any) => {
       if (
-        nameSet.every(
-          (existingName) => existingName.id !== assignment.availabilityDbId,
-        ) /*&& assignment.availabilityDbId != */
+        nameSet.every((existingName) => existingName.id !== assignment.availabilityDbId) &&
+        assignment.availabilityDbId != userId
       ) {
         nameSet.push({ name: assignment.userName, id: assignment.availabilityDbId });
       }
@@ -150,7 +188,11 @@ const RequestSwap = () => {
               onSubmit={(event: React.SubmitEvent<HTMLFormElement>) => {
                 event.preventDefault();
                 addToasts(
-                  CreateSwapRequestMutation.mutateAsync(selectedCells),
+                  CreateSwapRequestMutation.mutateAsync({
+                    shiftStartTimes: selectedCells,
+                    requesterId: userId,
+                    recipientId: selectedSwapPartnerAvailabilityId,
+                  }),
                   undefined,
                   "Request created! Please check your email to authenticate this request.",
                 ); //remove success message
@@ -174,7 +216,7 @@ const RequestSwap = () => {
                   start: parseTimeString(data.startTime)!,
                   end: parseTimeString(data.endTime)!,
                 }}
-                colors={assignmentColors}
+                colors={/*selectionColors*/ assignmentColors}
                 text={assignmentText}
                 setFocusedCell={setFocusedTime}
               />
@@ -196,6 +238,9 @@ const RequestSwap = () => {
                             setSelectedSwapPartnerAvailabilityId((prev) => {
                               console.log(`selected name: ${shift.name}, selected id: ${shift.id}`);
                               return prev === shift.id ? null : shift.id;
+                            });
+                            setSelectedSwapPartner((prev) => {
+                              return prev === shift.name ? null : shift.name;
                             });
                           }}
                         >

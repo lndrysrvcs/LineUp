@@ -311,9 +311,12 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
         return StatusCode(StatusCodes.Status406NotAcceptable);
     }
 
-    [HttpPost("{guid:guid}/requestSwap")]
-    public async Task<IActionResult> RequestSwap(Guid guid, [FromBody] DateTime[] shiftStartTimes)
+    [HttpPost("{guid:guid}/requestSwap/{requesterId:int}/{recipientId:int}")]
+    public async Task<IActionResult> RequestSwap(Guid guid, [FromBody] SwapRequestDto request)
     {
+        DateTime[] shiftStartTimes = request.shiftStartTimes;
+        int requesterId = request.RequesterId;
+        int recipientId = request.RecipientId;
         Schedule? schedule = context.Schedules.FirstOrDefault<Schedule>(s => s.Guid == guid);
         if (schedule == null || shiftStartTimes == null || !shiftStartTimes.Any())
         {
