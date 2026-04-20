@@ -4,9 +4,9 @@ namespace LineUp.Backend.Models;
 
 public class SwapRequestDto
 {
-    public DateTime[] shiftStartTimes { get; set; }
+    public required DateTime[] shiftStartTimes { get; set; }
 
-    public int RequesterId { get; set; }
+    public required int RequesterId { get; set; }
 
-    public int RecipientId { get; set; }
+    public required int RecipientId { get; set; }
 }
