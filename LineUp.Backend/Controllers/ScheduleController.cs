@@ -339,30 +339,29 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
                     s.ScheduleId == scheduleID
                     && s.StartTime == start
                     && s.Availability.Id == requesterId
-                );
-                // if (result == null || result is not ShiftAssignment) // throw an error if no shift assigned at that time
-                //     throw new FileNotFoundException();
+                ); //Attempt to find if the given shift belongs to requester
                 if (result != null)
                     requesterShiftCollection.Add(result);
-            }
-
-            foreach (DateTime start in shiftStartTimes)
-            {
-                var result = await context.ShiftAssignments.FirstOrDefaultAsync(s =>
-                    s.ScheduleId == scheduleID
-                    && s.StartTime == start
-                    && s.Availability.Id == recipientId
-                );
-                // if (result == null || result is not ShiftAssignment) // throw an error if no shift assigned at that time
-                //     throw new FileNotFoundException();
-                if (result != null)
-                    recipientShiftCollection.Add(result);
+                else
+                {
+                    result = await context.ShiftAssignments.FirstOrDefaultAsync(s =>
+                        s.ScheduleId == scheduleID
+                        && s.StartTime == start
+                        && s.Availability.Id == recipientId
+                    );  //Attempt to find if the given shift belongs to recipient
+                    if (result != null)
+                        requesterShiftCollection.Add(result);
+                    else
+                    { //If it doesn't belong to either, throw an exception
+                        throw new FileNotFoundException();
+                    }
+                }
             }
         }
         catch (FileNotFoundException e)
         {
             return UnprocessableEntity(
-                "The database did not recognize one or more of the times as shifts."
+                "One or more of the dates provided did not have a shift assigned to either party."
             );
         }
         if (requesterShiftCollection.Count < 1 && recipientShiftCollection.Count < 1)
