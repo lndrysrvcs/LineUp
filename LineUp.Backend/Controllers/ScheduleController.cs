@@ -340,7 +340,6 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
                     && s.StartTime == start
                     && s.Availability.Id == requesterId
                 );
-                Console.WriteLine("\n Found Requester Shift: " + result.ToJson());
                 // if (result == null || result is not ShiftAssignment) // throw an error if no shift assigned at that time
                 //     throw new FileNotFoundException();
                 if (result != null)
@@ -370,7 +369,6 @@ public class ScheduleController(LineUpContext context, IEmailService emailServic
             return UnprocessableEntity("No shift assignments were found for the time specified.");
 
         //Sort through the shifts (assume an unsorted list)
-        Console.WriteLine(requesterShiftCollection.ToJson());
         SwapRequest swapRequest = new SwapRequest
         {
             FromPartyA = requesterShiftCollection,
