@@ -21,6 +21,8 @@ public class GetScheduleAuthenticatedDto
 
     public required SchedulePreferences SchedulePreferences { get; set; } = new();
 
+    public required bool LatestEmailsSent { get; set; }
+
     public required List<Availability> Availabilities { get; set; } = [];
     public int AvailabilityCount => Availabilities.Count;
 }

@@ -1,19 +1,19 @@
-using System.Text;
 using LineUp.Core.Models;
+using Polly;
+using Polly.Registry;
 using Resend;
 
 namespace LineUp.Backend.Services;
 
-public class ResendEmailService(IResend resend) : IEmailService
+public class ResendEmailService(IResend resend, ResiliencePipelineProvider<string> pipelineProvider)
+    : IEmailService
 {
+    private readonly ResiliencePipeline pipeline = pipelineProvider.GetPipeline("email-retry");
     private readonly string from =
         Environment.GetEnvironmentVariable("EMAIL_FROM") ?? "LineUp <no-reply@lineup.rem.bi>";
 
     public async Task SendShiftAssignmentEmail(bool updated, Availability availability)
     {
-        if (availability.UserEmail == null)
-            return;
-
         var message = new EmailMessage
         {
             From = from,
@@ -32,16 +32,15 @@ public class ResendEmailService(IResend resend) : IEmailService
             },
         };
 
-        ResendResponse<Guid> response = await resend.EmailSendAsync(message);
+        ResendResponse<Guid> response = await pipeline.ExecuteAsync(async ct =>
+            await resend.EmailSendAsync(message, ct)
+        );
 
         Console.WriteLine("Email sent successfully!");
     }
 
     public async Task SendAvailabilityConfirmationEmail(bool updated, Availability availability)
     {
-        if (availability.UserEmail == null)
-            return;
-
         var message = new EmailMessage
         {
             From = from,
@@ -60,7 +59,9 @@ public class ResendEmailService(IResend resend) : IEmailService
             },
         };
 
-        ResendResponse<Guid> response = await resend.EmailSendAsync(message);
+        ResendResponse<Guid> response = await pipeline.ExecuteAsync(async ct =>
+            await resend.EmailSendAsync(message, ct)
+        );
 
         Console.WriteLine("Email sent successfully!");
     }

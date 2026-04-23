@@ -23,6 +23,8 @@ public class Schedule
 
     public Form? Form { get; set; }
     public int? FormId { get; set; }
+    
+    public bool LatestEmailsSent { get; set; } = false;
 
     public ICollection<ShiftAssignment>? ShiftAssignments { get; set; } =
         new List<ShiftAssignment>();
