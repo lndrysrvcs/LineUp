@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 
+/** The page rendered if React recieves any error that causes the previous page to crash. */
 export default function ErrorPage() {
   const error = useRouteError();
   console.log(error);

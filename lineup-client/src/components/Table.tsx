@@ -1,12 +1,33 @@
 import "./table.css";
 
-interface TableProps<T> {
+/**
+ * Props for the {@link Table} component.
+ * @typeParam T - The type of the data for a single row.
+ */
+export interface TableProps<T> {
+  /** The name to display at the top of each column. */
   headers: string[];
+
+  /** The data to be rendered inside each row. */
   data: T[];
+
+  /** The function to render a single row. Will be called for each row. */
   renderRow: (item: T) => React.ReactNode;
+
+  /** A list of CSS width values.
+   *
+   * @example ["10%", "20px", "5rem", ...]
+   * @defaultValue Equal widths
+   */
   columnWidths?: string[];
 }
 
+/**
+ * A customizable table that renders row data into a common format.
+ *
+ * @param props - The component props.
+ * @typeParam T - The type of the data for a single row.
+ */
 const Table = <T,>({ headers, data, renderRow, columnWidths }: TableProps<T>) => {
   return (
     <table className="scheduleTable">

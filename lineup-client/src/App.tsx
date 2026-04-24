@@ -81,6 +81,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+/** The main application shell. Renders the router and global providers. */
 function App() {
   return <RouterProvider router={router} />;
 }

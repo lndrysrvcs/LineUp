@@ -1,14 +1,29 @@
 import useMousePosition from "@/utils/useMousePosition";
 import { useEffect, useState } from "react";
 
-interface MousePopupProps {
+/**
+ * Props for the {@link MousePopup} component.
+ */
+export interface MousePopupProps {
+  /** If the popup is visible or not. */
   isOpen: boolean;
+
   width?: number;
+
   height?: number;
+
+  /** How long it takes the popup to fade in and out when {@link isOpen} changes. */
   fadeDuration?: number;
+
+  /** The component to render inside of the popup. */
   children: React.ReactNode;
 }
 
+/**
+ * A customizeable popup that will follow the mouse position.
+ *
+ * @param props - The component props.
+ */
 export function MousePopup({ isOpen, width, height, fadeDuration = 150, children }: MousePopupProps) {
   const { x, y } = useMousePosition();
   const [mounted, setMounted] = useState(isOpen);

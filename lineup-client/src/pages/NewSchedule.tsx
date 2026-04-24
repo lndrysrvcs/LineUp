@@ -1,7 +1,7 @@
 import type { Time, TimeRange, ValidMinutes } from "@/types";
 import { queryClient, useApi } from "@/utils/api";
 import { addToasts } from "@/utils/db";
-import { formatTimeForInput, getValidMinutesForInterval, parseTimeString, toMinutes } from "@/utils/time.ts";
+import { formatTime24Hour, getValidMinutesForInterval, parseTimeString, toMinutes } from "@/utils/time.ts";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
@@ -27,6 +27,7 @@ interface ScheduleData {
   maxShifts: number | undefined; //maximum number of shifts a single person can work
 }
 
+/** The page displayed when a manager wishes to create a new schedule. Allows a manager to input their schedule settings and submit a backend request to create the schedule. */
 const NewSchedule = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
@@ -129,8 +130,8 @@ const NewSchedule = () => {
       createScheduleMutation.mutateAsync({
         name: scheduleData.name.trim(),
         dateCoverage: scheduleData.dates?.map(formatDateLocal) || [],
-        startTime: formatTimeForInput(scheduleData.hours.start),
-        endTime: formatTimeForInput(scheduleData.hours.end),
+        startTime: formatTime24Hour(scheduleData.hours.start),
+        endTime: formatTime24Hour(scheduleData.hours.end),
         schedulePreferences: {
           minutesPerSlot: Number(scheduleData.shiftTimes),
           shiftIntervals: Number(scheduleData.shiftTimes),
@@ -342,7 +343,7 @@ const NewSchedule = () => {
             type="time"
             id="startTime"
             name="startTime"
-            value={formatTimeForInput(scheduleData.hours.start)}
+            value={formatTime24Hour(scheduleData.hours.start)}
             step={scheduleData.shiftTimes ? Number(scheduleData.shiftTimes) * 60 : 60}
             onChange={handleStartTimeChange}
             required
@@ -353,7 +354,7 @@ const NewSchedule = () => {
             type="time"
             id="endTime"
             name="endTime"
-            value={formatTimeForInput(scheduleData.hours.end)}
+            value={formatTime24Hour(scheduleData.hours.end)}
             step={scheduleData.shiftTimes ? Number(scheduleData.shiftTimes) * 60 : 60}
             onChange={handleEndTimeChange}
             required

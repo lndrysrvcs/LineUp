@@ -1,10 +1,24 @@
 import { useState } from "react";
 
-interface CopyableLinkProps {
+/**
+ * Props for the {@link CopyableLink} component.
+ */
+export interface CopyableLinkProps {
+  /** The url to be copied to clipboard. */
   url: string;
+
+  /** The string to display on the page that the user clicks to copy.
+   *
+   * @defaultValue {@link url}
+   */
   display?: string;
 }
 
+/**
+ * A link that appears as text and can be clicked to copy the text to a user's clipboard.
+ *
+ * @param props - The component props.
+ */
 const CopyableLink = ({ url, display }: CopyableLinkProps) => {
   const [copied, setCopied] = useState(false);
 

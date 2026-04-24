@@ -3,9 +3,15 @@
 LineUp is a scheduling tool for when you need 100% coverage over a period of time.
 It is designed to help teams ensure that everyone is available to work during any given period of time, whether for staffing a table or scheduling radio shows.
 
-## Link
+## Deployed Link
 
-Access the deployed version [here](https://lineup.rem.bi/)
+### [lineup.rem.bi](https://lineup.rem.bi/)
+
+## Documentation
+
+Frontend documentation can be found in [lineup-client/docs](lineup-client/docs/modules.md).
+
+Backend documentation can be found somewhere!
 
 ## Usage Example
 
@@ -20,7 +26,6 @@ Access the deployed version [here](https://lineup.rem.bi/)
   - After submitting the form, they receive an email confirming their submission with a link to allow them to edit their availability
 - Once the president has collected the availabilities, they decide to generate the schedule by clicking a button in the edit schedule page
 - Once the algorithm generates the schedule, an email can be shared with all users who submitted their availability, summarizing their shift assignments and linking to the page displaying the generated schedule
-
 
 ## Quickstart
 
@@ -39,11 +44,13 @@ Access the deployed version [here](https://lineup.rem.bi/)
    ```bash
    dotnet restore
    ```
+
    You will need to set the Resend API key with:
+
    ```bash
    aspire secret set Parameters:resend-api-key re_keygobbeldygook
    ```
-   
+
    The app will still work but will not send emails.
 
 2. **Install frontend dependencies**
@@ -72,17 +79,22 @@ Access the deployed version [here](https://lineup.rem.bi/)
 Note: On subsequent runs, do not use the `SEED` flag, unless you want to re-seed the database (which will delete all existing data).
 
 ### Testing
+
 To run the backend tests:
+
 ```bash
 dotnet test
 ```
+
 in the root of the repository.
 
 To run the frontend tests:
+
 ```bash
 pnpm test
 ```
-in the `lineup-client` directory.
+
+in the [`lineup-client`](lineup-client) directory.
 
 #### API Client Generation
 
@@ -100,6 +112,7 @@ aspire run
 ```
 
 ## The Team
+
 - Rhyder Swen
   - Frontend lead
   - Created Calendar component
@@ -121,18 +134,17 @@ aspire run
   - Designed database
   - Request to swap feature frontend and backend (493 Advanced Feature)
 
-
 ## Project Structure
-- **`lineup-client/`** - React frontend
-- **`LineUp.Backend/`** - .NET backend API
 
+- **[`lineup-client/`](lineup-client)** - React frontend
+- **[`LineUp.Backend/`](LineUp.Backend)** - .NET backend API
 
-- **`LineUp.Core/`** - Shared models and utilities
-- **`LineUp.Scheduler/`** - Scheduler logic
-- **`LineUp.EndToEndTests/`** - End-to-end tests
-- **`LineUp.MigrationService/`** - Database migration service (needed for Aspire)
-- **`LineUp.ServiceDefaults/`** - Shared service defaults and logic for Aspire
-- **`LineUp.AppHost/`** - Aspire app host
+- **[`LineUp.Core/`](LineUp.Core)** - Shared models and utilities
+- **[`LineUp.Scheduler/`](LineUp.Scheduler)** - Scheduler logic
+- **[`LineUp.EndToEndTests/`](LineUp.EndToEndTests)** - End-to-end tests
+- **[`LineUp.MigrationService/`](LineUp.MigrationService)** - Database migration service (needed for Aspire)
+- **[`LineUp.ServiceDefaults/`](LineUp.ServiceDefaults)** - Shared service defaults and logic for Aspire
+- **[`LineUp.AppHost/`](LineUp.AppHost)** - Aspire app host
 
 ```mermaid
 flowchart TB
@@ -151,7 +163,9 @@ flowchart TB
 
 ## Retrospective
 
-This project taught us about the importance of teamwork in software engineering. There were multiple points throughout our project where one or more of us had to rely on our teammates to help us complete a task before a weekly meeting. In that way, it also taught us about the importance of timeliness. Whenever we were on the other side of that situation, and we were the ones being depended on, we were motivated to finish our addition in a timely manner so that the others could finish their tasks on time and with low stress. Working as a team also encouraged us to maintain a high standard of quality for our code, since we knew multiple people would need to understand and work with it. 
+This project taught us about the importance of teamwork in software engineering. There were multiple points throughout our project where one or more of us had to rely on our teammates to help us complete a task before a weekly meeting. In that way, it also taught us about the importance of timeliness. Whenever we were on the other side of that situation, and we were the ones being depended on, we were motivated to finish our addition in a timely manner so that the others could finish their tasks on time and with low stress. Working as a team also encouraged us to maintain a high standard of quality for our code, since we knew multiple people would need to understand and work with it.
+
+It also taught us the skills for how to write code in a collaborative environment. For example, sticking to the Design Document and not just coding freely to ensure that the project falls in scope and is understandable to all. Additionally, we grew our skills in the React and C# languages, as well as software engineering-specific tools such as Vitest and xUnit and so many more.
 
 ## Versions
 
@@ -162,8 +176,10 @@ Moq: 4.20.72
 ## License
 
 MIT License
-Copyright (c) 2026 Rhyder Swen, Joseph Markowski, Eddie Rodriguez, Luke Palios
-For more information, see `LICENSE` in the home directory
+
+Copyright (c) 2026 Rhyder Swen, Joseph Markowski, Eddie Rodriguez, Luke Palios.
+
+For more information, see the [LICENSE](LICENSE) in the home directory.
 
 ## AI Usage
 

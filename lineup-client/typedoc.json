@@ -1,0 +1,11 @@
+{
+  "entryPoints": ["src/"],
+  "entryPointStrategy": "expand",
+  "tsconfig": "./tsconfig.json",
+  "out": "docs",
+  "exclude": ["**/*.test.tsx", "**/*.test.ts", "node_modules/**", "src/api-client/**", "src/main.tsx"],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "logLevel": "Info",
+  "plugin": ["typedoc-plugin-markdown"]
+}

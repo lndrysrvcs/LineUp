@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
+/** The default page displayed when a user is *not* logged in. Displays very basic information about how to log in. */
 const LoggedOutHome = () => {
   const { loginWithRedirect } = useAuth0();
 

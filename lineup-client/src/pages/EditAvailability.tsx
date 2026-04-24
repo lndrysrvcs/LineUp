@@ -7,6 +7,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 
+/** The page displayed when a user clicks on the edit link sent to their email. Allows them to update their availability selections if the schedule has not yet been generated. */
 const EditAvailability = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();

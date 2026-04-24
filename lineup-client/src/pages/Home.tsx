@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react/";
 import LoggedInHome from "./LoggedInHome";
 import LoggedOutHome from "./LoggedOutHome";
 
+/** A wrapper for the home page. Displays {@link LoggedOutHome} or {@link LoggedInHome} depending on the authentication status. */
 const Home = () => {
   const { isAuthenticated, isLoading, error } = useAuth0();
 
