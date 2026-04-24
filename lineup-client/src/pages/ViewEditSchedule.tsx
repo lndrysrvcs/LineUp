@@ -149,6 +149,23 @@ const ViewEditSchedule = () => {
     },
   });
 
+  const sendEmailsMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetchWithAuth(`/api/schedule/${guid}/sendEmails`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to send shift assignment emails");
+      }
+
+      return true;
+    },
+  });
+
   const [scheduleData, setScheduleData] = React.useState<ScheduleData>({
     name: "",
     shiftTimes: "",
@@ -329,6 +346,19 @@ const ViewEditSchedule = () => {
     addToasts(deleteScheduleMutation.mutateAsync());
   };
 
+  const handleSendEmails = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    if (
+      !confirm(
+        `Are you sure you want to send shift assignment emails?${data.latestEmailsSent ? " You've already sent emails for these shifts!" : ""}`,
+      )
+    )
+      return;
+
+    addToasts(sendEmailsMutation.mutateAsync(), "Sending shift assignment emails...");
+  };
+
   // If the schedule data is still loading, show a loading message
   if (!scheduleData) return <div>Loading...</div>;
 
@@ -411,6 +441,18 @@ const ViewEditSchedule = () => {
         >
           {scheduleGenerated ? "Regenerate Schedule" : "Generate Schedule"}
         </button>
+
+        {scheduleGenerated && (
+          <button
+            type="button"
+            className="submitBtn"
+            onClick={handleSendEmails}
+            disabled={sendEmailsMutation.isPending}
+            style={{ marginLeft: "10px" }}
+          >
+            Send Assignment Emails
+          </button>
+        )}
       </div>
       <hr />
       <div>

@@ -3,6 +3,24 @@
 LineUp is a scheduling tool for when you need 100% coverage over a period of time.
 It is designed to help teams ensure that everyone is available to work during any given period of time, whether for staffing a table or scheduling radio shows.
 
+## Link
+
+Access the deployed version [here](https://lineup.rem.bi/)
+
+## Usage Example
+
+- A club president is planning tabling to advertise an upcoming event and needs to organize their committee members based on their availability
+- They log in to LineUp using their username and password or Google account
+- From the homepage, they click a button to create a new schedule, taking them to a form
+- They enter the name ("Club Tabling"), the interval of time each shift should be divisible by (30 minutes), the duration of time to schedule for each day (11:00 AM to 5:00 PM), the dates to schedule for (April 27-May 1), and the number of people that should be working at the same time (2 people)
+  - May also optionally choose to enter the maximum length of time a single person can work without a break (120 minutes) and the maximum number of shifts an individual can work (10 shifts)
+- Once the schedule is created, their homepage is updated to include it in their list of schedules, including a link to its availability form
+- The president shares the link with their committee members
+- Each member fills out the availability form with their name, email, and selects the time blocks that they are available for
+  - After submitting the form, they receive an email confirming their submission with a link to allow them to edit their availability
+- Once the president has collected the availabilities, they decide to generate the schedule by clicking a button in the edit schedule page
+- Once the algorithm generates the schedule, an email can be shared with all users who submitted their availability, summarizing their shift assignments and linking to the page displaying the generated schedule
+
 
 ## Quickstart
 
@@ -81,6 +99,29 @@ $env:GEN = "true"
 aspire run
 ```
 
+## The Team
+- Rhyder Swen
+  - Frontend lead
+  - Created Calendar component
+  - Created Availability Entry/Final Schedule Viewing page
+  - Integrated the backend with the frontend
+- Joseph Markowski
+  - Frontend support
+  - Created Home, Schedule Creation, and Schedule Editing pages
+  - Visual style, design, and logos
+  - Primary frontend tester
+- Eddie Rodriguez
+  - Backend lead
+  - Developed scheduling algorithm
+  - Designed the API
+  - Helped design database
+- Luke Palios
+  - Backend support
+  - Helped design API
+  - Designed database
+  - Request to swap feature frontend and backend (493 Advanced Feature)
+
+
 ## Project Structure
 - **`lineup-client/`** - React frontend
 - **`LineUp.Backend/`** - .NET backend API
@@ -108,11 +149,21 @@ flowchart TB
     Auth0Api <-- Authenticate with Google --> ReactFrontend
 ```
 
+## Retrospective
+
+This project taught us about the importance of teamwork in software engineering. There were multiple points throughout our project where one or more of us had to rely on our teammates to help us complete a task before a weekly meeting. In that way, it also taught us about the importance of timeliness. Whenever we were on the other side of that situation, and we were the ones being depended on, we were motivated to finish our addition in a timely manner so that the others could finish their tasks on time and with low stress. Working as a team also encouraged us to maintain a high standard of quality for our code, since we knew multiple people would need to understand and work with it. 
+
 ## Versions
 
 Postgres: 18.1
 
 Moq: 4.20.72
+
+## License
+
+MIT License
+Copyright (c) 2026 Rhyder Swen, Joseph Markowski, Eddie Rodriguez, Luke Palios
+For more information, see `LICENSE` in the home directory
 
 ## AI Usage
 
