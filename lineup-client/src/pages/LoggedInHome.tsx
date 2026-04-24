@@ -17,6 +17,7 @@ interface TableData {
 // Schedule table headers
 const headers = ["Name", "Responses", "Availability Link", "Generated?", "Schedule"];
 
+/** The default page displayed when a user is logged in. Shows a user their list of schedules and allows for easy navigation to other administritive parts of the website. */
 const LoggedInHome = () => {
   const { user } = useAuth0();
   const navigate = useNavigate();

@@ -1,13 +1,13 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createContext } from "react";
 
-export type User = { id: string; email: string; username: string };
-
+/** The functions to be available to all children of an {@link utils/api/provider.AuthProvider | AuthProvider}. */
 export type AuthContextValue = {
   fetchWithAuth: (path: string, init?: RequestInit) => Promise<Response>;
 };
 
-// createContext in its own non-component file
+/** Creates a context for authentication, needed in a non-component file to be referenced anywhere. */
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+/** The TanStack Query Client, which manages all caching. */
 export const queryClient = new QueryClient({});

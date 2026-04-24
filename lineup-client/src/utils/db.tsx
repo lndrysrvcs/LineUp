@@ -1,6 +1,13 @@
 import { getToken, logout } from "@/utils/api/auth-token";
 import { toast } from "react-hot-toast";
 
+/** Adds toasts to asynchronous functions to give user's updates on their API queries.
+ *
+ * @param promise - The Promise that updates the toast once resolved.
+ * @param loadingMessage - The message to display while the Promise is still pending. Defaults to `"Submitting..."`
+ * @param successMessage - The message to display if the Promise completes without error. Defaults to `"Success!"`
+ * @example addToasts(mutationVar.mutateAsync(), "Working on it...", "Done!");
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function addToasts(promise: Promise<any>, loadingMessage?: string, successMessage?: string) {
   toast.promise(promise, {
@@ -10,6 +17,14 @@ function addToasts(promise: Promise<any>, loadingMessage?: string, successMessag
   });
 }
 
+/** A [React Router Loader](https://reactrouter.com/start/framework/data-loading) function for checking if a dynamic route exists and getting that page's associated data. Used for pages that users don't need to log in for (Availability and EditAvailability pages).
+ * @param url - The API URL to fetch from. Replaces {} with param.
+ * @param param - The specific param of the page a user navigated to.
+ * @returns The data returned from the API.
+ * @remarks To be used in conjunction with [useQuery (TanStack)](https://tanstack.com/query/v4/docs/framework/react/reference/useQuery).
+ * @example // Queries "/api/schedule/12345/details"
+ * useQuery(unauthorizedLoaderQuery("/api/schedule/{}/details", "12345"))
+ */
 function unauthorizedLoaderQuery(url: string, param: string) {
   // url should use {} for where the param should be
 
@@ -49,6 +64,14 @@ function unauthorizedLoaderQuery(url: string, param: string) {
   };
 }
 
+/** A [React Router Loader](https://reactrouter.com/start/framework/data-loading) function for checking if a dynamic route exists and getting that page's associated data. Used for restrcted pages that require a user to be logged in (ViewEditSchedule).
+ * @param url - The API URL to fetch from. Replaces {} with param.
+ * @param param - The specific param of the page a user navigated to.
+ * @returns The data returned from the API.
+ * @remarks To be used in conjunction with [useQuery (TanStack)](https://tanstack.com/query/v4/docs/framework/react/reference/useQuery).
+ * @example // Queries "/api/schedule/12345/details"
+ * useQuery(authorizedLoaderQuery("/api/schedule/{}/details", "12345"))
+ */
 function authorizedLoaderQuery(url: string, param: string) {
   // url should use {} for where the param should be
 

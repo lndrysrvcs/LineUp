@@ -4,11 +4,20 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigation } from "react-router";
 
-interface Props {
+/**
+ * Props for the {@link Topbar} component.
+ */
+export interface TopbarProps {
+  /** The main interactive portion of the app (anything that's beneath the topbar). */
   children: React.ReactNode;
 }
 
-const Topbar = ({ children }: Props) => {
+/**
+ * A common component that will appear on every page, complete with helpful links that are needed on all pages.
+ *
+ * @param props - The component props.
+ */
+const Topbar = ({ children }: TopbarProps) => {
   const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const navigation = useNavigation();
 

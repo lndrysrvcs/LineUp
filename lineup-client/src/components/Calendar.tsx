@@ -12,19 +12,47 @@ import { Fragment, useEffect, useState } from "react";
 import "./calendar.css";
 import type { CalendarCellProps } from "./CalendarCells";
 
-interface CalendarProps {
+/**
+ * Props for the {@link Calendar} component.
+ */
+export interface CalendarProps {
+  /** The Cell that chooses behavior, rendered in each row/column. */
   Cell: React.ComponentType<CalendarCellProps>;
+
+  /** Number of minutes each cell represents. */
   minutesPerCell: ValidMinutes;
+
+  /** Array of dates (columns) for the calendar. Time input does not matter. */
   dates: Date[];
+
+  /** Start time of first cell to end time of last cell. */
   range: TimeRange;
+
+  /** Map of UTC timestamps to CSS colors.
+   * @example {"2026-03-10T16:15:00.000Z": "var(--color)", ...}
+   */
   colors?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "var(--color)", ...}
-  text?: { [key: string]: string }; // {"2026-03-10T16:15:00.000Z": "Rhyder", ...}
+
+  /** Map of UTC timestamps to text displayed on the cell.
+   * @example {"2026-03-10T16:15:00.000Z": "Rhyder", ...}
+   */
+  text?: { [key: string]: string };
+
+  /** React state setter to update which cell a user is currently focusing over. Sets `null` when not hovering over a cell. */
   setFocusedCell?: React.Dispatch<React.SetStateAction<string | null>>;
+
+  /** Array of UTC timestamps for which cells are shown as selected. */
   selectedCells?: string[];
+
+  /** React state setter for {@link CalendarProps.selectedCells | selectedCells}. */
   setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-// Children are each cell of the calendar
+/**
+ * A calendar that renders rows and columns based on the input times, putting the chosen {@link components/CalendarCells | Cell} in each one.
+ *
+ * @param props - The component props.
+ */
 const Calendar = ({
   Cell,
   minutesPerCell,

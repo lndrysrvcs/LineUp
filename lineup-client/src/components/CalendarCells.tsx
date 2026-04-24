@@ -2,20 +2,46 @@ import type { Time } from "@/types";
 import { dayNumberToWeekday, formatTime, standardizeDateAndTime } from "@/utils/time";
 import React from "react";
 
+/**
+ * Props for the {@link ColoredCell} and {@link FillableCell} components.
+ */
 export interface CalendarCellProps {
+  /** The start time (row). */
   time: Time;
+
+  /** The day of the month (column). */
   date: Date;
+
+  /** {@inheritDoc components/Calendar.CalendarProps.selectedCells} */
   selectedCells?: string[];
+
+  /** React state setter for {@link CalendarCellProps.selectedCells | selectedCells}. */
   setSelectedCells?: React.Dispatch<React.SetStateAction<string[]>>;
+
+  /** If the user is holding mouse click/tap. */
   isPointerDown: boolean;
+
+  /** React state setter to update if the user is holding mouse click/tap. */
   setIsPointerDown: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /** If the user is enabling or disabling cells. */
   isEnablingCells: boolean;
+
+  /** React state setter for {@link CalendarCellProps.isEnablingCells | isEnablingCells}. */
   setIsEnablingCells: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /** {@inheritDoc components/Calendar.CalendarProps.colors} */
   colors: { [key: string]: string };
+
+  /** {@inheritDoc components/Calendar.CalendarProps.text} */
   text: { [key: string]: string };
 }
 
-// A cell type that can be selected/deselected to indicate availability
+/**
+ * A cell type that can be selected/deselected to indicate availability, including support for clicking and dragging across multiple cells.
+ *
+ * @param props - The component props.
+ */
 const FillableCell = ({
   time,
   date,
@@ -82,8 +108,12 @@ const FillableCell = ({
   );
 };
 
-// A cell type that is colored based on the provided input and includes text information, but cannot be clicked
-// Used for displaying the generated schedule with the proper shift assignments, sorted by color
+/**
+ * A cell type that is colored based on the provided input and includes text information, but cannot be clicked.
+ *
+ * @param props - The component props.
+ * @remarks Used for displaying the generated schedule with the proper shift assignments, sorted by color.
+ */
 const ColoredCell = ({ time, date, colors, text }: CalendarCellProps) => {
   const dateString = standardizeDateAndTime(date, time);
 

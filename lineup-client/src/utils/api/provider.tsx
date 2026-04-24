@@ -14,6 +14,9 @@ async function fetchWithoutAuth(path: string, init?: RequestInit) {
   return res;
 }
 
+/** The AuthProvider, which provides secure and common functionality for all authenticated functions.
+ * @remarks Should wrap around the entire application in order to allow access to authenticated functions.
+ */
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading, getAccessTokenSilently, logout } = useAuth0();
 

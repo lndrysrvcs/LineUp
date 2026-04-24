@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
+/** The page displayed when a user wishes to input and submit their availability to a schedule. Switches over to displaying the generated schedule once generated. */
 const Availability = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();

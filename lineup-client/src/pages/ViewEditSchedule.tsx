@@ -1,7 +1,7 @@
-import type { TimeRange, ValidMinutes } from "@/types";
 import { Calendar } from "@/components/Calendar";
 import { ColoredCell } from "@/components/CalendarCells";
 import { MousePopup } from "@/components/MousePopup";
+import type { TimeRange, ValidMinutes } from "@/types";
 import { queryClient, useApi } from "@/utils/api";
 import { addToasts, authorizedLoaderQuery } from "@/utils/db";
 import { parseTimeString } from "@/utils/time.ts";
@@ -24,6 +24,7 @@ interface ScheduleData {
   maxShifts: number | undefined; //maximum number of shifts a single person can work
 }
 
+/** The page displayed when a manager wishes to view responses or edit one of their previously-created schedules. Allows a manager to see what users are available at what times and submit updates to their chosen calendar parameters. */
 const ViewEditSchedule = () => {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();

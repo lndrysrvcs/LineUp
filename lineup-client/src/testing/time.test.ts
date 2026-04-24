@@ -7,9 +7,8 @@ import {
   addMinutesToTime,
   addTimeToDate,
   dayNumberToWeekday,
-  formatDate,
   formatTime,
-  formatTimeForInput,
+  formatTime24Hour,
   getTimeIncrementLabel,
   getValidMinutesForInterval,
   parseTimeString,
@@ -55,14 +54,6 @@ describe("weekday conversions", () => {
   });
 });
 
-describe("formatDate", () => {
-  it("formats date and time together", () => {
-    const date = new Date("2024-01-01T00:00:00");
-    const result = formatDate(date, { hour: 9, minute: 15 });
-    expect(result).toContain("09:15 AM");
-  });
-});
-
 describe("formatTime", () => {
   it("formats AM time correctly", () => {
     expect(formatTime({ hour: 9, minute: 15 })).toBe("09:15 AM");
@@ -81,10 +72,10 @@ describe("formatTime", () => {
   });
 });
 
-describe("formatTimeForInput", () => {
+describe("formatTime24Hour", () => {
   it("formats time in 24h format", () => {
-    expect(formatTimeForInput({ hour: 9, minute: 15 })).toBe("09:15");
-    expect(formatTimeForInput({ hour: 17, minute: 30 })).toBe("17:30");
+    expect(formatTime24Hour({ hour: 9, minute: 15 })).toBe("09:15");
+    expect(formatTime24Hour({ hour: 17, minute: 30 })).toBe("17:30");
   });
 });
 
