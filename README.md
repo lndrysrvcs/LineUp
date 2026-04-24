@@ -11,7 +11,7 @@ It is designed to help teams ensure that everyone is available to work during an
 
 Frontend documentation can be found in [lineup-client/docs](lineup-client/docs/modules.md).
 
-Backend docuementation can be found somewhere!
+Backend documentation can be found somewhere!
 
 ## Usage Example
 
@@ -165,7 +165,7 @@ flowchart TB
 
 This project taught us about the importance of teamwork in software engineering. There were multiple points throughout our project where one or more of us had to rely on our teammates to help us complete a task before a weekly meeting. In that way, it also taught us about the importance of timeliness. Whenever we were on the other side of that situation, and we were the ones being depended on, we were motivated to finish our addition in a timely manner so that the others could finish their tasks on time and with low stress. Working as a team also encouraged us to maintain a high standard of quality for our code, since we knew multiple people would need to understand and work with it.
 
-It also taught us the skills for how to write code in a collaborative environment. For example, sticking to the Design Document and not just coding freely to ensure that the project falls in scope and understandable to all. Additionally, we grew our skills in the React and C# languages, as well as software engineering-specific tools such as Vitest and xUnit and so many more.
+It also taught us the skills for how to write code in a collaborative environment. For example, sticking to the Design Document and not just coding freely to ensure that the project falls in scope and is understandable to all. Additionally, we grew our skills in the React and C# languages, as well as software engineering-specific tools such as Vitest and xUnit and so many more.
 
 ## Versions
 
@@ -176,6 +176,7 @@ Moq: 4.20.72
 ## License
 
 MIT License
+
 Copyright (c) 2026 Rhyder Swen, Joseph Markowski, Eddie Rodriguez, Luke Palios.
 
 For more information, see the [LICENSE](LICENSE) in the home directory.
