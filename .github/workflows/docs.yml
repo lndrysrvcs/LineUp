@@ -20,10 +20,8 @@ jobs:
           version: 10.31.0
       - name: Build JS docs
         run: cd lineup-client && pnpm install && pnpm exec typedoc
-      - uses: nunit/docfx-action@v4.1.0
-        name: Build Documentation
-        with:
-          args: docfx.json
+      - name: Build Documentation
+        run: dotnet docfx docfx.json
 
 
   # Deploy job
