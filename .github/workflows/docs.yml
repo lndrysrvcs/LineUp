@@ -24,6 +24,11 @@ jobs:
         run: dotnet restore && dotnet tool restore
       - name: Build Documentation
         run: dotnet docfx docfx.json
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        with:
+          path: _site/
 
 
   # Deploy job
