@@ -6,6 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LineUp.MigrationService;
 
+/// <summary>
+/// Background service that runs migrations and seeds the database.
+/// </summary>
+/// <param name="serviceProvider"></param>
+/// <param name="hostApplicationLifetime"></param>
 public class Worker(
     IServiceProvider serviceProvider,
     IHostApplicationLifetime hostApplicationLifetime
@@ -14,6 +19,10 @@ public class Worker(
     public const string ActivitySourceName = "Migrations";
     private static readonly ActivitySource SActivitySource = new(ActivitySourceName);
 
+    /// <summary>
+    /// Runs migrations and seeds the database.
+    /// </summary>
+    /// <param name="cancellationToken">The cancellation token to use for the operation.</param>
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         using var activity = SActivitySource.StartActivity(
@@ -38,6 +47,11 @@ public class Worker(
         hostApplicationLifetime.StopApplication();
     }
 
+    /// <summary>
+    /// Runs migrations asynchronously.
+    /// </summary>
+    /// <param name="dbContext">The database context to run migrations on.</param>
+    /// <param name="cancellationToken">The cancellation token to use for the operation.</param>
     private static async Task RunMigrationAsync(
         LineUpContext dbContext,
         CancellationToken cancellationToken
@@ -51,6 +65,11 @@ public class Worker(
         });
     }
 
+    /// <summary>
+    /// Seeds the database with sample data.
+    /// </summary>
+    /// <param name="context">The database context to seed.</param>
+    /// <param name="cancellationToken">The cancellation token to use for the operation.</param>
     private static async Task SeedDataAsync(
         LineUpContext context,
         CancellationToken cancellationToken

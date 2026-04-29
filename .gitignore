@@ -210,3 +210,6 @@ LineUp.AppHost/aspire-output/
 .idea/**/projectSettingsUpdater.xml
 # api spec
 openapi-spec/
+# docfx
+api/
+_site/

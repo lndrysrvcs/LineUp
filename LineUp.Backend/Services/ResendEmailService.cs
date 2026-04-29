@@ -5,6 +5,11 @@ using Resend;
 
 namespace LineUp.Backend.Services;
 
+/// <summary>
+/// Implementation of <see cref="IEmailService"/> that uses the Resend API.
+/// </summary>
+/// <param name="resend">The Resend API client for sending emails.</param>
+/// <param name="pipelineProvider">Provider for resilience pipelines to handle retries.</param>
 public class ResendEmailService(IResend resend, ResiliencePipelineProvider<string> pipelineProvider)
     : IEmailService
 {

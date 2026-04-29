@@ -37,7 +37,7 @@ public class AvailabilityController(LineUpContext context, IEmailService emailSe
     [HttpPatch("{guid:guid}/edit")]
     public async Task<IActionResult> EditAvailability(
         Guid guid,
-        [FromBody] AvailabilityUpdateDTO availability
+        [FromBody] AvailabilityUpdateDto availability
     )
     {
         var availabilityToUpdate = await context

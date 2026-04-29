@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "./",
+          "files": [
+            "**/*.csproj" 
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "index.md",
+          "toc.yml",
+          "cs-docs/**"
+        ]
+      },
+      {
+        "files": [
+          "api/**.yml", 
+          "api/index.md"
+        ]
+      },
+      { 
+        "files": [
+          "**.md",
+          "**/toc.yml"
+        ],
+        "src": "lineup-client/docs",
+        "dest": "client-docs"
+      },
+      {
+        "content": [{
+          "files": [ "**/api-spec.swagger.json" ]
+        }]
+      },
+      {
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "LineUp",
+      "_appTitle": "LineUp",
+      "_enableSearch": true,
+      "pdf": false
+    }
+  }
+}

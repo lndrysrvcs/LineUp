@@ -2,6 +2,9 @@
 
 namespace LineUp.Scheduler;
 
+/// <summary>
+/// Helper methods for generating the availability matrix.
+/// </summary>
 static class AvailabilityMatrixTools
 {
     /// <summary>
@@ -22,6 +25,11 @@ static class AvailabilityMatrixTools
         ];
     }
 
+    /// <summary>
+    /// Generates a dictionary of the time pointers for the schedule.
+    /// </summary>
+    /// <param name="schedule">The schedule to generate the matrix for.</param>
+    /// <returns>A dictionary mapping TimeOnly to the index in the matrix.</returns>
     public static Dictionary<TimeOnly, int> GenerateMatrixTimePointerHashSet(Schedule schedule)
     {
         Dictionary<TimeOnly, int> result = new();
@@ -38,6 +46,11 @@ static class AvailabilityMatrixTools
         return result;
     }
 
+    /// <summary>
+    /// Generates a dictionary of the availability guid pointers for the schedule.
+    /// </summary>
+    /// <param name="availabilities">The availabilities to generate the matrix for.</param>
+    /// <returns>A dictionary mapping Guid to the index in the matrix.</returns>
     public static Dictionary<Guid, int> GenerateAvailabilityGuidPointerHashSet(
         IEnumerable<Availability> availabilities
     )

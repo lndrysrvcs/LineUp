@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LineUp.Backend.Support;
 
+/// <summary>
+/// Attribute to check if the user has a specific scope.
+/// </summary>
 public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
 {
     protected override Task HandleRequirementAsync(

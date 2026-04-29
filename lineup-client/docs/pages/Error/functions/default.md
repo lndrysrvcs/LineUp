@@ -1,14 +1,14 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [pages/Error](../README.md) / default
+[lineup-client](../../../modules.md) / [pages/Error](../index.md) / default
 
 # Function: default()
 
 > **default**(): `Element`
 
-Defined in: [pages/Error.tsx:6](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/pages/Error.tsx#L6)
+Defined in: [pages/Error.tsx:6](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/pages/Error.tsx#L6)
 
 The page rendered if React recieves any error that causes the previous page to crash.
 

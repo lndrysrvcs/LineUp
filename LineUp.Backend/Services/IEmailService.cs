@@ -3,12 +3,32 @@ using LineUp.Core.Models;
 
 namespace LineUp.Backend.Services;
 
+/// <summary>
+/// Service interface for sending emails.
+/// </summary>
 public interface IEmailService
 {
+    /// <summary>
+    /// Sends an email to the user notifying them of their shift assignment.
+    /// </summary>
+    /// <param name="updated">Indicates if the availability was updated.</param>
+    /// <param name="availability">The availability details.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     Task SendShiftAssignmentEmail(bool updated, Availability availability);
 
+    /// <summary>
+    /// Sends an email to the user confirming their availability.
+    /// </summary>
+    /// <param name="updated">Indicates if the availability was updated.</param>
+    /// <param name="availability">The availability details.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     Task SendAvailabilityConfirmationEmail(bool updated, Availability availability);
 
+    /// <summary>
+    /// Builds a list of shift assignments for the user.
+    /// </summary>
+    /// <param name="availability">The availability details.</param>
+    /// <returns>A string containing the list of shift assignments in HTML list item format.</returns>
     public static string BuildShiftAssignmentLi(Availability availability)
     {
         if (availability.Schedule.ShiftAssignments == null)

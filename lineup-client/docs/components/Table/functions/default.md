@@ -1,14 +1,14 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [components/Table](../README.md) / default
+[lineup-client](../../../modules.md) / [components/Table](../index.md) / default
 
 # Function: default()
 
 > **default**\<`T`\>(`props`): `Element`
 
-Defined in: [components/Table.tsx:31](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Table.tsx#L31)
+Defined in: [components/Table.tsx:31](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Table.tsx#L31)
 
 A customizable table that renders row data into a common format.
 
