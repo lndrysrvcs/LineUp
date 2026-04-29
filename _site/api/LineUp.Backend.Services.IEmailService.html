@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Interface IEmailService | LineUp ">
       
-      
+      <meta name="description" content="Service interface for sending emails.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -89,7 +89,7 @@
 
 
   <h1 id="LineUp_Backend_Services_IEmailService" data-uid="LineUp.Backend.Services.IEmailService" class="text-break">
-Interface IEmailService  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L6"><i class="bi bi-code-slash"></i></a>
+Interface IEmailService  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,8 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
   <dl><dt>Assembly</dt><dd>LineUp.Backend.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"></div>
+  <div class="markdown summary"><p>Service interface for sending emails.</p>
+</div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
@@ -124,10 +125,11 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
 
   <h3 id="LineUp_Backend_Services_IEmailService_BuildShiftAssignmentLi_LineUp_Core_Models_Availability_" data-uid="LineUp.Backend.Services.IEmailService.BuildShiftAssignmentLi(LineUp.Core.Models.Availability)">
   BuildShiftAssignmentLi(Availability)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Builds a list of shift assignments for the user.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -137,13 +139,15 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>availability</code> <a class="xref" href="LineUp.Core.Models.Availability.html">Availability</a></dt>
-    <dd></dd>
+    <dd><p>The availability details.</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dd><p>A string containing the list of shift assignments in HTML list item format.</p>
+</dd>
   </dl>
 
 
@@ -160,10 +164,11 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
 
   <h3 id="LineUp_Backend_Services_IEmailService_SendAvailabilityConfirmationEmail_System_Boolean_LineUp_Core_Models_Availability_" data-uid="LineUp.Backend.Services.IEmailService.SendAvailabilityConfirmationEmail(System.Boolean,LineUp.Core.Models.Availability)">
   SendAvailabilityConfirmationEmail(bool, Availability)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Sends an email to the user confirming their availability.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -173,15 +178,18 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>updated</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>Indicates if the availability was updated.</p>
+</dd>
     <dt><code>availability</code> <a class="xref" href="LineUp.Core.Models.Availability.html">Availability</a></dt>
-    <dd></dd>
+    <dd><p>The availability details.</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
-    <dd></dd>
+    <dd><p>A task representing the asynchronous operation.</p>
+</dd>
   </dl>
 
 
@@ -198,10 +206,11 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
 
   <h3 id="LineUp_Backend_Services_IEmailService_SendShiftAssignmentEmail_System_Boolean_LineUp_Core_Models_Availability_" data-uid="LineUp.Backend.Services.IEmailService.SendShiftAssignmentEmail(System.Boolean,LineUp.Core.Models.Availability)">
   SendShiftAssignmentEmail(bool, Availability)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Sends an email to the user notifying them of their shift assignment.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -211,15 +220,18 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>updated</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>Indicates if the availability was updated.</p>
+</dd>
     <dt><code>availability</code> <a class="xref" href="LineUp.Core.Models.Availability.html">Availability</a></dt>
-    <dd></dd>
+    <dd><p>The availability details.</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
-    <dd></dd>
+    <dd><p>A task representing the asynchronous operation.</p>
+</dd>
   </dl>
 
 
@@ -236,7 +248,7 @@ Interface IEmailService  <a class="header-action link-secondary" title="View sou
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L6" class="edit-link">Edit this page</a>
+          <a href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/IEmailService.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
 

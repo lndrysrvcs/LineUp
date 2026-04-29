@@ -4,8 +4,15 @@ using LineUp.Core.Models.Forms;
 
 namespace LineUp.Backend.Support;
 
+/// <summary>
+/// Seeds the database with some example data.
+/// </summary>
+/// <param name="context">The database context to interact with.</param>
 public class DbSeeder(LineUpContext context)
 {
+    /// <summary>
+    /// Seeds the database with some example data if the database is empty.
+    /// </summary>
     public void Seed()
     {
         // check to make sure we haven't seeded already

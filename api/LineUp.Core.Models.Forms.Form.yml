@@ -22,10 +22,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Form
     path: LineUp.Core/Models/Forms/Form.cs
-    startLine: 4
+    startLine: 7
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: Represents a form for scheduling.
+  example: []
   syntax:
     content: public class Form
     content.vb: Public Class Form
@@ -57,10 +59,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/Forms/Form.cs
-    startLine: 6
+    startLine: 12
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The primary key of the Form.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -86,10 +90,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Questions
     path: LineUp.Core/Models/Forms/Form.cs
-    startLine: 7
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The questions in the form.
+  example: []
   syntax:
     content: public ICollection<FormQuestion> Questions { get; set; }
     parameters: []
@@ -115,10 +121,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Schedule
     path: LineUp.Core/Models/Forms/Form.cs
-    startLine: 9
+    startLine: 22
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The schedule associated with the form.
+  example: []
   syntax:
     content: public required Schedule Schedule { get; set; }
     parameters: []

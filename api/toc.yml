@@ -18,9 +18,6 @@ items:
   name: LineUp.Backend.Controllers
   type: Namespace
   items:
-  - uid: LineUp.Backend.Controllers.ApiController
-    name: ApiController
-    type: Class
   - uid: LineUp.Backend.Controllers.AvailabilityController
     name: AvailabilityController
     type: Class
@@ -85,6 +82,9 @@ items:
   items:
   - uid: LineUp.Backend.Models.AvailabilityCreateDto
     name: AvailabilityCreateDto
+    type: Class
+  - uid: LineUp.Backend.Models.AvailabilityUpdateDto
+    name: AvailabilityUpdateDto
     type: Class
   - uid: LineUp.Backend.Models.GetScheduleAuthenticatedDto
     name: GetScheduleAuthenticatedDto
@@ -156,9 +156,6 @@ items:
     type: Class
   - uid: LineUp.Core.Models.AvailabilityPreferences
     name: AvailabilityPreferences
-    type: Class
-  - uid: LineUp.Core.Models.AvailabilityUpdateDTO
-    name: AvailabilityUpdateDTO
     type: Class
   - uid: LineUp.Core.Models.Schedule
     name: Schedule

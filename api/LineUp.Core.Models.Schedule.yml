@@ -31,10 +31,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Schedule
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 6
+    startLine: 9
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: Represents a user's schedule.
+  example: []
   syntax:
     content: >-
       [Index("Auth0UserId", new string[] { "Guid" })]
@@ -72,10 +74,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 9
+    startLine: 15
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The primary key of the Schedule.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -101,10 +105,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Guid
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 10
+    startLine: 19
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: A unique identifier for the Schedule.
+  example: []
   syntax:
     content: public Guid Guid { get; init; }
     parameters: []
@@ -130,10 +136,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Auth0UserId
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 12
+    startLine: 24
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The Auth0 user ID associated with the Schedule.
+  example: []
   syntax:
     content: >-
       [MaxLength(256)]
@@ -171,10 +179,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Name
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 15
+    startLine: 30
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The name of the Schedule.
+  example: []
   syntax:
     content: >-
       [MaxLength(256)]
@@ -212,10 +222,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: DateCoverage
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 18
+    startLine: 36
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The dates covered by the Schedule.
+  example: []
   syntax:
     content: public required DateOnly[] DateCoverage { get; set; }
     parameters: []
@@ -241,10 +253,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: StartTime
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 20
+    startLine: 41
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The start time of the schedule.
+  example: []
   syntax:
     content: public required TimeOnly StartTime { get; set; }
     parameters: []
@@ -270,10 +284,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: EndTime
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 21
+    startLine: 45
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The end time of the schedule.
+  example: []
   syntax:
     content: public required TimeOnly EndTime { get; set; }
     parameters: []
@@ -299,10 +315,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Form
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 23
+    startLine: 50
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The form associated with the Schedule.
+  example: []
   syntax:
     content: public Form? Form { get; set; }
     parameters: []
@@ -328,7 +346,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormId
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 24
+    startLine: 51
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
@@ -357,10 +375,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: LatestEmailsSent
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 26
+    startLine: 56
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: Whether the latest emails have been sent to the user.
+  example: []
   syntax:
     content: public bool LatestEmailsSent { get; set; }
     parameters: []
@@ -386,10 +406,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ShiftAssignments
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 28
+    startLine: 61
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The shift assignments associated with the Schedule.
+  example: []
   syntax:
     content: public ICollection<ShiftAssignment>? ShiftAssignments { get; set; }
     parameters: []
@@ -415,10 +437,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SchedulePreferences
     path: LineUp.Core/Models/Schedule.cs
-    startLine: 31
+    startLine: 67
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The preferences for the Schedule.
+  example: []
   syntax:
     content: public required SchedulePreferences SchedulePreferences { get; set; }
     parameters: []

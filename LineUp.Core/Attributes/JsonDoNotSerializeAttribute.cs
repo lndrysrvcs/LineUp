@@ -7,6 +7,9 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace LineUp.Core.Attributes;
 
+/// <summary>
+/// Attribute to mark a property as not to be serialized in JSON.
+/// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public sealed class JsonDoNotSerializeAttribute : JsonAttribute;
 

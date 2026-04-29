@@ -25,10 +25,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SchedulePreferences
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 2
+    startLine: 5
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: Represents the preferences for a schedule.
+  example: []
   syntax:
     content: public class SchedulePreferences
     content.vb: Public Class SchedulePreferences
@@ -60,10 +62,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 4
+    startLine: 10
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The unique identifier for the schedule preferences.
+  example: []
   syntax:
     content: public Guid Id { get; set; }
     parameters: []
@@ -89,10 +93,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: MinutesPerSlot
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 5
+    startLine: 14
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The number of minutes per slot.
+  example: []
   syntax:
     content: public int MinutesPerSlot { get; set; }
     parameters: []
@@ -118,10 +124,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ShiftIntervals
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 6
+    startLine: 18
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The number of shift intervals.
+  example: []
   syntax:
     content: public int ShiftIntervals { get; set; }
     parameters: []
@@ -147,10 +155,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: UsersPerShift
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 7
+    startLine: 22
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The number of users per shift.
+  example: []
   syntax:
     content: public int UsersPerShift { get; set; }
     parameters: []
@@ -176,10 +186,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: MaximumShiftDurationMinutes
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 8
+    startLine: 26
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The maximum duration of a shift in minutes.
+  example: []
   syntax:
     content: public int MaximumShiftDurationMinutes { get; set; }
     parameters: []
@@ -205,10 +217,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: MaximumShiftsPerWorker
     path: LineUp.Core/Models/SchedulePreferences.cs
-    startLine: 9
+    startLine: 30
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The maximum number of shifts per worker.
+  example: []
   syntax:
     content: public int MaximumShiftsPerWorker { get; set; }
     parameters: []

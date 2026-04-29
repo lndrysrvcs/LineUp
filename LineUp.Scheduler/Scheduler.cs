@@ -4,6 +4,9 @@ using LineUp.Core.Models.Forms;
 
 namespace LineUp.Scheduler;
 
+/// <summary>
+/// The main class for scheduling shifts.
+/// </summary>
 public static class Scheduler
 {
     /// <summary>

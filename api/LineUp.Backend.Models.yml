@@ -5,6 +5,7 @@ items:
   id: LineUp.Backend.Models
   children:
   - LineUp.Backend.Models.AvailabilityCreateDto
+  - LineUp.Backend.Models.AvailabilityUpdateDto
   - LineUp.Backend.Models.GetScheduleAuthenticatedDto
   - LineUp.Backend.Models.GetScheduleUnauthenticatedDto
   - LineUp.Backend.Models.ScheduleDto
@@ -27,6 +28,13 @@ references:
   name: AvailabilityCreateDto
   nameWithType: AvailabilityCreateDto
   fullName: LineUp.Backend.Models.AvailabilityCreateDto
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto
+  commentId: T:LineUp.Backend.Models.AvailabilityUpdateDto
+  parent: LineUp.Backend.Models
+  href: LineUp.Backend.Models.AvailabilityUpdateDto.html
+  name: AvailabilityUpdateDto
+  nameWithType: AvailabilityUpdateDto
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto
 - uid: LineUp.Backend.Models.GetScheduleAuthenticatedDto
   commentId: T:LineUp.Backend.Models.GetScheduleAuthenticatedDto
   href: LineUp.Backend.Models.GetScheduleAuthenticatedDto.html

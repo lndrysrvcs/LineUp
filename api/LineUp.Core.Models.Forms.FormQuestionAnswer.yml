@@ -59,10 +59,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/Forms/FormQuestionAnswer.cs
-    startLine: 4
+    startLine: 7
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The primary key of the FormQuestionAnswer.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -88,10 +90,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormQuestionId
     path: LineUp.Core/Models/Forms/FormQuestionAnswer.cs
-    startLine: 5
+    startLine: 12
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The ID of the associated FormQuestion.
+  example: []
   syntax:
     content: public int FormQuestionId { get; set; }
     parameters: []
@@ -117,10 +121,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AnswerId
     path: LineUp.Core/Models/Forms/FormQuestionAnswer.cs
-    startLine: 6
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The ID of the associated QuestionOptions.
+  example: []
   syntax:
     content: public int AnswerId { get; set; }
     parameters: []
@@ -146,10 +152,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Question
     path: LineUp.Core/Models/Forms/FormQuestionAnswer.cs
-    startLine: 8
+    startLine: 22
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The associated FormQuestion.
+  example: []
   syntax:
     content: public required FormQuestion Question { get; set; }
     parameters: []
@@ -175,10 +183,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AnswerText
     path: LineUp.Core/Models/Forms/FormQuestionAnswer.cs
-    startLine: 10
+    startLine: 27
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The text answer provided by the user.
+  example: []
   syntax:
     content: public required string AnswerText { get; set; }
     parameters: []

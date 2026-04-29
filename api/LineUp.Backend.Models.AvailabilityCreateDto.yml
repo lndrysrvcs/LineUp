@@ -24,10 +24,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AvailabilityCreateDto
     path: LineUp.Backend/Models/AvailabilityCreateDto.cs
-    startLine: 7
+    startLine: 10
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Models
+  summary: DTO for creating an availability.
+  example: []
   syntax:
     content: public class AvailabilityCreateDto
     content.vb: Public Class AvailabilityCreateDto
@@ -59,10 +61,15 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AvailabilitySlots
     path: LineUp.Backend/Models/AvailabilityCreateDto.cs
-    startLine: 9
+    startLine: 16
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Models
+  summary: >-
+    The date and time slots that the user is available.
+
+    The slots are in UTC and indicated by the START time of the slot.
+  example: []
   syntax:
     content: public DateTime[] AvailabilitySlots { get; set; }
     parameters: []
@@ -88,10 +95,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: UserName
     path: LineUp.Backend/Models/AvailabilityCreateDto.cs
-    startLine: 11
+    startLine: 21
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Models
+  summary: The user's name.
+  example: []
   syntax:
     content: >-
       [MaxLength(64)]
@@ -129,10 +138,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: UserEmail
     path: LineUp.Backend/Models/AvailabilityCreateDto.cs
-    startLine: 14
+    startLine: 27
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Models
+  summary: The user's email address.
+  example: []
   syntax:
     content: >-
       [MaxLength(256)]
@@ -170,10 +181,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Preferences
     path: LineUp.Backend/Models/AvailabilityCreateDto.cs
-    startLine: 17
+    startLine: 33
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Models
+  summary: The user's availability preferences.
+  example: []
   syntax:
     content: public AvailabilityPreferences? Preferences { get; set; }
     parameters: []
@@ -199,10 +212,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormAnswers
     path: LineUp.Backend/Models/AvailabilityCreateDto.cs
-    startLine: 19
+    startLine: 38
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Models
+  summary: The user's form answers.
+  example: []
   syntax:
     content: public ICollection<FormQuestionAnswer> FormAnswers { get; set; }
     parameters: []

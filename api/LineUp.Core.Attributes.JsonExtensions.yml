@@ -20,7 +20,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: JsonExtensions
     path: LineUp.Core/Attributes/JsonDoNotSerializeAttribute.cs
-    startLine: 12
+    startLine: 15
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Attributes
@@ -55,7 +55,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ApplyJsonDoNotSerializeAttribute
     path: LineUp.Core/Attributes/JsonDoNotSerializeAttribute.cs
-    startLine: 14
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Attributes

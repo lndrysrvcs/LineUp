@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LineUp.Backend;
 
+/// <summary>
+/// The database context for the LineUp application.
+/// </summary>
 public class LineUpContext : DbContext
 {
     public virtual DbSet<Schedule> Schedules { get; set; }
@@ -17,6 +20,10 @@ public class LineUpContext : DbContext
     public LineUpContext(DbContextOptions<LineUpContext> options)
         : base(options) { }
 
+    /// <summary>
+    /// Configures the database model.
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder

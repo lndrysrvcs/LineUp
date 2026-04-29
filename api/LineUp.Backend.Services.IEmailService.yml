@@ -22,10 +22,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: IEmailService
     path: LineUp.Backend/Services/IEmailService.cs
-    startLine: 5
+    startLine: 8
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Service interface for sending emails.
+  example: []
   syntax:
     content: public interface IEmailService
     content.vb: Public Interface IEmailService
@@ -50,19 +52,24 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SendShiftAssignmentEmail
     path: LineUp.Backend/Services/IEmailService.cs
-    startLine: 7
+    startLine: 16
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Sends an email to the user notifying them of their shift assignment.
+  example: []
   syntax:
     content: Task SendShiftAssignmentEmail(bool updated, Availability availability)
     parameters:
     - id: updated
       type: System.Boolean
+      description: Indicates if the availability was updated.
     - id: availability
       type: LineUp.Core.Models.Availability
+      description: The availability details.
     return:
       type: System.Threading.Tasks.Task
+      description: A task representing the asynchronous operation.
     content.vb: Function SendShiftAssignmentEmail(updated As Boolean, availability As Availability) As Task
   overload: LineUp.Backend.Services.IEmailService.SendShiftAssignmentEmail*
   nameWithType.vb: IEmailService.SendShiftAssignmentEmail(Boolean, Availability)
@@ -86,19 +93,24 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SendAvailabilityConfirmationEmail
     path: LineUp.Backend/Services/IEmailService.cs
-    startLine: 9
+    startLine: 24
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Sends an email to the user confirming their availability.
+  example: []
   syntax:
     content: Task SendAvailabilityConfirmationEmail(bool updated, Availability availability)
     parameters:
     - id: updated
       type: System.Boolean
+      description: Indicates if the availability was updated.
     - id: availability
       type: LineUp.Core.Models.Availability
+      description: The availability details.
     return:
       type: System.Threading.Tasks.Task
+      description: A task representing the asynchronous operation.
     content.vb: Function SendAvailabilityConfirmationEmail(updated As Boolean, availability As Availability) As Task
   overload: LineUp.Backend.Services.IEmailService.SendAvailabilityConfirmationEmail*
   nameWithType.vb: IEmailService.SendAvailabilityConfirmationEmail(Boolean, Availability)
@@ -122,17 +134,21 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: BuildShiftAssignmentLi
     path: LineUp.Backend/Services/IEmailService.cs
-    startLine: 11
+    startLine: 31
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Builds a list of shift assignments for the user.
+  example: []
   syntax:
     content: public static string BuildShiftAssignmentLi(Availability availability)
     parameters:
     - id: availability
       type: LineUp.Core.Models.Availability
+      description: The availability details.
     return:
       type: System.String
+      description: A string containing the list of shift assignments in HTML list item format.
     content.vb: Public Shared Function BuildShiftAssignmentLi(availability As Availability) As String
   overload: LineUp.Backend.Services.IEmailService.BuildShiftAssignmentLi*
 references:

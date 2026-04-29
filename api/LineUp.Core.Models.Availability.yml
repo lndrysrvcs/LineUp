@@ -28,10 +28,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Availability
     path: LineUp.Core/Models/Availability.cs
-    startLine: 8
+    startLine: 11
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: Represents a user's availability for a specific schedule.
+  example: []
   syntax:
     content: >-
       [Index("Guid", new string[] { })]
@@ -69,10 +71,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/Availability.cs
-    startLine: 11
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The primary key of the Availability.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -98,10 +102,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Guid
     path: LineUp.Core/Models/Availability.cs
-    startLine: 12
+    startLine: 21
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: A unique identifier for the Availability.
+  example: []
   syntax:
     content: public Guid Guid { get; init; }
     parameters: []
@@ -127,10 +133,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AvailabilitySlots
     path: LineUp.Core/Models/Availability.cs
-    startLine: 14
+    startLine: 26
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The user's availability slots.
+  example: []
   syntax:
     content: public DateTime[] AvailabilitySlots { get; set; }
     parameters: []
@@ -156,10 +164,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: UserName
     path: LineUp.Core/Models/Availability.cs
-    startLine: 16
+    startLine: 31
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The user's name.
+  example: []
   syntax:
     content: >-
       [MaxLength(64)]
@@ -197,10 +207,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: UserEmail
     path: LineUp.Core/Models/Availability.cs
-    startLine: 19
+    startLine: 37
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The user's email address.
+  example: []
   syntax:
     content: >-
       [MaxLength(256)]
@@ -238,10 +250,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Preferences
     path: LineUp.Core/Models/Availability.cs
-    startLine: 22
+    startLine: 43
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The user's availability preferences.
+  example: []
   syntax:
     content: public AvailabilityPreferences? Preferences { get; set; }
     parameters: []
@@ -267,10 +281,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormAnswers
     path: LineUp.Core/Models/Availability.cs
-    startLine: 24
+    startLine: 48
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The user's form answers.
+  example: []
   syntax:
     content: public ICollection<FormQuestionAnswer> FormAnswers { get; set; }
     parameters: []
@@ -296,10 +312,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ScheduleGuid
     path: LineUp.Core/Models/Availability.cs
-    startLine: 27
+    startLine: 54
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The GUID of the associated schedule.
+  example: []
   syntax:
     content: public Guid ScheduleGuid { get; }
     parameters: []
@@ -325,7 +343,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Schedule
     path: LineUp.Core/Models/Availability.cs
-    startLine: 30
+    startLine: 57
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models

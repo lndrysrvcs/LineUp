@@ -22,10 +22,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ResendEmailService
     path: LineUp.Backend/Services/ResendEmailService.cs
-    startLine: 7
+    startLine: 12
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Implementation of <xref href="LineUp.Backend.Services.IEmailService" data-throw-if-not-resolved="false"></xref> that uses the Resend API.
+  example: []
   syntax:
     content: 'public class ResendEmailService : IEmailService'
     content.vb: Public Class ResendEmailService Implements IEmailService
@@ -59,17 +61,21 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: .ctor
     path: LineUp.Backend/Services/ResendEmailService.cs
-    startLine: 7
+    startLine: 12
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Implementation of <xref href="LineUp.Backend.Services.IEmailService" data-throw-if-not-resolved="false"></xref> that uses the Resend API.
+  example: []
   syntax:
     content: public ResendEmailService(IResend resend, ResiliencePipelineProvider<string> pipelineProvider)
     parameters:
     - id: resend
       type: Resend.IResend
+      description: The Resend API client for sending emails.
     - id: pipelineProvider
       type: Polly.Registry.ResiliencePipelineProvider{System.String}
+      description: Provider for resilience pipelines to handle retries.
     content.vb: Public Sub New(resend As IResend, pipelineProvider As ResiliencePipelineProvider(Of String))
   overload: LineUp.Backend.Services.ResendEmailService.#ctor*
   nameWithType.vb: ResendEmailService.New(IResend, ResiliencePipelineProvider(Of String))
@@ -93,20 +99,24 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SendShiftAssignmentEmail
     path: LineUp.Backend/Services/ResendEmailService.cs
-    startLine: 14
+    startLine: 19
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Sends an email to the user notifying them of their shift assignment.
   example: []
   syntax:
     content: public Task SendShiftAssignmentEmail(bool updated, Availability availability)
     parameters:
     - id: updated
       type: System.Boolean
+      description: Indicates if the availability was updated.
     - id: availability
       type: LineUp.Core.Models.Availability
+      description: The availability details.
     return:
       type: System.Threading.Tasks.Task
+      description: A task representing the asynchronous operation.
     content.vb: Public Function SendShiftAssignmentEmail(updated As Boolean, availability As Availability) As Task
   overload: LineUp.Backend.Services.ResendEmailService.SendShiftAssignmentEmail*
   implements:
@@ -132,20 +142,24 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SendAvailabilityConfirmationEmail
     path: LineUp.Backend/Services/ResendEmailService.cs
-    startLine: 41
+    startLine: 46
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Services
+  summary: Sends an email to the user confirming their availability.
   example: []
   syntax:
     content: public Task SendAvailabilityConfirmationEmail(bool updated, Availability availability)
     parameters:
     - id: updated
       type: System.Boolean
+      description: Indicates if the availability was updated.
     - id: availability
       type: LineUp.Core.Models.Availability
+      description: The availability details.
     return:
       type: System.Threading.Tasks.Task
+      description: A task representing the asynchronous operation.
     content.vb: Public Function SendAvailabilityConfirmationEmail(updated As Boolean, availability As Availability) As Task
   overload: LineUp.Backend.Services.ResendEmailService.SendAvailabilityConfirmationEmail*
   implements:
@@ -154,6 +168,13 @@ items:
   fullName.vb: LineUp.Backend.Services.ResendEmailService.SendAvailabilityConfirmationEmail(Boolean, LineUp.Core.Models.Availability)
   name.vb: SendAvailabilityConfirmationEmail(Boolean, Availability)
 references:
+- uid: LineUp.Backend.Services.IEmailService
+  commentId: T:LineUp.Backend.Services.IEmailService
+  parent: LineUp.Backend.Services
+  href: LineUp.Backend.Services.IEmailService.html
+  name: IEmailService
+  nameWithType: IEmailService
+  fullName: LineUp.Backend.Services.IEmailService
 - uid: LineUp.Backend.Services
   commentId: N:LineUp.Backend.Services
   href: LineUp.html
@@ -195,13 +216,6 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: LineUp.Backend.Services.IEmailService
-  commentId: T:LineUp.Backend.Services.IEmailService
-  parent: LineUp.Backend.Services
-  href: LineUp.Backend.Services.IEmailService.html
-  name: IEmailService
-  nameWithType: IEmailService
-  fullName: LineUp.Backend.Services.IEmailService
 - uid: System.Object.Equals(System.Object)
   commentId: M:System.Object.Equals(System.Object)
   parent: System.Object

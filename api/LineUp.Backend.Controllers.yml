@@ -4,7 +4,6 @@ items:
   commentId: N:LineUp.Backend.Controllers
   id: LineUp.Backend.Controllers
   children:
-  - LineUp.Backend.Controllers.ApiController
   - LineUp.Backend.Controllers.AvailabilityController
   - LineUp.Backend.Controllers.ScheduleController
   langs:
@@ -17,12 +16,6 @@ items:
   assemblies:
   - LineUp.Backend
 references:
-- uid: LineUp.Backend.Controllers.ApiController
-  commentId: T:LineUp.Backend.Controllers.ApiController
-  href: LineUp.Backend.Controllers.ApiController.html
-  name: ApiController
-  nameWithType: ApiController
-  fullName: LineUp.Backend.Controllers.ApiController
 - uid: LineUp.Backend.Controllers.AvailabilityController
   commentId: T:LineUp.Backend.Controllers.AvailabilityController
   href: LineUp.Backend.Controllers.AvailabilityController.html

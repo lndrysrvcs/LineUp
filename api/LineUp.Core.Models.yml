@@ -6,7 +6,6 @@ items:
   children:
   - LineUp.Core.Models.Availability
   - LineUp.Core.Models.AvailabilityPreferences
-  - LineUp.Core.Models.AvailabilityUpdateDTO
   - LineUp.Core.Models.Schedule
   - LineUp.Core.Models.SchedulePreferences
   - LineUp.Core.Models.ShiftAssignment
@@ -27,13 +26,6 @@ references:
   name: Availability
   nameWithType: Availability
   fullName: LineUp.Core.Models.Availability
-- uid: LineUp.Core.Models.AvailabilityUpdateDTO
-  commentId: T:LineUp.Core.Models.AvailabilityUpdateDTO
-  parent: LineUp.Core.Models
-  href: LineUp.Core.Models.AvailabilityUpdateDTO.html
-  name: AvailabilityUpdateDTO
-  nameWithType: AvailabilityUpdateDTO
-  fullName: LineUp.Core.Models.AvailabilityUpdateDTO
 - uid: LineUp.Core.Models.AvailabilityPreferences
   commentId: T:LineUp.Core.Models.AvailabilityPreferences
   parent: LineUp.Core.Models

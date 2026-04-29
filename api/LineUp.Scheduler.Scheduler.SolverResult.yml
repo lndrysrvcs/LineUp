@@ -21,7 +21,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SolverResult
     path: LineUp.Scheduler/Scheduler.cs
-    startLine: 442
+    startLine: 445
   assemblies:
   - LineUp.Scheduler
   namespace: LineUp.Scheduler
@@ -58,7 +58,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Status
     path: LineUp.Scheduler/Scheduler.cs
-    startLine: 444
+    startLine: 447
   assemblies:
   - LineUp.Scheduler
   namespace: LineUp.Scheduler
@@ -87,7 +87,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Assignments
     path: LineUp.Scheduler/Scheduler.cs
-    startLine: 445
+    startLine: 448
   assemblies:
   - LineUp.Scheduler
   namespace: LineUp.Scheduler

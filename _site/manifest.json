@@ -106,7 +106,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.LineUpContext",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.LineUpContext.yml\" sourcestartlinenumber=\"1\">The database context for the LineUp application.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -358,7 +358,21 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Models.AvailabilityCreateDto",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Models.AvailabilityCreateDto.yml\" sourcestartlinenumber=\"1\">DTO for creating an availability.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.AvailabilityUpdateDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.AvailabilityUpdateDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.AvailabilityUpdateDto",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Models.AvailabilityUpdateDto.yml\" sourcestartlinenumber=\"1\">DTO for updating an availability.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -456,7 +470,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Services.IEmailService",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Services.IEmailService.yml\" sourcestartlinenumber=\"1\">Service interface for sending emails.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -470,7 +484,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Services.MockEmailService",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Services.MockEmailService.yml\" sourcestartlinenumber=\"1\">Mock implementation of <xref href=\"LineUp.Backend.Services.IEmailService\" data-throw-if-not-resolved=\"false\"></xref> for testing.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -484,7 +498,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Services.ResendEmailService",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Services.ResendEmailService.yml\" sourcestartlinenumber=\"1\">Implementation of <xref href=\"LineUp.Backend.Services.IEmailService\" data-throw-if-not-resolved=\"false\"></xref> that uses the Resend API.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -512,7 +526,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Support.DbSeeder",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Support.DbSeeder.yml\" sourcestartlinenumber=\"1\">Seeds the database with some example data.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -526,7 +540,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Support.HasScopeHandler",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Support.HasScopeHandler.yml\" sourcestartlinenumber=\"1\">Attribute to check if the user has a specific scope.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -540,7 +554,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Backend.Support.HasScopeRequirement",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Support.HasScopeRequirement.yml\" sourcestartlinenumber=\"1\">Requirement for a specific scope.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -624,7 +638,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Attributes.JsonDoNotSerializeAttribute",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Attributes.JsonDoNotSerializeAttribute.yml\" sourcestartlinenumber=\"1\">Attribute to mark a property as not to be serialized in JSON.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -666,7 +680,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.Availability",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.Availability.yml\" sourcestartlinenumber=\"1\">Represents a user's availability for a specific schedule.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -680,7 +694,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.AvailabilityPreferences",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.AvailabilityPreferences.yml\" sourcestartlinenumber=\"1\">Represents the preferences for an availability.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -708,7 +722,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.Forms.Form",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.Forms.Form.yml\" sourcestartlinenumber=\"1\">Represents a form for scheduling.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -722,7 +736,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.Forms.FormQuestion",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.Forms.FormQuestion.yml\" sourcestartlinenumber=\"1\">Represents a question in a form.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -750,7 +764,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.Forms.QuestionOptions",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.Forms.QuestionOptions.yml\" sourcestartlinenumber=\"1\">Represents the available options for a form question.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -764,7 +778,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.Forms.QuestionType",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.Forms.QuestionType.yml\" sourcestartlinenumber=\"1\">Represents the different types of questions that can be included in a form.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -792,7 +806,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.Schedule",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.Schedule.yml\" sourcestartlinenumber=\"1\">Represents a user's schedule.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -806,7 +820,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.SchedulePreferences",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.SchedulePreferences.yml\" sourcestartlinenumber=\"1\">Represents the preferences for a schedule.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -820,7 +834,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Core.Models.ShiftAssignment",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Core.Models.ShiftAssignment.yml\" sourcestartlinenumber=\"1\">Represents a shift assignment for a user.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -848,7 +862,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.MigrationService.Worker",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.MigrationService.Worker.yml\" sourcestartlinenumber=\"1\">Background service that runs migrations and seeds the database.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -890,7 +904,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "LineUp.Scheduler.Scheduler",
-      "Summary": null
+      "Summary": "<p sourcefile=\"api/LineUp.Scheduler.Scheduler.yml\" sourcestartlinenumber=\"1\">The main class for scheduling shifts.</p>\n"
     },
     {
       "type": "ManagedReference",

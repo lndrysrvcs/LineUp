@@ -22,10 +22,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: QuestionOptions
     path: LineUp.Core/Models/Forms/QuestionOptions.cs
-    startLine: 4
+    startLine: 7
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: Represents the available options for a form question.
+  example: []
   syntax:
     content: public class QuestionOptions
     content.vb: Public Class QuestionOptions
@@ -57,10 +59,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/Forms/QuestionOptions.cs
-    startLine: 6
+    startLine: 12
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The primary key of the QuestionOptions.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -86,10 +90,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: OptionText
     path: LineUp.Core/Models/Forms/QuestionOptions.cs
-    startLine: 8
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The text of the option.
+  example: []
   syntax:
     content: >-
       [MaxLength(64)]
@@ -127,10 +133,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: SortOrder
     path: LineUp.Core/Models/Forms/QuestionOptions.cs
-    startLine: 10
+    startLine: 23
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The order in which the options should be displayed.
+  example: []
   syntax:
     content: public int SortOrder { get; set; }
     parameters: []

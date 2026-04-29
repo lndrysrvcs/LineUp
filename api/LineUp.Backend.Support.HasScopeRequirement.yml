@@ -22,10 +22,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: HasScopeRequirement
     path: LineUp.Backend/Support/HasScopeRequirement.cs
-    startLine: 4
+    startLine: 9
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: Requirement for a specific scope.
+  example: []
   syntax:
     content: 'public class HasScopeRequirement : IAuthorizationRequirement'
     content.vb: Public Class HasScopeRequirement Implements IAuthorizationRequirement
@@ -59,17 +61,21 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: .ctor
     path: LineUp.Backend/Support/HasScopeRequirement.cs
-    startLine: 4
+    startLine: 9
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: Requirement for a specific scope.
+  example: []
   syntax:
     content: public HasScopeRequirement(string scope, string issuer)
     parameters:
     - id: scope
       type: System.String
+      description: ''
     - id: issuer
       type: System.String
+      description: ''
     content.vb: Public Sub New(scope As String, issuer As String)
   overload: LineUp.Backend.Support.HasScopeRequirement.#ctor*
   nameWithType.vb: HasScopeRequirement.New(String, String)
@@ -93,10 +99,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Issuer
     path: LineUp.Backend/Support/HasScopeRequirement.cs
-    startLine: 6
+    startLine: 14
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: The issuer of the scope.
+  example: []
   syntax:
     content: public string Issuer { get; }
     parameters: []
@@ -122,10 +130,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Scope
     path: LineUp.Backend/Support/HasScopeRequirement.cs
-    startLine: 7
+    startLine: 18
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: The scope required.
+  example: []
   syntax:
     content: public string Scope { get; }
     parameters: []

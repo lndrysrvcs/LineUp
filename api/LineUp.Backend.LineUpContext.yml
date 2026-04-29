@@ -28,10 +28,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: LineUpContext
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 6
+    startLine: 9
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
+  summary: The database context for the LineUp application.
+  example: []
   syntax:
     content: 'public class LineUpContext : DbContext, IInfrastructure<IServiceProvider>, IDbContextDependencies, IDbSetCache, IDbContextPoolable, IResettableService, IDisposable, IAsyncDisposable'
     content.vb: Public Class LineUpContext Inherits DbContext Implements IInfrastructure(Of IServiceProvider), IDbContextDependencies, IDbSetCache, IDbContextPoolable, IResettableService, IDisposable, IAsyncDisposable
@@ -118,7 +120,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Schedules
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 8
+    startLine: 11
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -147,7 +149,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Availabilities
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 9
+    startLine: 12
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -176,7 +178,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Forms
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 10
+    startLine: 13
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -205,7 +207,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormQuestions
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 11
+    startLine: 14
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -234,7 +236,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: QuestionOptions
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 12
+    startLine: 15
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -263,7 +265,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormQuestionAnswers
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 13
+    startLine: 16
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -292,7 +294,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ShiftAssignments
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 14
+    startLine: 17
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -321,7 +323,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: .ctor
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 16
+    startLine: 19
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
@@ -353,38 +355,18 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: OnModelCreating
     path: LineUp.Backend/LineUpContext.cs
-    startLine: 19
+    startLine: 26
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend
-  summary: >-
-    Override this method to further configure the model that was discovered by convention from the entity types
-
-    exposed in <xref href="Microsoft.EntityFrameworkCore.DbSet%601" data-throw-if-not-resolved="false"></xref> properties on your derived context. The resulting model may be cached
-
-    and re-used for subsequent instances of your derived context.
-  remarks: >-
-    <p>
-        If a model is explicitly set on the options for this context (via <xref href="Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)" data-throw-if-not-resolved="false"></xref>)
-        then this method will not be run. However, it will still run when creating a compiled model.
-    </p>
-
-    <p>
-        See <a href="https://aka.ms/efcore-docs-modeling">Modeling entity types and relationships</a> for more information and
-        examples.
-    </p>
+  summary: Configures the database model.
   example: []
   syntax:
     content: protected override void OnModelCreating(ModelBuilder modelBuilder)
     parameters:
     - id: modelBuilder
       type: Microsoft.EntityFrameworkCore.ModelBuilder
-      description: >-
-        The builder being used to construct the model for this context. Databases (and other extensions) typically
-
-        define extension methods on this object that allow you to configure aspects of the model that are specific
-
-        to a given database.
+      description: ''
     content.vb: Protected Overrides Sub OnModelCreating(modelBuilder As ModelBuilder)
   overridden: Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)
   overload: LineUp.Backend.LineUpContext.OnModelCreating*
@@ -3163,35 +3145,6 @@ references:
   - name: Of
   - name: " "
   - name: TContext
-  - name: )
-- uid: Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)
-  commentId: M:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.usemodel
-  name: UseModel(IModel)
-  nameWithType: DbContextOptionsBuilder.UseModel(IModel)
-  fullName: Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)
-  spec.csharp:
-  - uid: Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)
-    name: UseModel
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.usemodel
-  - name: (
-  - uid: Microsoft.EntityFrameworkCore.Metadata.IModel
-    name: IModel
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.entityframeworkcore.metadata.imodel
-  - name: )
-  spec.vb:
-  - uid: Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.UseModel(Microsoft.EntityFrameworkCore.Metadata.IModel)
-    name: UseModel
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.entityframeworkcore.dbcontextoptionsbuilder.usemodel
-  - name: (
-  - uid: Microsoft.EntityFrameworkCore.Metadata.IModel
-    name: IModel
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.entityframeworkcore.metadata.imodel
   - name: )
 - uid: Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)
   commentId: M:Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)

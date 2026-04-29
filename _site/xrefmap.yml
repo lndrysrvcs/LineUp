@@ -140,12 +140,12 @@ references:
   fullName.vb: LineUp.Backend.Controllers.AvailabilityController.New
   nameWithType: AvailabilityController.AvailabilityController
   nameWithType.vb: AvailabilityController.New
-- uid: LineUp.Backend.Controllers.AvailabilityController.EditAvailability(System.Guid,LineUp.Core.Models.AvailabilityUpdateDTO)
-  name: EditAvailability(Guid, AvailabilityUpdateDTO)
-  href: api/LineUp.Backend.Controllers.AvailabilityController.html#LineUp_Backend_Controllers_AvailabilityController_EditAvailability_System_Guid_LineUp_Core_Models_AvailabilityUpdateDTO_
-  commentId: M:LineUp.Backend.Controllers.AvailabilityController.EditAvailability(System.Guid,LineUp.Core.Models.AvailabilityUpdateDTO)
-  fullName: LineUp.Backend.Controllers.AvailabilityController.EditAvailability(System.Guid, LineUp.Core.Models.AvailabilityUpdateDTO)
-  nameWithType: AvailabilityController.EditAvailability(Guid, AvailabilityUpdateDTO)
+- uid: LineUp.Backend.Controllers.AvailabilityController.EditAvailability(System.Guid,LineUp.Backend.Models.AvailabilityUpdateDto)
+  name: EditAvailability(Guid, AvailabilityUpdateDto)
+  href: api/LineUp.Backend.Controllers.AvailabilityController.html#LineUp_Backend_Controllers_AvailabilityController_EditAvailability_System_Guid_LineUp_Backend_Models_AvailabilityUpdateDto_
+  commentId: M:LineUp.Backend.Controllers.AvailabilityController.EditAvailability(System.Guid,LineUp.Backend.Models.AvailabilityUpdateDto)
+  fullName: LineUp.Backend.Controllers.AvailabilityController.EditAvailability(System.Guid, LineUp.Backend.Models.AvailabilityUpdateDto)
+  nameWithType: AvailabilityController.EditAvailability(Guid, AvailabilityUpdateDto)
 - uid: LineUp.Backend.Controllers.AvailabilityController.EditAvailability*
   name: EditAvailability
   href: api/LineUp.Backend.Controllers.AvailabilityController.html#LineUp_Backend_Controllers_AvailabilityController_EditAvailability_
@@ -1256,6 +1256,90 @@ references:
   isSpec: "True"
   fullName: LineUp.Backend.Models.AvailabilityCreateDto.UserName
   nameWithType: AvailabilityCreateDto.UserName
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto
+  name: AvailabilityUpdateDto
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html
+  commentId: T:LineUp.Backend.Models.AvailabilityUpdateDto
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto
+  nameWithType: AvailabilityUpdateDto
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.AvailabilitySlots
+  name: AvailabilitySlots
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_AvailabilitySlots
+  commentId: P:LineUp.Backend.Models.AvailabilityUpdateDto.AvailabilitySlots
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.AvailabilitySlots
+  nameWithType: AvailabilityUpdateDto.AvailabilitySlots
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.AvailabilitySlots*
+  name: AvailabilitySlots
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_AvailabilitySlots_
+  commentId: Overload:LineUp.Backend.Models.AvailabilityUpdateDto.AvailabilitySlots
+  isSpec: "True"
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.AvailabilitySlots
+  nameWithType: AvailabilityUpdateDto.AvailabilitySlots
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.FormAnswers
+  name: FormAnswers
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_FormAnswers
+  commentId: P:LineUp.Backend.Models.AvailabilityUpdateDto.FormAnswers
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.FormAnswers
+  nameWithType: AvailabilityUpdateDto.FormAnswers
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.FormAnswers*
+  name: FormAnswers
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_FormAnswers_
+  commentId: Overload:LineUp.Backend.Models.AvailabilityUpdateDto.FormAnswers
+  isSpec: "True"
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.FormAnswers
+  nameWithType: AvailabilityUpdateDto.FormAnswers
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.Id
+  name: Id
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_Id
+  commentId: P:LineUp.Backend.Models.AvailabilityUpdateDto.Id
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.Id
+  nameWithType: AvailabilityUpdateDto.Id
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.Id*
+  name: Id
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_Id_
+  commentId: Overload:LineUp.Backend.Models.AvailabilityUpdateDto.Id
+  isSpec: "True"
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.Id
+  nameWithType: AvailabilityUpdateDto.Id
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.Preferences
+  name: Preferences
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_Preferences
+  commentId: P:LineUp.Backend.Models.AvailabilityUpdateDto.Preferences
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.Preferences
+  nameWithType: AvailabilityUpdateDto.Preferences
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.Preferences*
+  name: Preferences
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_Preferences_
+  commentId: Overload:LineUp.Backend.Models.AvailabilityUpdateDto.Preferences
+  isSpec: "True"
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.Preferences
+  nameWithType: AvailabilityUpdateDto.Preferences
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.UserEmail
+  name: UserEmail
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_UserEmail
+  commentId: P:LineUp.Backend.Models.AvailabilityUpdateDto.UserEmail
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.UserEmail
+  nameWithType: AvailabilityUpdateDto.UserEmail
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.UserEmail*
+  name: UserEmail
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_UserEmail_
+  commentId: Overload:LineUp.Backend.Models.AvailabilityUpdateDto.UserEmail
+  isSpec: "True"
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.UserEmail
+  nameWithType: AvailabilityUpdateDto.UserEmail
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.UserName
+  name: UserName
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_UserName
+  commentId: P:LineUp.Backend.Models.AvailabilityUpdateDto.UserName
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.UserName
+  nameWithType: AvailabilityUpdateDto.UserName
+- uid: LineUp.Backend.Models.AvailabilityUpdateDto.UserName*
+  name: UserName
+  href: api/LineUp.Backend.Models.AvailabilityUpdateDto.html#LineUp_Backend_Models_AvailabilityUpdateDto_UserName_
+  commentId: Overload:LineUp.Backend.Models.AvailabilityUpdateDto.UserName
+  isSpec: "True"
+  fullName: LineUp.Backend.Models.AvailabilityUpdateDto.UserName
+  nameWithType: AvailabilityUpdateDto.UserName
 - uid: LineUp.Backend.Models.GetScheduleAuthenticatedDto
   name: GetScheduleAuthenticatedDto
   href: api/LineUp.Backend.Models.GetScheduleAuthenticatedDto.html

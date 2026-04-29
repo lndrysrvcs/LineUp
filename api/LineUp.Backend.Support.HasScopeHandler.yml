@@ -20,10 +20,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: HasScopeHandler
     path: LineUp.Backend/Support/HasScopeHandler.cs
-    startLine: 6
+    startLine: 9
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: Attribute to check if the user has a specific scope.
+  example: []
   syntax:
     content: 'public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>, IAuthorizationHandler'
     content.vb: Public Class HasScopeHandler Inherits AuthorizationHandler(Of HasScopeRequirement) Implements IAuthorizationHandler
@@ -59,7 +61,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: HandleRequirementAsync
     path: LineUp.Backend/Support/HasScopeHandler.cs
-    startLine: 8
+    startLine: 11
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support

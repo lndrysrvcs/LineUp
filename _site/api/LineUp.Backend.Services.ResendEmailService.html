@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class ResendEmailService | LineUp ">
       
-      
+      <meta name="description" content="Implementation of  that uses the Resend API.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -89,7 +89,7 @@
 
 
   <h1 id="LineUp_Backend_Services_ResendEmailService" data-uid="LineUp.Backend.Services.ResendEmailService" class="text-break">
-Class ResendEmailService  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L8"><i class="bi bi-code-slash"></i></a>
+Class ResendEmailService  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,8 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
   <dl><dt>Assembly</dt><dd>LineUp.Backend.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"></div>
+  <div class="markdown summary"><p>Implementation of <a class="xref" href="LineUp.Backend.Services.IEmailService.html">IEmailService</a> that uses the Resend API.</p>
+</div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
@@ -162,10 +163,11 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
 
   <h3 id="LineUp_Backend_Services_ResendEmailService__ctor_Resend_IResend_Polly_Registry_ResiliencePipelineProvider_System_String__" data-uid="LineUp.Backend.Services.ResendEmailService.#ctor(Resend.IResend,Polly.Registry.ResiliencePipelineProvider{System.String})">
   ResendEmailService(IResend, ResiliencePipelineProvider&lt;string&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Implementation of <a class="xref" href="LineUp.Backend.Services.IEmailService.html">IEmailService</a> that uses the Resend API.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -175,9 +177,11 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>resend</code> <span class="xref">IResend</span></dt>
-    <dd></dd>
+    <dd><p>The Resend API client for sending emails.</p>
+</dd>
     <dt><code>pipelineProvider</code> <a class="xref" href="https://github.com/App-vNext/Polly/blob/077cf388fc5a85a7f6cd0fdcb2b68d17a898019e/src/Polly.Core/Registry/ResiliencePipelineProvider.cs">ResiliencePipelineProvider</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
-    <dd></dd>
+    <dd><p>Provider for resilience pipelines to handle retries.</p>
+</dd>
   </dl>
 
 
@@ -199,10 +203,11 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
 
   <h3 id="LineUp_Backend_Services_ResendEmailService_SendAvailabilityConfirmationEmail_System_Boolean_LineUp_Core_Models_Availability_" data-uid="LineUp.Backend.Services.ResendEmailService.SendAvailabilityConfirmationEmail(System.Boolean,LineUp.Core.Models.Availability)">
   SendAvailabilityConfirmationEmail(bool, Availability)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Sends an email to the user confirming their availability.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -212,15 +217,18 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>updated</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>Indicates if the availability was updated.</p>
+</dd>
     <dt><code>availability</code> <a class="xref" href="LineUp.Core.Models.Availability.html">Availability</a></dt>
-    <dd></dd>
+    <dd><p>The availability details.</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
-    <dd></dd>
+    <dd><p>A task representing the asynchronous operation.</p>
+</dd>
   </dl>
 
 
@@ -237,10 +245,11 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
 
   <h3 id="LineUp_Backend_Services_ResendEmailService_SendShiftAssignmentEmail_System_Boolean_LineUp_Core_Models_Availability_" data-uid="LineUp.Backend.Services.ResendEmailService.SendShiftAssignmentEmail(System.Boolean,LineUp.Core.Models.Availability)">
   SendShiftAssignmentEmail(bool, Availability)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Sends an email to the user notifying them of their shift assignment.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -250,15 +259,18 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>updated</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>Indicates if the availability was updated.</p>
+</dd>
     <dt><code>availability</code> <a class="xref" href="LineUp.Core.Models.Availability.html">Availability</a></dt>
-    <dd></dd>
+    <dd><p>The availability details.</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
-    <dd></dd>
+    <dd><p>A task representing the asynchronous operation.</p>
+</dd>
   </dl>
 
 
@@ -275,7 +287,7 @@ Class ResendEmailService  <a class="header-action link-secondary" title="View so
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/LineUp.Backend/Services/ResendEmailService.cs/#L13" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -21,10 +21,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: DbSeeder
     path: LineUp.Backend/Support/DbSeeder.cs
-    startLine: 6
+    startLine: 10
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: Seeds the database with some example data.
+  example: []
   syntax:
     content: public class DbSeeder
     content.vb: Public Class DbSeeder
@@ -56,15 +58,18 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: .ctor
     path: LineUp.Backend/Support/DbSeeder.cs
-    startLine: 6
+    startLine: 10
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: Seeds the database with some example data.
+  example: []
   syntax:
     content: public DbSeeder(LineUpContext context)
     parameters:
     - id: context
       type: LineUp.Backend.LineUpContext
+      description: The database context to interact with.
     content.vb: Public Sub New(context As LineUpContext)
   overload: LineUp.Backend.Support.DbSeeder.#ctor*
   nameWithType.vb: DbSeeder.New(LineUpContext)
@@ -88,10 +93,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Seed
     path: LineUp.Backend/Support/DbSeeder.cs
-    startLine: 8
+    startLine: 15
   assemblies:
   - LineUp.Backend
   namespace: LineUp.Backend.Support
+  summary: Seeds the database with some example data if the database is empty.
+  example: []
   syntax:
     content: public void Seed()
     content.vb: Public Sub Seed()

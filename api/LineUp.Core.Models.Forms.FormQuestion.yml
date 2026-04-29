@@ -23,10 +23,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: FormQuestion
     path: LineUp.Core/Models/Forms/FormQuestion.cs
-    startLine: 4
+    startLine: 7
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: Represents a question in a form.
+  example: []
   syntax:
     content: public class FormQuestion
     content.vb: Public Class FormQuestion
@@ -58,10 +60,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/Forms/FormQuestion.cs
-    startLine: 6
+    startLine: 12
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The primary key of the FormQuestion.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -87,10 +91,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: QuestionText
     path: LineUp.Core/Models/Forms/FormQuestion.cs
-    startLine: 8
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The text of the question.
+  example: []
   syntax:
     content: >-
       [MaxLength(512)]
@@ -128,10 +134,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Type
     path: LineUp.Core/Models/Forms/FormQuestion.cs
-    startLine: 10
+    startLine: 23
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The type of the question.
+  example: []
   syntax:
     content: public QuestionType Type { get; set; }
     parameters: []
@@ -157,10 +165,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Options
     path: LineUp.Core/Models/Forms/FormQuestion.cs
-    startLine: 11
+    startLine: 28
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models.Forms
+  summary: The options for the question.
+  example: []
   syntax:
     content: public ICollection<QuestionOptions> Options { get; set; }
     parameters: []

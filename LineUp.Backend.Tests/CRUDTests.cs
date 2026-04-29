@@ -366,7 +366,7 @@ public class CRUDTests
             Guid availabilityGuid = returnedAvailability.Guid;
             // Act
 
-            AvailabilityUpdateDTO sampleAvailabilityDto = new AvailabilityUpdateDTO
+            AvailabilityUpdateDto sampleAvailabilityDto = new AvailabilityUpdateDto
             {
                 UserName = "Test Availability",
                 UserEmail = "test@email.com",

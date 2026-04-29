@@ -27,10 +27,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ShiftAssignment
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 4
+    startLine: 7
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: Represents a shift assignment for a user.
+  example: []
   syntax:
     content: public class ShiftAssignment
     content.vb: Public Class ShiftAssignment
@@ -62,10 +64,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 6
+    startLine: 12
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The primary key of the ShiftAssignment.
+  example: []
   syntax:
     content: public int Id { get; set; }
     parameters: []
@@ -91,10 +95,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: StartTime
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 8
+    startLine: 17
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The start of the shift assignment.
+  example: []
   syntax:
     content: public DateTime StartTime { get; set; }
     parameters: []
@@ -120,10 +126,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: EndTime
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 9
+    startLine: 21
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The end of the shift assignment.
+  example: []
   syntax:
     content: public DateTime EndTime { get; set; }
     parameters: []
@@ -149,10 +157,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: UserName
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 11
+    startLine: 26
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The user's name.
+  example: []
   syntax:
     content: public string? UserName { get; }
     parameters: []
@@ -178,10 +188,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AvailabilityDbId
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 12
+    startLine: 30
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The availability ID.
+  example: []
   syntax:
     content: public int? AvailabilityDbId { get; }
     parameters: []
@@ -207,10 +219,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Availability
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 14
+    startLine: 35
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The availability associated with the ShiftAssignment.
+  example: []
   syntax:
     content: public Availability? Availability { get; set; }
     parameters: []
@@ -236,10 +250,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ScheduleId
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 18
+    startLine: 41
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The schedule ID.
+  example: []
   syntax:
     content: public int? ScheduleId { get; set; }
     parameters: []
@@ -265,10 +281,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Schedule
     path: LineUp.Core/Models/ShiftAssignment.cs
-    startLine: 19
+    startLine: 46
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The schedule associated with the ShiftAssignment.
+  example: []
   syntax:
     content: public Schedule? Schedule { get; }
     parameters: []

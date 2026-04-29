@@ -20,10 +20,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: AvailabilityPreferences
     path: LineUp.Core/Models/AvailabilityPreferences.cs
-    startLine: 2
+    startLine: 5
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: Represents the preferences for an availability.
+  example: []
   syntax:
     content: public class AvailabilityPreferences
     content.vb: Public Class AvailabilityPreferences
@@ -55,10 +57,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Id
     path: LineUp.Core/Models/AvailabilityPreferences.cs
-    startLine: 4
+    startLine: 10
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Models
+  summary: The unique identifier for the availability preferences.
+  example: []
   syntax:
     content: public Guid Id { get; set; }
     parameters: []

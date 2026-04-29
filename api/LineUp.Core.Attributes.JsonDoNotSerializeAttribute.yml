@@ -19,10 +19,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: JsonDoNotSerializeAttribute
     path: LineUp.Core/Attributes/JsonDoNotSerializeAttribute.cs
-    startLine: 9
+    startLine: 12
   assemblies:
   - LineUp.Core
   namespace: LineUp.Core.Attributes
+  summary: Attribute to mark a property as not to be serialized in JSON.
+  example: []
   syntax:
     content: >-
       [AttributeUsage(AttributeTargets.Property|AttributeTargets.Field)]

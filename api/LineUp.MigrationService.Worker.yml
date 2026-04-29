@@ -22,10 +22,12 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: Worker
     path: LineUp.MigrationService/Worker.cs
-    startLine: 8
+    startLine: 13
   assemblies:
   - LineUp.MigrationService
   namespace: LineUp.MigrationService
+  summary: Background service that runs migrations and seeds the database.
+  example: []
   syntax:
     content: 'public class Worker : BackgroundService, IHostedService, IDisposable'
     content.vb: Public Class Worker Inherits BackgroundService Implements IHostedService, IDisposable
@@ -65,17 +67,21 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: .ctor
     path: LineUp.MigrationService/Worker.cs
-    startLine: 8
+    startLine: 13
   assemblies:
   - LineUp.MigrationService
   namespace: LineUp.MigrationService
+  summary: Background service that runs migrations and seeds the database.
+  example: []
   syntax:
     content: public Worker(IServiceProvider serviceProvider, IHostApplicationLifetime hostApplicationLifetime)
     parameters:
     - id: serviceProvider
       type: System.IServiceProvider
+      description: ''
     - id: hostApplicationLifetime
       type: Microsoft.Extensions.Hosting.IHostApplicationLifetime
+      description: ''
     content.vb: Public Sub New(serviceProvider As IServiceProvider, hostApplicationLifetime As IHostApplicationLifetime)
   overload: LineUp.MigrationService.Worker.#ctor*
   nameWithType.vb: Worker.New(IServiceProvider, IHostApplicationLifetime)
@@ -99,7 +105,7 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ActivitySourceName
     path: LineUp.MigrationService/Worker.cs
-    startLine: 13
+    startLine: 18
   assemblies:
   - LineUp.MigrationService
   namespace: LineUp.MigrationService
@@ -126,24 +132,20 @@ items:
       repo: git@github.com:rhyderswen/LineUp.git
     id: ExecuteAsync
     path: LineUp.MigrationService/Worker.cs
-    startLine: 16
+    startLine: 25
   assemblies:
   - LineUp.MigrationService
   namespace: LineUp.MigrationService
-  summary: >-
-    This method is called when the <xref href="Microsoft.Extensions.Hosting.IHostedService" data-throw-if-not-resolved="false"></xref> starts. The implementation should return a task that represents
-
-    the lifetime of the long running operation(s) being performed.
-  remarks: See <a href="https://learn.microsoft.com/dotnet/core/extensions/workers">Worker Services in .NET</a> for implementation guidelines.
+  summary: Runs migrations and seeds the database.
   example: []
   syntax:
     content: protected override Task ExecuteAsync(CancellationToken cancellationToken)
     parameters:
     - id: cancellationToken
       type: System.Threading.CancellationToken
+      description: The cancellation token to use for the operation.
     return:
       type: System.Threading.Tasks.Task
-      description: A <xref href="System.Threading.Tasks.Task" data-throw-if-not-resolved="false"></xref> that represents the long running operations.
     content.vb: Protected Overrides Function ExecuteAsync(cancellationToken As CancellationToken) As Task
   overridden: Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync(System.Threading.CancellationToken)
   overload: LineUp.MigrationService.Worker.ExecuteAsync*
@@ -594,43 +596,6 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
-  commentId: M:Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.stopasync
-  name: StopAsync(CancellationToken)
-  nameWithType: IHostedService.StopAsync(CancellationToken)
-  fullName: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
-  spec.csharp:
-  - uid: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
-    name: StopAsync
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.stopasync
-  - name: (
-  - uid: System.Threading.CancellationToken
-    name: CancellationToken
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
-  - name: )
-  spec.vb:
-  - uid: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
-    name: StopAsync
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.stopasync
-  - name: (
-  - uid: System.Threading.CancellationToken
-    name: CancellationToken
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
-  - name: )
-- uid: System.Threading.Tasks.Task
-  commentId: T:System.Threading.Tasks.Task
-  parent: System.Threading.Tasks
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
-  name: Task
-  nameWithType: Task
-  fullName: System.Threading.Tasks.Task
 - uid: Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync(System.Threading.CancellationToken)
   commentId: M:Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync(System.Threading.CancellationToken)
   parent: Microsoft.Extensions.Hosting.BackgroundService
@@ -675,6 +640,41 @@ references:
   name: CancellationToken
   nameWithType: CancellationToken
   fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
 - uid: System.Threading.Tasks
   commentId: N:System.Threading.Tasks
   isExternal: true
@@ -712,30 +712,3 @@ references:
     name: Tasks
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
-- uid: System.Threading
-  commentId: N:System.Threading
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Threading
-  nameWithType: System.Threading
-  fullName: System.Threading
-  spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Threading
-    name: Threading
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Threading
-    name: Threading
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading
