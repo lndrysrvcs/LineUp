@@ -20,6 +20,8 @@ jobs:
           version: 10.31.0
       - name: Build JS docs
         run: cd lineup-client && pnpm install && pnpm exec typedoc
+      - name: Restore dependencies
+        run: dotnet restore && dotnet tool restore
       - name: Build Documentation
         run: dotnet docfx docfx.json
 
