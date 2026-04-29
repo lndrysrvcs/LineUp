@@ -1,0 +1,68 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Backend.Support
+  commentId: N:LineUp.Backend.Support
+  id: LineUp.Backend.Support
+  children:
+  - LineUp.Backend.Support.DbSeeder
+  - LineUp.Backend.Support.HasScopeHandler
+  - LineUp.Backend.Support.HasScopeRequirement
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Backend.Support
+  nameWithType: LineUp.Backend.Support
+  fullName: LineUp.Backend.Support
+  type: Namespace
+  assemblies:
+  - LineUp.Backend
+references:
+- uid: LineUp.Backend.Support.DbSeeder
+  commentId: T:LineUp.Backend.Support.DbSeeder
+  href: LineUp.Backend.Support.DbSeeder.html
+  name: DbSeeder
+  nameWithType: DbSeeder
+  fullName: LineUp.Backend.Support.DbSeeder
+- uid: LineUp.Backend.Support.HasScopeHandler
+  commentId: T:LineUp.Backend.Support.HasScopeHandler
+  href: LineUp.Backend.Support.HasScopeHandler.html
+  name: HasScopeHandler
+  nameWithType: HasScopeHandler
+  fullName: LineUp.Backend.Support.HasScopeHandler
+- uid: LineUp.Backend.Support.HasScopeRequirement
+  commentId: T:LineUp.Backend.Support.HasScopeRequirement
+  parent: LineUp.Backend.Support
+  href: LineUp.Backend.Support.HasScopeRequirement.html
+  name: HasScopeRequirement
+  nameWithType: HasScopeRequirement
+  fullName: LineUp.Backend.Support.HasScopeRequirement
+- uid: LineUp.Backend.Support
+  commentId: N:LineUp.Backend.Support
+  href: LineUp.html
+  name: LineUp.Backend.Support
+  nameWithType: LineUp.Backend.Support
+  fullName: LineUp.Backend.Support
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  - name: .
+  - uid: LineUp.Backend.Support
+    name: Support
+    href: LineUp.Backend.Support.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  - name: .
+  - uid: LineUp.Backend.Support
+    name: Support
+    href: LineUp.Backend.Support.html

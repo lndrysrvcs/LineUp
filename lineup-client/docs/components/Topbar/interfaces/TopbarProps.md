@@ -1,12 +1,12 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [components/Topbar](../README.md) / TopbarProps
+[lineup-client](../../../modules.md) / [components/Topbar](../index.md) / TopbarProps
 
 # Interface: TopbarProps
 
-Defined in: [components/Topbar.tsx:10](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Topbar.tsx#L10)
+Defined in: [components/Topbar.tsx:10](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Topbar.tsx#L10)
 
 Props for the [Topbar](../functions/default.md) component.
 
@@ -16,6 +16,6 @@ Props for the [Topbar](../functions/default.md) component.
 
 > **children**: `ReactNode`
 
-Defined in: [components/Topbar.tsx:12](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Topbar.tsx#L12)
+Defined in: [components/Topbar.tsx:12](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Topbar.tsx#L12)
 
 The main interactive portion of the app (anything that's beneath the topbar).

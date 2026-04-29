@@ -1,0 +1,92 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Core.Models.Forms
+  commentId: N:LineUp.Core.Models.Forms
+  id: LineUp.Core.Models.Forms
+  children:
+  - LineUp.Core.Models.Forms.Form
+  - LineUp.Core.Models.Forms.FormQuestion
+  - LineUp.Core.Models.Forms.FormQuestionAnswer
+  - LineUp.Core.Models.Forms.QuestionOptions
+  - LineUp.Core.Models.Forms.QuestionType
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Core.Models.Forms
+  nameWithType: LineUp.Core.Models.Forms
+  fullName: LineUp.Core.Models.Forms
+  type: Namespace
+  assemblies:
+  - LineUp.Core
+references:
+- uid: LineUp.Core.Models.Forms.Form
+  commentId: T:LineUp.Core.Models.Forms.Form
+  parent: LineUp.Core.Models.Forms
+  href: LineUp.Core.Models.Forms.Form.html
+  name: Form
+  nameWithType: Form
+  fullName: LineUp.Core.Models.Forms.Form
+- uid: LineUp.Core.Models.Forms.FormQuestion
+  commentId: T:LineUp.Core.Models.Forms.FormQuestion
+  parent: LineUp.Core.Models.Forms
+  href: LineUp.Core.Models.Forms.FormQuestion.html
+  name: FormQuestion
+  nameWithType: FormQuestion
+  fullName: LineUp.Core.Models.Forms.FormQuestion
+- uid: LineUp.Core.Models.Forms.FormQuestionAnswer
+  commentId: T:LineUp.Core.Models.Forms.FormQuestionAnswer
+  href: LineUp.Core.Models.Forms.FormQuestionAnswer.html
+  name: FormQuestionAnswer
+  nameWithType: FormQuestionAnswer
+  fullName: LineUp.Core.Models.Forms.FormQuestionAnswer
+- uid: LineUp.Core.Models.Forms.QuestionOptions
+  commentId: T:LineUp.Core.Models.Forms.QuestionOptions
+  href: LineUp.Core.Models.Forms.QuestionOptions.html
+  name: QuestionOptions
+  nameWithType: QuestionOptions
+  fullName: LineUp.Core.Models.Forms.QuestionOptions
+- uid: LineUp.Core.Models.Forms.QuestionType
+  commentId: T:LineUp.Core.Models.Forms.QuestionType
+  parent: LineUp.Core.Models.Forms
+  href: LineUp.Core.Models.Forms.QuestionType.html
+  name: QuestionType
+  nameWithType: QuestionType
+  fullName: LineUp.Core.Models.Forms.QuestionType
+- uid: LineUp.Core.Models.Forms
+  commentId: N:LineUp.Core.Models.Forms
+  href: LineUp.html
+  name: LineUp.Core.Models.Forms
+  nameWithType: LineUp.Core.Models.Forms
+  fullName: LineUp.Core.Models.Forms
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+  - name: .
+  - uid: LineUp.Core.Models.Forms
+    name: Forms
+    href: LineUp.Core.Models.Forms.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+  - name: .
+  - uid: LineUp.Core.Models.Forms
+    name: Forms
+    href: LineUp.Core.Models.Forms.html

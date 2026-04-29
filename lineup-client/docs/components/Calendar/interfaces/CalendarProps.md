@@ -1,12 +1,12 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [components/Calendar](../README.md) / CalendarProps
+[lineup-client](../../../modules.md) / [components/Calendar](../index.md) / CalendarProps
 
 # Interface: CalendarProps
 
-Defined in: [components/Calendar.tsx:18](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L18)
+Defined in: [components/Calendar.tsx:18](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L18)
 
 Props for the [Calendar](../functions/Calendar.md) component.
 
@@ -16,7 +16,7 @@ Props for the [Calendar](../functions/Calendar.md) component.
 
 > **Cell**: `ComponentType`\<[`CalendarCellProps`](../../CalendarCells/interfaces/CalendarCellProps.md)\>
 
-Defined in: [components/Calendar.tsx:20](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L20)
+Defined in: [components/Calendar.tsx:20](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L20)
 
 The Cell that chooses behavior, rendered in each row/column.
 
@@ -26,7 +26,7 @@ The Cell that chooses behavior, rendered in each row/column.
 
 > `optional` **colors?**: `object`
 
-Defined in: [components/Calendar.tsx:34](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L34)
+Defined in: [components/Calendar.tsx:34](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L34)
 
 Map of UTC timestamps to CSS colors.
 
@@ -46,7 +46,7 @@ Map of UTC timestamps to CSS colors.
 
 > **dates**: `Date`[]
 
-Defined in: [components/Calendar.tsx:26](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L26)
+Defined in: [components/Calendar.tsx:26](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L26)
 
 Array of dates (columns) for the calendar. Time input does not matter.
 
@@ -56,7 +56,7 @@ Array of dates (columns) for the calendar. Time input does not matter.
 
 > **minutesPerCell**: [`ValidMinutes`](../../../types/type-aliases/ValidMinutes.md)
 
-Defined in: [components/Calendar.tsx:23](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L23)
+Defined in: [components/Calendar.tsx:23](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L23)
 
 Number of minutes each cell represents.
 
@@ -66,7 +66,7 @@ Number of minutes each cell represents.
 
 > **range**: [`TimeRange`](../../../types/type-aliases/TimeRange.md)
 
-Defined in: [components/Calendar.tsx:29](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L29)
+Defined in: [components/Calendar.tsx:29](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L29)
 
 Start time of first cell to end time of last cell.
 
@@ -76,7 +76,7 @@ Start time of first cell to end time of last cell.
 
 > `optional` **selectedCells?**: `string`[]
 
-Defined in: [components/Calendar.tsx:45](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L45)
+Defined in: [components/Calendar.tsx:45](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L45)
 
 Array of UTC timestamps for which cells are shown as selected.
 
@@ -86,7 +86,7 @@ Array of UTC timestamps for which cells are shown as selected.
 
 > `optional` **setFocusedCell?**: `Dispatch`\<`SetStateAction`\<`string` \| `null`\>\>
 
-Defined in: [components/Calendar.tsx:42](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L42)
+Defined in: [components/Calendar.tsx:42](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L42)
 
 React state setter to update which cell a user is currently focusing over. Sets `null` when not hovering over a cell.
 
@@ -96,7 +96,7 @@ React state setter to update which cell a user is currently focusing over. Sets 
 
 > `optional` **setSelectedCells?**: `Dispatch`\<`SetStateAction`\<`string`[]\>\>
 
-Defined in: [components/Calendar.tsx:48](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L48)
+Defined in: [components/Calendar.tsx:48](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L48)
 
 React state setter for [selectedCells](#selectedcells).
 
@@ -106,7 +106,7 @@ React state setter for [selectedCells](#selectedcells).
 
 > `optional` **text?**: `object`
 
-Defined in: [components/Calendar.tsx:39](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/Calendar.tsx#L39)
+Defined in: [components/Calendar.tsx:39](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L39)
 
 Map of UTC timestamps to text displayed on the cell.
 

@@ -1,14 +1,14 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [components/MousePopup](../README.md) / MousePopup
+[lineup-client](../../../modules.md) / [components/MousePopup](../index.md) / MousePopup
 
 # Function: MousePopup()
 
 > **MousePopup**(`props`): `Element` \| `null`
 
-Defined in: [components/MousePopup.tsx:27](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/components/MousePopup.tsx#L27)
+Defined in: [components/MousePopup.tsx:27](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/MousePopup.tsx#L27)
 
 A customizeable popup that will follow the mouse position.
 

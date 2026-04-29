@@ -1,14 +1,14 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [utils/time](../README.md) / getTimeIncrementLabel
+[lineup-client](../../../modules.md) / [utils/time](../index.md) / getTimeIncrementLabel
 
 # Function: getTimeIncrementLabel()
 
 > **getTimeIncrementLabel**(`row`, `rangeStart`, `minutesPerCell`): `string`
 
-Defined in: [utils/time.ts:51](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/utils/time.ts#L51)
+Defined in: [utils/time.ts:51](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/utils/time.ts#L51)
 
 Generates the label to be shown on a given row of the calendar, based on the row, starting time, and minutes per cell.
 

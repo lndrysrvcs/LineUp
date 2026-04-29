@@ -1,0 +1,576 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Backend.Tests.CRUDTests
+  commentId: T:LineUp.Backend.Tests.CRUDTests
+  id: CRUDTests
+  parent: LineUp.Backend.Tests
+  children:
+  - LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test
+  - LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test
+  - LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test
+  - LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test
+  - LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test
+  langs:
+  - csharp
+  - vb
+  name: CRUDTests
+  nameWithType: CRUDTests
+  fullName: LineUp.Backend.Tests.CRUDTests
+  type: Class
+  source:
+    remote:
+      path: LineUp.Backend.Tests/CRUDTests.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: CRUDTests
+    path: LineUp.Backend.Tests/CRUDTests.cs
+    startLine: 14
+  assemblies:
+  - LineUp.Backend.Tests
+  namespace: LineUp.Backend.Tests
+  syntax:
+    content: public class CRUDTests
+    content.vb: Public Class CRUDTests
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test
+  commentId: M:LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test
+  id: CreateSchedule_Test
+  parent: LineUp.Backend.Tests.CRUDTests
+  langs:
+  - csharp
+  - vb
+  name: CreateSchedule_Test()
+  nameWithType: CRUDTests.CreateSchedule_Test()
+  fullName: LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test()
+  type: Method
+  source:
+    remote:
+      path: LineUp.Backend.Tests/CRUDTests.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: CreateSchedule_Test
+    path: LineUp.Backend.Tests/CRUDTests.cs
+    startLine: 82
+  assemblies:
+  - LineUp.Backend.Tests
+  namespace: LineUp.Backend.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task CreateSchedule_Test()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function CreateSchedule_Test() As Task
+  overload: LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test
+  commentId: M:LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test
+  id: UpdateSchedule_Test
+  parent: LineUp.Backend.Tests.CRUDTests
+  langs:
+  - csharp
+  - vb
+  name: UpdateSchedule_Test()
+  nameWithType: CRUDTests.UpdateSchedule_Test()
+  fullName: LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test()
+  type: Method
+  source:
+    remote:
+      path: LineUp.Backend.Tests/CRUDTests.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: UpdateSchedule_Test
+    path: LineUp.Backend.Tests/CRUDTests.cs
+    startLine: 135
+  assemblies:
+  - LineUp.Backend.Tests
+  namespace: LineUp.Backend.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task UpdateSchedule_Test()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function UpdateSchedule_Test() As Task
+  overload: LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test
+  commentId: M:LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test
+  id: DeleteSchedule_Test
+  parent: LineUp.Backend.Tests.CRUDTests
+  langs:
+  - csharp
+  - vb
+  name: DeleteSchedule_Test()
+  nameWithType: CRUDTests.DeleteSchedule_Test()
+  fullName: LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test()
+  type: Method
+  source:
+    remote:
+      path: LineUp.Backend.Tests/CRUDTests.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: DeleteSchedule_Test
+    path: LineUp.Backend.Tests/CRUDTests.cs
+    startLine: 190
+  assemblies:
+  - LineUp.Backend.Tests
+  namespace: LineUp.Backend.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task DeleteSchedule_Test()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function DeleteSchedule_Test() As Task
+  overload: LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test
+  commentId: M:LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test
+  id: CreateAvailability_Test
+  parent: LineUp.Backend.Tests.CRUDTests
+  langs:
+  - csharp
+  - vb
+  name: CreateAvailability_Test()
+  nameWithType: CRUDTests.CreateAvailability_Test()
+  fullName: LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test()
+  type: Method
+  source:
+    remote:
+      path: LineUp.Backend.Tests/CRUDTests.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: CreateAvailability_Test
+    path: LineUp.Backend.Tests/CRUDTests.cs
+    startLine: 239
+  assemblies:
+  - LineUp.Backend.Tests
+  namespace: LineUp.Backend.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task CreateAvailability_Test()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function CreateAvailability_Test() As Task
+  overload: LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test
+  commentId: M:LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test
+  id: UpdateAvailability_Test
+  parent: LineUp.Backend.Tests.CRUDTests
+  langs:
+  - csharp
+  - vb
+  name: UpdateAvailability_Test()
+  nameWithType: CRUDTests.UpdateAvailability_Test()
+  fullName: LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test()
+  type: Method
+  source:
+    remote:
+      path: LineUp.Backend.Tests/CRUDTests.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: UpdateAvailability_Test
+    path: LineUp.Backend.Tests/CRUDTests.cs
+    startLine: 309
+  assemblies:
+  - LineUp.Backend.Tests
+  namespace: LineUp.Backend.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task UpdateAvailability_Test()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function UpdateAvailability_Test() As Task
+  overload: LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+references:
+- uid: LineUp.Backend.Tests
+  commentId: N:LineUp.Backend.Tests
+  href: LineUp.html
+  name: LineUp.Backend.Tests
+  nameWithType: LineUp.Backend.Tests
+  fullName: LineUp.Backend.Tests
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  - name: .
+  - uid: LineUp.Backend.Tests
+    name: Tests
+    href: LineUp.Backend.Tests.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  - name: .
+  - uid: LineUp.Backend.Tests
+    name: Tests
+    href: LineUp.Backend.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test*
+  commentId: Overload:LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test
+  href: LineUp.Backend.Tests.CRUDTests.html#LineUp_Backend_Tests_CRUDTests_CreateSchedule_Test
+  name: CreateSchedule_Test
+  nameWithType: CRUDTests.CreateSchedule_Test
+  fullName: LineUp.Backend.Tests.CRUDTests.CreateSchedule_Test
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test*
+  commentId: Overload:LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test
+  href: LineUp.Backend.Tests.CRUDTests.html#LineUp_Backend_Tests_CRUDTests_UpdateSchedule_Test
+  name: UpdateSchedule_Test
+  nameWithType: CRUDTests.UpdateSchedule_Test
+  fullName: LineUp.Backend.Tests.CRUDTests.UpdateSchedule_Test
+- uid: LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test*
+  commentId: Overload:LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test
+  href: LineUp.Backend.Tests.CRUDTests.html#LineUp_Backend_Tests_CRUDTests_DeleteSchedule_Test
+  name: DeleteSchedule_Test
+  nameWithType: CRUDTests.DeleteSchedule_Test
+  fullName: LineUp.Backend.Tests.CRUDTests.DeleteSchedule_Test
+- uid: LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test*
+  commentId: Overload:LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test
+  href: LineUp.Backend.Tests.CRUDTests.html#LineUp_Backend_Tests_CRUDTests_CreateAvailability_Test
+  name: CreateAvailability_Test
+  nameWithType: CRUDTests.CreateAvailability_Test
+  fullName: LineUp.Backend.Tests.CRUDTests.CreateAvailability_Test
+- uid: LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test*
+  commentId: Overload:LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test
+  href: LineUp.Backend.Tests.CRUDTests.html#LineUp_Backend_Tests_CRUDTests_UpdateAvailability_Test
+  name: UpdateAvailability_Test
+  nameWithType: CRUDTests.UpdateAvailability_Test
+  fullName: LineUp.Backend.Tests.CRUDTests.UpdateAvailability_Test

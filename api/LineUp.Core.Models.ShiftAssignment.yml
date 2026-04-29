@@ -1,0 +1,692 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Core.Models.ShiftAssignment
+  commentId: T:LineUp.Core.Models.ShiftAssignment
+  id: ShiftAssignment
+  parent: LineUp.Core.Models
+  children:
+  - LineUp.Core.Models.ShiftAssignment.Availability
+  - LineUp.Core.Models.ShiftAssignment.AvailabilityDbId
+  - LineUp.Core.Models.ShiftAssignment.EndTime
+  - LineUp.Core.Models.ShiftAssignment.Id
+  - LineUp.Core.Models.ShiftAssignment.Schedule
+  - LineUp.Core.Models.ShiftAssignment.ScheduleId
+  - LineUp.Core.Models.ShiftAssignment.StartTime
+  - LineUp.Core.Models.ShiftAssignment.UserName
+  langs:
+  - csharp
+  - vb
+  name: ShiftAssignment
+  nameWithType: ShiftAssignment
+  fullName: LineUp.Core.Models.ShiftAssignment
+  type: Class
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: ShiftAssignment
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 4
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public class ShiftAssignment
+    content.vb: Public Class ShiftAssignment
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: LineUp.Core.Models.ShiftAssignment.Id
+  commentId: P:LineUp.Core.Models.ShiftAssignment.Id
+  id: Id
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: ShiftAssignment.Id
+  fullName: LineUp.Core.Models.ShiftAssignment.Id
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: Id
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 6
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public int Id { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Id As Integer
+  overload: LineUp.Core.Models.ShiftAssignment.Id*
+- uid: LineUp.Core.Models.ShiftAssignment.StartTime
+  commentId: P:LineUp.Core.Models.ShiftAssignment.StartTime
+  id: StartTime
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: StartTime
+  nameWithType: ShiftAssignment.StartTime
+  fullName: LineUp.Core.Models.ShiftAssignment.StartTime
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: StartTime
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 8
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public DateTime StartTime { get; set; }
+    parameters: []
+    return:
+      type: System.DateTime
+    content.vb: Public Property StartTime As Date
+  overload: LineUp.Core.Models.ShiftAssignment.StartTime*
+- uid: LineUp.Core.Models.ShiftAssignment.EndTime
+  commentId: P:LineUp.Core.Models.ShiftAssignment.EndTime
+  id: EndTime
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: EndTime
+  nameWithType: ShiftAssignment.EndTime
+  fullName: LineUp.Core.Models.ShiftAssignment.EndTime
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: EndTime
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 9
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public DateTime EndTime { get; set; }
+    parameters: []
+    return:
+      type: System.DateTime
+    content.vb: Public Property EndTime As Date
+  overload: LineUp.Core.Models.ShiftAssignment.EndTime*
+- uid: LineUp.Core.Models.ShiftAssignment.UserName
+  commentId: P:LineUp.Core.Models.ShiftAssignment.UserName
+  id: UserName
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: UserName
+  nameWithType: ShiftAssignment.UserName
+  fullName: LineUp.Core.Models.ShiftAssignment.UserName
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: UserName
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 11
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public string? UserName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property UserName As String
+  overload: LineUp.Core.Models.ShiftAssignment.UserName*
+- uid: LineUp.Core.Models.ShiftAssignment.AvailabilityDbId
+  commentId: P:LineUp.Core.Models.ShiftAssignment.AvailabilityDbId
+  id: AvailabilityDbId
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: AvailabilityDbId
+  nameWithType: ShiftAssignment.AvailabilityDbId
+  fullName: LineUp.Core.Models.ShiftAssignment.AvailabilityDbId
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: AvailabilityDbId
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 12
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public int? AvailabilityDbId { get; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public ReadOnly Property AvailabilityDbId As Integer?
+  overload: LineUp.Core.Models.ShiftAssignment.AvailabilityDbId*
+- uid: LineUp.Core.Models.ShiftAssignment.Availability
+  commentId: P:LineUp.Core.Models.ShiftAssignment.Availability
+  id: Availability
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: Availability
+  nameWithType: ShiftAssignment.Availability
+  fullName: LineUp.Core.Models.ShiftAssignment.Availability
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: Availability
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 14
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public Availability? Availability { get; set; }
+    parameters: []
+    return:
+      type: LineUp.Core.Models.Availability
+    content.vb: Public Property Availability As Availability
+  overload: LineUp.Core.Models.ShiftAssignment.Availability*
+- uid: LineUp.Core.Models.ShiftAssignment.ScheduleId
+  commentId: P:LineUp.Core.Models.ShiftAssignment.ScheduleId
+  id: ScheduleId
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: ScheduleId
+  nameWithType: ShiftAssignment.ScheduleId
+  fullName: LineUp.Core.Models.ShiftAssignment.ScheduleId
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: ScheduleId
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 18
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public int? ScheduleId { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: Public Property ScheduleId As Integer?
+  overload: LineUp.Core.Models.ShiftAssignment.ScheduleId*
+- uid: LineUp.Core.Models.ShiftAssignment.Schedule
+  commentId: P:LineUp.Core.Models.ShiftAssignment.Schedule
+  id: Schedule
+  parent: LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: Schedule
+  nameWithType: ShiftAssignment.Schedule
+  fullName: LineUp.Core.Models.ShiftAssignment.Schedule
+  type: Property
+  source:
+    remote:
+      path: LineUp.Core/Models/ShiftAssignment.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: Schedule
+    path: LineUp.Core/Models/ShiftAssignment.cs
+    startLine: 19
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models
+  syntax:
+    content: public Schedule? Schedule { get; }
+    parameters: []
+    return:
+      type: LineUp.Core.Models.Schedule
+    content.vb: Public ReadOnly Property Schedule As Schedule
+  overload: LineUp.Core.Models.ShiftAssignment.Schedule*
+references:
+- uid: LineUp.Core.Models
+  commentId: N:LineUp.Core.Models
+  href: LineUp.html
+  name: LineUp.Core.Models
+  nameWithType: LineUp.Core.Models
+  fullName: LineUp.Core.Models
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: LineUp.Core.Models.ShiftAssignment.Id*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.Id
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_Id
+  name: Id
+  nameWithType: ShiftAssignment.Id
+  fullName: LineUp.Core.Models.ShiftAssignment.Id
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: LineUp.Core.Models.ShiftAssignment.StartTime*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.StartTime
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_StartTime
+  name: StartTime
+  nameWithType: ShiftAssignment.StartTime
+  fullName: LineUp.Core.Models.ShiftAssignment.StartTime
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.datetime
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: LineUp.Core.Models.ShiftAssignment.EndTime*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.EndTime
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_EndTime
+  name: EndTime
+  nameWithType: ShiftAssignment.EndTime
+  fullName: LineUp.Core.Models.ShiftAssignment.EndTime
+- uid: LineUp.Core.Models.ShiftAssignment.UserName*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.UserName
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_UserName
+  name: UserName
+  nameWithType: ShiftAssignment.UserName
+  fullName: LineUp.Core.Models.ShiftAssignment.UserName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: LineUp.Core.Models.ShiftAssignment.AvailabilityDbId*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.AvailabilityDbId
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_AvailabilityDbId
+  name: AvailabilityDbId
+  nameWithType: ShiftAssignment.AvailabilityDbId
+  fullName: LineUp.Core.Models.ShiftAssignment.AvailabilityDbId
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: LineUp.Core.Models.ShiftAssignment.Availability*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.Availability
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_Availability
+  name: Availability
+  nameWithType: ShiftAssignment.Availability
+  fullName: LineUp.Core.Models.ShiftAssignment.Availability
+- uid: LineUp.Core.Models.Availability
+  commentId: T:LineUp.Core.Models.Availability
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.Availability.html
+  name: Availability
+  nameWithType: Availability
+  fullName: LineUp.Core.Models.Availability
+- uid: LineUp.Core.Models.ShiftAssignment.ScheduleId*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.ScheduleId
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_ScheduleId
+  name: ScheduleId
+  nameWithType: ShiftAssignment.ScheduleId
+  fullName: LineUp.Core.Models.ShiftAssignment.ScheduleId
+- uid: LineUp.Core.Models.ShiftAssignment.Schedule*
+  commentId: Overload:LineUp.Core.Models.ShiftAssignment.Schedule
+  href: LineUp.Core.Models.ShiftAssignment.html#LineUp_Core_Models_ShiftAssignment_Schedule
+  name: Schedule
+  nameWithType: ShiftAssignment.Schedule
+  fullName: LineUp.Core.Models.ShiftAssignment.Schedule
+- uid: LineUp.Core.Models.Schedule
+  commentId: T:LineUp.Core.Models.Schedule
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.Schedule.html
+  name: Schedule
+  nameWithType: Schedule
+  fullName: LineUp.Core.Models.Schedule

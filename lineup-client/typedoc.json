@@ -2,7 +2,15 @@
   "entryPoints": ["src/"],
   "entryPointStrategy": "expand",
   "tsconfig": "./tsconfig.json",
-  "out": "docs",
+  "outputs": [
+    {
+      "name": "markdown",
+      "path": "docs",
+      "options": {
+        "entryFileName": "index.md"
+      }
+    }
+  ],
   "exclude": ["**/*.test.tsx", "**/*.test.ts", "node_modules/**", "src/api-client/**", "src/main.tsx"],
   "excludePrivate": true,
   "excludeProtected": false,

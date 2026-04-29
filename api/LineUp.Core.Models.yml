@@ -1,0 +1,93 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Core.Models
+  commentId: N:LineUp.Core.Models
+  id: LineUp.Core.Models
+  children:
+  - LineUp.Core.Models.Availability
+  - LineUp.Core.Models.AvailabilityPreferences
+  - LineUp.Core.Models.AvailabilityUpdateDTO
+  - LineUp.Core.Models.Schedule
+  - LineUp.Core.Models.SchedulePreferences
+  - LineUp.Core.Models.ShiftAssignment
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Core.Models
+  nameWithType: LineUp.Core.Models
+  fullName: LineUp.Core.Models
+  type: Namespace
+  assemblies:
+  - LineUp.Core
+references:
+- uid: LineUp.Core.Models.Availability
+  commentId: T:LineUp.Core.Models.Availability
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.Availability.html
+  name: Availability
+  nameWithType: Availability
+  fullName: LineUp.Core.Models.Availability
+- uid: LineUp.Core.Models.AvailabilityUpdateDTO
+  commentId: T:LineUp.Core.Models.AvailabilityUpdateDTO
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.AvailabilityUpdateDTO.html
+  name: AvailabilityUpdateDTO
+  nameWithType: AvailabilityUpdateDTO
+  fullName: LineUp.Core.Models.AvailabilityUpdateDTO
+- uid: LineUp.Core.Models.AvailabilityPreferences
+  commentId: T:LineUp.Core.Models.AvailabilityPreferences
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.AvailabilityPreferences.html
+  name: AvailabilityPreferences
+  nameWithType: AvailabilityPreferences
+  fullName: LineUp.Core.Models.AvailabilityPreferences
+- uid: LineUp.Core.Models.Schedule
+  commentId: T:LineUp.Core.Models.Schedule
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.Schedule.html
+  name: Schedule
+  nameWithType: Schedule
+  fullName: LineUp.Core.Models.Schedule
+- uid: LineUp.Core.Models.SchedulePreferences
+  commentId: T:LineUp.Core.Models.SchedulePreferences
+  parent: LineUp.Core.Models
+  href: LineUp.Core.Models.SchedulePreferences.html
+  name: SchedulePreferences
+  nameWithType: SchedulePreferences
+  fullName: LineUp.Core.Models.SchedulePreferences
+- uid: LineUp.Core.Models.ShiftAssignment
+  commentId: T:LineUp.Core.Models.ShiftAssignment
+  href: LineUp.Core.Models.ShiftAssignment.html
+  name: ShiftAssignment
+  nameWithType: ShiftAssignment
+  fullName: LineUp.Core.Models.ShiftAssignment
+- uid: LineUp.Core.Models
+  commentId: N:LineUp.Core.Models
+  href: LineUp.html
+  name: LineUp.Core.Models
+  nameWithType: LineUp.Core.Models
+  fullName: LineUp.Core.Models
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html

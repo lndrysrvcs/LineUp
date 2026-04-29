@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Backend.Controllers
+  commentId: N:LineUp.Backend.Controllers
+  id: LineUp.Backend.Controllers
+  children:
+  - LineUp.Backend.Controllers.ApiController
+  - LineUp.Backend.Controllers.AvailabilityController
+  - LineUp.Backend.Controllers.ScheduleController
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Backend.Controllers
+  nameWithType: LineUp.Backend.Controllers
+  fullName: LineUp.Backend.Controllers
+  type: Namespace
+  assemblies:
+  - LineUp.Backend
+references:
+- uid: LineUp.Backend.Controllers.ApiController
+  commentId: T:LineUp.Backend.Controllers.ApiController
+  href: LineUp.Backend.Controllers.ApiController.html
+  name: ApiController
+  nameWithType: ApiController
+  fullName: LineUp.Backend.Controllers.ApiController
+- uid: LineUp.Backend.Controllers.AvailabilityController
+  commentId: T:LineUp.Backend.Controllers.AvailabilityController
+  href: LineUp.Backend.Controllers.AvailabilityController.html
+  name: AvailabilityController
+  nameWithType: AvailabilityController
+  fullName: LineUp.Backend.Controllers.AvailabilityController
+- uid: LineUp.Backend.Controllers.ScheduleController
+  commentId: T:LineUp.Backend.Controllers.ScheduleController
+  href: LineUp.Backend.Controllers.ScheduleController.html
+  name: ScheduleController
+  nameWithType: ScheduleController
+  fullName: LineUp.Backend.Controllers.ScheduleController

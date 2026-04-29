@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: Projects
+  commentId: N:Projects
+  id: Projects
+  children:
+  - Projects.LineUp_AppHost
+  - Projects.LineUp_Backend
+  - Projects.LineUp_MigrationService
+  langs:
+  - csharp
+  - vb
+  name: Projects
+  nameWithType: Projects
+  fullName: Projects
+  type: Namespace
+  assemblies:
+  - LineUp.AppHost
+references:
+- uid: Projects.LineUp_Backend
+  commentId: T:Projects.LineUp_Backend
+  href: Projects.LineUp_Backend.html
+  name: LineUp_Backend
+  nameWithType: LineUp_Backend
+  fullName: Projects.LineUp_Backend
+- uid: Projects.LineUp_MigrationService
+  commentId: T:Projects.LineUp_MigrationService
+  href: Projects.LineUp_MigrationService.html
+  name: LineUp_MigrationService
+  nameWithType: LineUp_MigrationService
+  fullName: Projects.LineUp_MigrationService
+- uid: Projects.LineUp_AppHost
+  commentId: T:Projects.LineUp_AppHost
+  href: Projects.LineUp_AppHost.html
+  name: LineUp_AppHost
+  nameWithType: LineUp_AppHost
+  fullName: Projects.LineUp_AppHost

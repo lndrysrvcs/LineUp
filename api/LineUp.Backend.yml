@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Backend
+  commentId: N:LineUp.Backend
+  id: LineUp.Backend
+  children:
+  - LineUp.Backend.LineUpContext
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Backend
+  nameWithType: LineUp.Backend
+  fullName: LineUp.Backend
+  type: Namespace
+  assemblies:
+  - LineUp.Backend
+references:
+- uid: LineUp.Backend.LineUpContext
+  commentId: T:LineUp.Backend.LineUpContext
+  parent: LineUp.Backend
+  href: LineUp.Backend.LineUpContext.html
+  name: LineUpContext
+  nameWithType: LineUpContext
+  fullName: LineUp.Backend.LineUpContext
+- uid: LineUp.Backend
+  commentId: N:LineUp.Backend
+  href: LineUp.html
+  name: LineUp.Backend
+  nameWithType: LineUp.Backend
+  fullName: LineUp.Backend
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html

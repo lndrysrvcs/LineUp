@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.MigrationService
+  commentId: N:LineUp.MigrationService
+  id: LineUp.MigrationService
+  children:
+  - LineUp.MigrationService.Worker
+  langs:
+  - csharp
+  - vb
+  name: LineUp.MigrationService
+  nameWithType: LineUp.MigrationService
+  fullName: LineUp.MigrationService
+  type: Namespace
+  assemblies:
+  - LineUp.MigrationService
+references:
+- uid: LineUp.MigrationService.Worker
+  commentId: T:LineUp.MigrationService.Worker
+  href: LineUp.MigrationService.Worker.html
+  name: Worker
+  nameWithType: Worker
+  fullName: LineUp.MigrationService.Worker

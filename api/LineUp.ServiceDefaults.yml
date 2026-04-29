@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.ServiceDefaults
+  commentId: N:LineUp.ServiceDefaults
+  id: LineUp.ServiceDefaults
+  children:
+  - LineUp.ServiceDefaults.Extensions
+  langs:
+  - csharp
+  - vb
+  name: LineUp.ServiceDefaults
+  nameWithType: LineUp.ServiceDefaults
+  fullName: LineUp.ServiceDefaults
+  type: Namespace
+  assemblies:
+  - LineUp.ServiceDefaults
+references:
+- uid: LineUp.ServiceDefaults.Extensions
+  commentId: T:LineUp.ServiceDefaults.Extensions
+  href: LineUp.ServiceDefaults.Extensions.html
+  name: Extensions
+  nameWithType: Extensions
+  fullName: LineUp.ServiceDefaults.Extensions

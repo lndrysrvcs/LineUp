@@ -1,0 +1,1985 @@
+{
+  "source_base_path": "/home/ox/RiderProjects/LineUp",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.AppHost.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.AppHost.Extensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.AppHost.Extensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.AppHost.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.AppHost.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.AppHost",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Controllers.ApiController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Controllers.ApiController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Controllers.ApiController",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Controllers.AvailabilityController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Controllers.AvailabilityController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Controllers.AvailabilityController",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Controllers.ScheduleController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Controllers.ScheduleController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Controllers.ScheduleController",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Controllers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Controllers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Controllers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.LineUpContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.LineUpContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.LineUpContext",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.AddFormAnswersAndAnnotations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.AddFormAnswersAndAnnotations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.AddFormAnswersAndAnnotations",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.AddFormAnswersAndAnnotations.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.AddForms.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.AddForms.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.AddForms",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.AddForms.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.AddMoreAnnotations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.AddMoreAnnotations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.AddMoreAnnotations",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.AddMoreAnnotations.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.AddMoreSchedulePrefs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.AddMoreSchedulePrefs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.AddMoreSchedulePrefs",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.AddMoreSchedulePrefs.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.AddScheduleFkId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.AddScheduleFkId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.AddScheduleFkId",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.AddScheduleFkId.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.CoreMigration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.CoreMigration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.CoreMigration",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.CoreMigration.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.EmailEnforced.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.EmailEnforced.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.EmailEnforced",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.EmailEnforced.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.EmailSentFlag.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.EmailSentFlag.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.EmailSentFlag",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.EmailSentFlag.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.FixSeedingByNavigationProperty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.FixSeedingByNavigationProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.FixSeedingByNavigationProperty",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.FixSeedingByNavigationProperty.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.GuidAvailability.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.GuidAvailability.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.GuidAvailability",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.GuidAvailability.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.InitialCreate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.InitialCreate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.InitialCreate",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.InitialCreate.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.MinutesPerSlot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.MinutesPerSlot.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.MinutesPerSlot",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.MinutesPerSlot.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.RemoveDateCoverage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.RemoveDateCoverage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.RemoveDateCoverage",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.RemoveDateCoverage.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.RemoveUnneededProps.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.RemoveUnneededProps.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.RemoveUnneededProps",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.RemoveUnneededProps.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.SplitPreferences.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.SplitPreferences.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.SplitPreferences",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.SplitPreferences.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.UniqueEmail.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.UniqueEmail.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations.UniqueEmail",
+      "Summary": "<p sourcefile=\"api/LineUp.Backend.Migrations.UniqueEmail.yml\" sourcestartlinenumber=\"1\">A base class inherited by each EF Core migration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Migrations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Migrations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Migrations",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.AvailabilityCreateDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.AvailabilityCreateDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.AvailabilityCreateDto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.GetScheduleAuthenticatedDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.GetScheduleAuthenticatedDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.GetScheduleAuthenticatedDto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.GetScheduleUnauthenticatedDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.GetScheduleUnauthenticatedDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.GetScheduleUnauthenticatedDto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.ScheduleDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.ScheduleDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.ScheduleDto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.ScheduleListDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.ScheduleListDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.ScheduleListDto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.ScheduleUpdateDto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.ScheduleUpdateDto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models.ScheduleUpdateDto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Services.IEmailService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Services.IEmailService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Services.IEmailService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Services.MockEmailService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Services.MockEmailService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Services.MockEmailService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Services.ResendEmailService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Services.ResendEmailService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Services.ResendEmailService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Services.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Services",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Support.DbSeeder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Support.DbSeeder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Support.DbSeeder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Support.HasScopeHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Support.HasScopeHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Support.HasScopeHandler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Support.HasScopeRequirement.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Support.HasScopeRequirement.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Support.HasScopeRequirement",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Support.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Support.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Support",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Tests.CRUDTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Tests.CRUDTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Tests.CRUDTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Tests.MigrationTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Tests.MigrationTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Tests.MigrationTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.Tests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.Tests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend.Tests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Backend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Backend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Backend",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Attributes.JsonDoNotSerializeAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Attributes.JsonDoNotSerializeAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Attributes.JsonDoNotSerializeAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Attributes.JsonExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Attributes.JsonExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Attributes.JsonExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Attributes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Attributes",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Availability.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Availability.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Availability",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.AvailabilityPreferences.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.AvailabilityPreferences.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.AvailabilityPreferences",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.AvailabilityUpdateDTO.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.AvailabilityUpdateDTO.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.AvailabilityUpdateDTO",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Forms.Form.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Forms.Form.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Forms.Form",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Forms.FormQuestion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Forms.FormQuestion.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Forms.FormQuestion",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Forms.FormQuestionAnswer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Forms.FormQuestionAnswer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Forms.FormQuestionAnswer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Forms.QuestionOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Forms.QuestionOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Forms.QuestionOptions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Forms.QuestionType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Forms.QuestionType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Forms.QuestionType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Forms.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Forms.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Forms",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.Schedule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.Schedule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.Schedule",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.SchedulePreferences.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.SchedulePreferences.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.SchedulePreferences",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.ShiftAssignment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.ShiftAssignment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models.ShiftAssignment",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Core.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Core.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Core.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.MigrationService.Worker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.MigrationService.Worker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.MigrationService.Worker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.MigrationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.MigrationService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.MigrationService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Scheduler.SolverResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Scheduler.SolverResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Scheduler.SolverResult",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Scheduler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Scheduler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Scheduler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Tests.RandomizationTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Tests.RandomizationTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Tests.RandomizationTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Tests.SchedulerLogicTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Tests.SchedulerLogicTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Tests.SchedulerLogicTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Tests.SchedulerRegressionTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Tests.SchedulerRegressionTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Tests.SchedulerRegressionTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Tests.SchedulerStressTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Tests.SchedulerStressTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Tests.SchedulerStressTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.Tests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.Tests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler.Tests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.Scheduler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.Scheduler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.Scheduler",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.ServiceDefaults.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.ServiceDefaults.Extensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.ServiceDefaults.Extensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/LineUp.ServiceDefaults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LineUp.ServiceDefaults.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "LineUp.ServiceDefaults",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Projects.LineUp_AppHost.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Projects.LineUp_AppHost.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Projects.LineUp_AppHost",
+      "Summary": "<p sourcefile=\"api/Projects.LineUp_AppHost.yml\" sourcestartlinenumber=\"1\">Metadata for the Aspire AppHost project.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Projects.LineUp_Backend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Projects.LineUp_Backend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Projects.LineUp_Backend",
+      "Summary": "<p sourcefile=\"api/Projects.LineUp_Backend.yml\" sourcestartlinenumber=\"1\">Metadata for the LineUp_Backend project.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Projects.LineUp_MigrationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Projects.LineUp_MigrationService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Projects.LineUp_MigrationService",
+      "Summary": "<p sourcefile=\"api/Projects.LineUp_MigrationService.yml\" sourcestartlinenumber=\"1\">Metadata for the LineUp_MigrationService project.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Projects.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Projects.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Projects",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "api/toc.json"
+        },
+        ".html": {
+          "relative_path": "api/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cs-docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "cs-docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cs-docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "cs-docs/introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "cs-docs/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "cs-docs/toc.json"
+        },
+        ".html": {
+          "relative_path": "cs-docs/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/App/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/App/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/App/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/App/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Calendar/functions/Calendar.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Calendar/functions/Calendar.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Calendar/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Calendar/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Calendar/interfaces/CalendarProps.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Calendar/interfaces/CalendarProps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CalendarCells/functions/ColoredCell.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CalendarCells/functions/ColoredCell.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CalendarCells/functions/FillableCell.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CalendarCells/functions/FillableCell.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CalendarCells/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CalendarCells/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CalendarCells/interfaces/CalendarCellProps.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CalendarCells/interfaces/CalendarCellProps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CopyableLink/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CopyableLink/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CopyableLink/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CopyableLink/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/CopyableLink/interfaces/CopyableLinkProps.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/CopyableLink/interfaces/CopyableLinkProps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/MousePopup/functions/MousePopup.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/MousePopup/functions/MousePopup.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/MousePopup/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/MousePopup/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/MousePopup/interfaces/MousePopupProps.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/MousePopup/interfaces/MousePopupProps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Table/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Table/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Table/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Table/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Table/interfaces/TableProps.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Table/interfaces/TableProps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Topbar/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Topbar/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Topbar/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Topbar/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/components/Topbar/interfaces/TopbarProps.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/components/Topbar/interfaces/TopbarProps.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/modules.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/modules.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/Availability/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/Availability/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/Availability/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/Availability/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/EditAvailability/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/EditAvailability/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/EditAvailability/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/EditAvailability/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/Error/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/Error/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/Error/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/Error/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/Home/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/Home/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/Home/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/Home/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/LoggedInHome/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/LoggedInHome/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/LoggedInHome/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/LoggedInHome/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/LoggedOutHome/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/LoggedOutHome/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/LoggedOutHome/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/LoggedOutHome/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/NewSchedule/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/NewSchedule/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/NewSchedule/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/NewSchedule/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/ViewEditSchedule/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/ViewEditSchedule/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/pages/ViewEditSchedule/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/pages/ViewEditSchedule/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "lineup-client/docs/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "client-docs/toc.json"
+        },
+        ".html": {
+          "relative_path": "client-docs/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/type-aliases/Time.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/type-aliases/Time.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/type-aliases/TimeRange.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/type-aliases/TimeRange.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/type-aliases/ValidHours.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/type-aliases/ValidHours.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/type-aliases/ValidMinutes.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/type-aliases/ValidMinutes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/type-aliases/Weekday.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/type-aliases/Weekday.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/types/variables/WEEKDAYS.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/types/variables/WEEKDAYS.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/functions/getToken.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/functions/getToken.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/functions/logout.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/functions/logout.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/functions/registerGetToken.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/functions/registerGetToken.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/functions/registerLogout.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/functions/registerLogout.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/type-aliases/GetTokenFn.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/type-aliases/GetTokenFn.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/auth-token/type-aliases/LogoutFn.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/auth-token/type-aliases/LogoutFn.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/context/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/context/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/context/type-aliases/AuthContextValue.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/context/type-aliases/AuthContextValue.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/context/variables/AuthContext.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/context/variables/AuthContext.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/context/variables/queryClient.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/context/variables/queryClient.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/provider/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/provider/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/provider/variables/AuthProvider.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/provider/variables/AuthProvider.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/useApi/functions/useApi.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/useApi/functions/useApi.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/api/useApi/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/api/useApi/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/db/functions/addToasts.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/db/functions/addToasts.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/db/functions/authorizedLoaderQuery.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/db/functions/authorizedLoaderQuery.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/db/functions/unauthorizedLoaderQuery.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/db/functions/unauthorizedLoaderQuery.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/db/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/db/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/addMinutesToTime.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/addMinutesToTime.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/addTimeToDate.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/addTimeToDate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/dayNumberToWeekday.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/dayNumberToWeekday.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/formatTime.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/formatTime.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/formatTime24Hour.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/formatTime24Hour.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/getTimeIncrementLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/getTimeIncrementLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/getValidMinutesForInterval.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/getValidMinutesForInterval.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/parseTimeString.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/parseTimeString.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/rangeIs24Hours.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/rangeIs24Hours.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/standardizeDateAndTime.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/standardizeDateAndTime.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/timesAreEqual.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/timesAreEqual.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/toMinutes.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/toMinutes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/functions/weekdayToNum.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/functions/weekdayToNum.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/time/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/time/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/useMousePosition/functions/default.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/useMousePosition/functions/default.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "lineup-client/docs/utils/useMousePosition/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "client-docs/utils/useMousePosition/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

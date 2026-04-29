@@ -1,0 +1,68 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Backend.Services
+  commentId: N:LineUp.Backend.Services
+  id: LineUp.Backend.Services
+  children:
+  - LineUp.Backend.Services.IEmailService
+  - LineUp.Backend.Services.MockEmailService
+  - LineUp.Backend.Services.ResendEmailService
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Backend.Services
+  nameWithType: LineUp.Backend.Services
+  fullName: LineUp.Backend.Services
+  type: Namespace
+  assemblies:
+  - LineUp.Backend
+references:
+- uid: LineUp.Backend.Services.IEmailService
+  commentId: T:LineUp.Backend.Services.IEmailService
+  parent: LineUp.Backend.Services
+  href: LineUp.Backend.Services.IEmailService.html
+  name: IEmailService
+  nameWithType: IEmailService
+  fullName: LineUp.Backend.Services.IEmailService
+- uid: LineUp.Backend.Services.MockEmailService
+  commentId: T:LineUp.Backend.Services.MockEmailService
+  href: LineUp.Backend.Services.MockEmailService.html
+  name: MockEmailService
+  nameWithType: MockEmailService
+  fullName: LineUp.Backend.Services.MockEmailService
+- uid: LineUp.Backend.Services.ResendEmailService
+  commentId: T:LineUp.Backend.Services.ResendEmailService
+  href: LineUp.Backend.Services.ResendEmailService.html
+  name: ResendEmailService
+  nameWithType: ResendEmailService
+  fullName: LineUp.Backend.Services.ResendEmailService
+- uid: LineUp.Backend.Services
+  commentId: N:LineUp.Backend.Services
+  href: LineUp.html
+  name: LineUp.Backend.Services
+  nameWithType: LineUp.Backend.Services
+  fullName: LineUp.Backend.Services
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  - name: .
+  - uid: LineUp.Backend.Services
+    name: Services
+    href: LineUp.Backend.Services.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Backend
+    name: Backend
+    href: LineUp.Backend.html
+  - name: .
+  - uid: LineUp.Backend.Services
+    name: Services
+    href: LineUp.Backend.Services.html

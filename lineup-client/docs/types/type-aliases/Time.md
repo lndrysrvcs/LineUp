@@ -1,14 +1,14 @@
-[**lineup-client**](../../README.md)
+[**lineup-client**](../../index.md)
 
 ---
 
-[lineup-client](../../modules.md) / [types](../README.md) / Time
+[lineup-client](../../modules.md) / [types](../index.md) / Time
 
 # Type Alias: Time
 
 > **Time** = `object`
 
-Defined in: [types.ts:10](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/types.ts#L10)
+Defined in: [types.ts:10](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/types.ts#L10)
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: [types.ts:10](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f
 
 > **hour**: [`ValidHours`](ValidHours.md)
 
-Defined in: [types.ts:11](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/types.ts#L11)
+Defined in: [types.ts:11](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/types.ts#L11)
 
 ---
 
@@ -24,4 +24,4 @@ Defined in: [types.ts:11](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f
 
 > **minute**: [`ValidMinutes`](ValidMinutes.md)
 
-Defined in: [types.ts:12](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/types.ts#L12)
+Defined in: [types.ts:12](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/types.ts#L12)

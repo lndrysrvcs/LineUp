@@ -1,14 +1,14 @@
-[**lineup-client**](../../../README.md)
+[**lineup-client**](../../../index.md)
 
 ---
 
-[lineup-client](../../../modules.md) / [utils/time](../README.md) / addTimeToDate
+[lineup-client](../../../modules.md) / [utils/time](../index.md) / addTimeToDate
 
 # Function: addTimeToDate()
 
 > **addTimeToDate**(`date`, `time`): `Date`
 
-Defined in: [utils/time.ts:147](https://github.com/rhyderswen/CSDS393/blob/ecc0a38fd3f95300fa1c37b43b7273c0049bb5bd/lineup-client/src/utils/time.ts#L147)
+Defined in: [utils/time.ts:147](https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/utils/time.ts#L147)
 
 Combines a Time object to a Date object, returning a new Date object with the specified day of the Date but the specified time of the Time object.
 

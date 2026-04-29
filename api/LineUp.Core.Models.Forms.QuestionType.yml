@@ -1,0 +1,182 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Core.Models.Forms.QuestionType
+  commentId: T:LineUp.Core.Models.Forms.QuestionType
+  id: QuestionType
+  parent: LineUp.Core.Models.Forms
+  children:
+  - LineUp.Core.Models.Forms.QuestionType.Checkbox
+  - LineUp.Core.Models.Forms.QuestionType.FreeResponse
+  - LineUp.Core.Models.Forms.QuestionType.Radio
+  - LineUp.Core.Models.Forms.QuestionType.Select
+  langs:
+  - csharp
+  - vb
+  name: QuestionType
+  nameWithType: QuestionType
+  fullName: LineUp.Core.Models.Forms.QuestionType
+  type: Enum
+  source:
+    remote:
+      path: LineUp.Core/Models/Forms/QuestionType.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: QuestionType
+    path: LineUp.Core/Models/Forms/QuestionType.cs
+    startLine: 2
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models.Forms
+  syntax:
+    content: public enum QuestionType
+    content.vb: Public Enum QuestionType
+- uid: LineUp.Core.Models.Forms.QuestionType.FreeResponse
+  commentId: F:LineUp.Core.Models.Forms.QuestionType.FreeResponse
+  id: FreeResponse
+  parent: LineUp.Core.Models.Forms.QuestionType
+  langs:
+  - csharp
+  - vb
+  name: FreeResponse
+  nameWithType: QuestionType.FreeResponse
+  fullName: LineUp.Core.Models.Forms.QuestionType.FreeResponse
+  type: Field
+  source:
+    remote:
+      path: LineUp.Core/Models/Forms/QuestionType.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: FreeResponse
+    path: LineUp.Core/Models/Forms/QuestionType.cs
+    startLine: 4
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models.Forms
+  syntax:
+    content: FreeResponse = 0
+    return:
+      type: LineUp.Core.Models.Forms.QuestionType
+- uid: LineUp.Core.Models.Forms.QuestionType.Radio
+  commentId: F:LineUp.Core.Models.Forms.QuestionType.Radio
+  id: Radio
+  parent: LineUp.Core.Models.Forms.QuestionType
+  langs:
+  - csharp
+  - vb
+  name: Radio
+  nameWithType: QuestionType.Radio
+  fullName: LineUp.Core.Models.Forms.QuestionType.Radio
+  type: Field
+  source:
+    remote:
+      path: LineUp.Core/Models/Forms/QuestionType.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: Radio
+    path: LineUp.Core/Models/Forms/QuestionType.cs
+    startLine: 5
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models.Forms
+  syntax:
+    content: Radio = 1
+    return:
+      type: LineUp.Core.Models.Forms.QuestionType
+- uid: LineUp.Core.Models.Forms.QuestionType.Checkbox
+  commentId: F:LineUp.Core.Models.Forms.QuestionType.Checkbox
+  id: Checkbox
+  parent: LineUp.Core.Models.Forms.QuestionType
+  langs:
+  - csharp
+  - vb
+  name: Checkbox
+  nameWithType: QuestionType.Checkbox
+  fullName: LineUp.Core.Models.Forms.QuestionType.Checkbox
+  type: Field
+  source:
+    remote:
+      path: LineUp.Core/Models/Forms/QuestionType.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: Checkbox
+    path: LineUp.Core/Models/Forms/QuestionType.cs
+    startLine: 6
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models.Forms
+  syntax:
+    content: Checkbox = 2
+    return:
+      type: LineUp.Core.Models.Forms.QuestionType
+- uid: LineUp.Core.Models.Forms.QuestionType.Select
+  commentId: F:LineUp.Core.Models.Forms.QuestionType.Select
+  id: Select
+  parent: LineUp.Core.Models.Forms.QuestionType
+  langs:
+  - csharp
+  - vb
+  name: Select
+  nameWithType: QuestionType.Select
+  fullName: LineUp.Core.Models.Forms.QuestionType.Select
+  type: Field
+  source:
+    remote:
+      path: LineUp.Core/Models/Forms/QuestionType.cs
+      branch: er/unified-docs
+      repo: git@github.com:rhyderswen/LineUp.git
+    id: Select
+    path: LineUp.Core/Models/Forms/QuestionType.cs
+    startLine: 7
+  assemblies:
+  - LineUp.Core
+  namespace: LineUp.Core.Models.Forms
+  syntax:
+    content: Select = 3
+    return:
+      type: LineUp.Core.Models.Forms.QuestionType
+references:
+- uid: LineUp.Core.Models.Forms
+  commentId: N:LineUp.Core.Models.Forms
+  href: LineUp.html
+  name: LineUp.Core.Models.Forms
+  nameWithType: LineUp.Core.Models.Forms
+  fullName: LineUp.Core.Models.Forms
+  spec.csharp:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+  - name: .
+  - uid: LineUp.Core.Models.Forms
+    name: Forms
+    href: LineUp.Core.Models.Forms.html
+  spec.vb:
+  - uid: LineUp
+    name: LineUp
+    href: LineUp.html
+  - name: .
+  - uid: LineUp.Core
+    name: Core
+    href: LineUp.Core.html
+  - name: .
+  - uid: LineUp.Core.Models
+    name: Models
+    href: LineUp.Core.Models.html
+  - name: .
+  - uid: LineUp.Core.Models.Forms
+    name: Forms
+    href: LineUp.Core.Models.Forms.html
+- uid: LineUp.Core.Models.Forms.QuestionType
+  commentId: T:LineUp.Core.Models.Forms.QuestionType
+  parent: LineUp.Core.Models.Forms
+  href: LineUp.Core.Models.Forms.QuestionType.html
+  name: QuestionType
+  nameWithType: QuestionType
+  fullName: LineUp.Core.Models.Forms.QuestionType

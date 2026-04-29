@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.AppHost
+  commentId: N:LineUp.AppHost
+  id: LineUp.AppHost
+  children:
+  - LineUp.AppHost.Extensions
+  langs:
+  - csharp
+  - vb
+  name: LineUp.AppHost
+  nameWithType: LineUp.AppHost
+  fullName: LineUp.AppHost
+  type: Namespace
+  assemblies:
+  - LineUp.AppHost
+references:
+- uid: LineUp.AppHost.Extensions
+  commentId: T:LineUp.AppHost.Extensions
+  href: LineUp.AppHost.Extensions.html
+  name: Extensions
+  nameWithType: Extensions
+  fullName: LineUp.AppHost.Extensions

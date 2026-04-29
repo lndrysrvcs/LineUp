@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface: CalendarProps | LineUp </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface: CalendarProps | LineUp ">
+      
+      
+      <link rel="icon" href="../../../../favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/lineup-client/docs/components/Calendar/interfaces/CalendarProps.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../logo.svg" alt="LineUp">
+            LineUp
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<p><a href="../../../index.html"><strong>lineup-client</strong></a></p>
+<hr>
+<p><a href="../../../modules.html">lineup-client</a> / <a href="../index.html">components/Calendar</a> / CalendarProps</p>
+<h1 id="interface-calendarprops">Interface: CalendarProps</h1>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L18">components/Calendar.tsx:18</a></p>
+<p>Props for the <a href="../functions/Calendar.html">Calendar</a> component.</p>
+<h2 id="properties">Properties</h2>
+<h3 id="cell">Cell</h3>
+<blockquote>
+<p><strong>Cell</strong>: <code>ComponentType</code>&lt;<a href="../../CalendarCells/interfaces/CalendarCellProps.html"><code>CalendarCellProps</code></a>&gt;</p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L20">components/Calendar.tsx:20</a></p>
+<p>The Cell that chooses behavior, rendered in each row/column.</p>
+<hr>
+<h3 id="colors">colors?</h3>
+<blockquote>
+<p><code>optional</code> <strong>colors?</strong>: <code>object</code></p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L34">components/Calendar.tsx:34</a></p>
+<p>Map of UTC timestamps to CSS colors.</p>
+<h4 id="index-signature">Index Signature</h4>
+<p>[<code>key</code>: <code>string</code>]: <code>string</code></p>
+<h4 id="example">Example</h4>
+<pre><code class="lang-ts">{&quot;2026-03-10T16:15:00.000Z&quot;: &quot;var(--color)&quot;, ...}
+</code></pre>
+<hr>
+<h3 id="dates">dates</h3>
+<blockquote>
+<p><strong>dates</strong>: <code>Date</code>[]</p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L26">components/Calendar.tsx:26</a></p>
+<p>Array of dates (columns) for the calendar. Time input does not matter.</p>
+<hr>
+<h3 id="minutespercell">minutesPerCell</h3>
+<blockquote>
+<p><strong>minutesPerCell</strong>: <a href="../../../types/type-aliases/ValidMinutes.html"><code>ValidMinutes</code></a></p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L23">components/Calendar.tsx:23</a></p>
+<p>Number of minutes each cell represents.</p>
+<hr>
+<h3 id="range">range</h3>
+<blockquote>
+<p><strong>range</strong>: <a href="../../../types/type-aliases/TimeRange.html"><code>TimeRange</code></a></p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L29">components/Calendar.tsx:29</a></p>
+<p>Start time of first cell to end time of last cell.</p>
+<hr>
+<h3 id="selectedcells">selectedCells?</h3>
+<blockquote>
+<p><code>optional</code> <strong>selectedCells?</strong>: <code>string</code>[]</p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L45">components/Calendar.tsx:45</a></p>
+<p>Array of UTC timestamps for which cells are shown as selected.</p>
+<hr>
+<h3 id="setfocusedcell">setFocusedCell?</h3>
+<blockquote>
+<p><code>optional</code> <strong>setFocusedCell?</strong>: <code>Dispatch</code>&lt;<code>SetStateAction</code>&lt;<code>string</code> | <code>null</code>&gt;&gt;</p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L42">components/Calendar.tsx:42</a></p>
+<p>React state setter to update which cell a user is currently focusing over. Sets <code>null</code> when not hovering over a cell.</p>
+<hr>
+<h3 id="setselectedcells">setSelectedCells?</h3>
+<blockquote>
+<p><code>optional</code> <strong>setSelectedCells?</strong>: <code>Dispatch</code>&lt;<code>SetStateAction</code>&lt;<code>string</code>[]&gt;&gt;</p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L48">components/Calendar.tsx:48</a></p>
+<p>React state setter for <a href="#selectedcells">selectedCells</a>.</p>
+<hr>
+<h3 id="text">text?</h3>
+<blockquote>
+<p><code>optional</code> <strong>text?</strong>: <code>object</code></p>
+</blockquote>
+<p>Defined in: <a href="https://github.com/rhyderswen/LineUp/blob/b2755005f655d50dd5f2fef681fc2f663505ff02/lineup-client/src/components/Calendar.tsx#L39">components/Calendar.tsx:39</a></p>
+<p>Map of UTC timestamps to text displayed on the cell.</p>
+<h4 id="index-signature-1">Index Signature</h4>
+<p>[<code>key</code>: <code>string</code>]: <code>string</code></p>
+<h4 id="example-1">Example</h4>
+<pre><code class="lang-ts">{&quot;2026-03-10T16:15:00.000Z&quot;: &quot;Rhyder&quot;, ...}
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/rhyderswen/LineUp/blob/er/unified-docs/lineup-client/docs/components/Calendar/interfaces/CalendarProps.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

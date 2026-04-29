@@ -1,0 +1,51 @@
+### YamlMime:ManagedReference
+items:
+- uid: LineUp.Scheduler.Tests
+  commentId: N:LineUp.Scheduler.Tests
+  id: LineUp.Scheduler.Tests
+  children:
+  - LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest
+  - LineUp.Scheduler.Tests.RandomizationTests
+  - LineUp.Scheduler.Tests.SchedulerLogicTests
+  - LineUp.Scheduler.Tests.SchedulerRegressionTests
+  - LineUp.Scheduler.Tests.SchedulerStressTests
+  langs:
+  - csharp
+  - vb
+  name: LineUp.Scheduler.Tests
+  nameWithType: LineUp.Scheduler.Tests
+  fullName: LineUp.Scheduler.Tests
+  type: Namespace
+  assemblies:
+  - LineUp.Scheduler.Tests
+references:
+- uid: LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest
+  commentId: T:LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest
+  href: LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest.html
+  name: AvailabilityMatrixToolsTest
+  nameWithType: AvailabilityMatrixToolsTest
+  fullName: LineUp.Scheduler.Tests.AvailabilityMatrixToolsTest
+- uid: LineUp.Scheduler.Tests.RandomizationTests
+  commentId: T:LineUp.Scheduler.Tests.RandomizationTests
+  href: LineUp.Scheduler.Tests.RandomizationTests.html
+  name: RandomizationTests
+  nameWithType: RandomizationTests
+  fullName: LineUp.Scheduler.Tests.RandomizationTests
+- uid: LineUp.Scheduler.Tests.SchedulerLogicTests
+  commentId: T:LineUp.Scheduler.Tests.SchedulerLogicTests
+  href: LineUp.Scheduler.Tests.SchedulerLogicTests.html
+  name: SchedulerLogicTests
+  nameWithType: SchedulerLogicTests
+  fullName: LineUp.Scheduler.Tests.SchedulerLogicTests
+- uid: LineUp.Scheduler.Tests.SchedulerRegressionTests
+  commentId: T:LineUp.Scheduler.Tests.SchedulerRegressionTests
+  href: LineUp.Scheduler.Tests.SchedulerRegressionTests.html
+  name: SchedulerRegressionTests
+  nameWithType: SchedulerRegressionTests
+  fullName: LineUp.Scheduler.Tests.SchedulerRegressionTests
+- uid: LineUp.Scheduler.Tests.SchedulerStressTests
+  commentId: T:LineUp.Scheduler.Tests.SchedulerStressTests
+  href: LineUp.Scheduler.Tests.SchedulerStressTests.html
+  name: SchedulerStressTests
+  nameWithType: SchedulerStressTests
+  fullName: LineUp.Scheduler.Tests.SchedulerStressTests
