@@ -25,7 +25,8 @@
       {
         "files": [
           "api/**.yml", 
-          "api/index.md"
+          "api/index.md",
+          "**/api-spec.swagger.json"
         ]
       },
       { 
@@ -38,7 +39,7 @@
       },
       {
         "content": [{
-          "files": [ "**/api-spec.json" ]
+          "files": [ "**/api-spec.swagger.json" ]
         }]
       },
       {

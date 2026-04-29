@@ -697,12 +697,12 @@
   "client-docs/utils/db/functions/authorizedLoaderQuery.html": {
     "href": "client-docs/utils/db/functions/authorizedLoaderQuery.html",
     "title": "Function: authorizedLoaderQuery() | LineUp",
-    "summary": "lineup-client lineup-client / utils/db / authorizedLoaderQuery Function: authorizedLoaderQuery() authorizedLoaderQuery(url, param): object Defined in: utils/db.tsx:75 A React Router Loader function for checking if a dynamic route exists and getting that page's associated data. Used for restrcted pages that require a user to be logged in (ViewEditSchedule). Parameters url string The API URL to fetch from. Replaces {} with param. param string The specific param of the page a user navigated to. Returns object The data returned from the API. queryFn queryFn: () => Promise<any> Returns Promise<any> queryKey queryKey: string[] Remarks To be used in conjunction with useQuery (TanStack). Example // Queries \"/api/schedule/12345/details\" useQuery(authorizedLoaderQuery(\"/api/schedule/{}/details\", \"12345\"))"
+    "summary": "lineup-client lineup-client / utils/db / authorizedLoaderQuery Function: authorizedLoaderQuery() authorizedLoaderQuery(url, param): object Defined in: utils/db.tsx:75 A React Router Loader function for checking if a dynamic route exists and getting that page's associated data. Used for restrcted pages that require a user to be logged in (ViewEditSchedule). Parameters url string The API URL to fetch from. Replaces {} with param. param string The specific param of the page a user navigated to. Returns object The data returned from the API. queryFn queryFn: () => Promise<any> Returns Promise<any> queryKey queryKey: string[] Remarks To be used in conjunction with useQuery (TanStack). Example // Queries \"/api/schedule/12345/details\" useQuery(authorizedLoaderQuery(\"/api/schedule/{}/details\", \"12345\"));"
   },
   "client-docs/utils/db/functions/unauthorizedLoaderQuery.html": {
     "href": "client-docs/utils/db/functions/unauthorizedLoaderQuery.html",
     "title": "Function: unauthorizedLoaderQuery() | LineUp",
-    "summary": "lineup-client lineup-client / utils/db / unauthorizedLoaderQuery Function: unauthorizedLoaderQuery() unauthorizedLoaderQuery(url, param): object Defined in: utils/db.tsx:28 A React Router Loader function for checking if a dynamic route exists and getting that page's associated data. Used for pages that users don't need to log in for (Availability and EditAvailability pages). Parameters url string The API URL to fetch from. Replaces {} with param. param string The specific param of the page a user navigated to. Returns object The data returned from the API. queryFn queryFn: () => Promise<any> Returns Promise<any> queryKey queryKey: string[] Remarks To be used in conjunction with useQuery (TanStack). Example // Queries \"/api/schedule/12345/details\" useQuery(unauthorizedLoaderQuery(\"/api/schedule/{}/details\", \"12345\"))"
+    "summary": "lineup-client lineup-client / utils/db / unauthorizedLoaderQuery Function: unauthorizedLoaderQuery() unauthorizedLoaderQuery(url, param): object Defined in: utils/db.tsx:28 A React Router Loader function for checking if a dynamic route exists and getting that page's associated data. Used for pages that users don't need to log in for (Availability and EditAvailability pages). Parameters url string The API URL to fetch from. Replaces {} with param. param string The specific param of the page a user navigated to. Returns object The data returned from the API. queryFn queryFn: () => Promise<any> Returns Promise<any> queryKey queryKey: string[] Remarks To be used in conjunction with useQuery (TanStack). Example // Queries \"/api/schedule/12345/details\" useQuery(unauthorizedLoaderQuery(\"/api/schedule/{}/details\", \"12345\"));"
   },
   "client-docs/utils/db/index.html": {
     "href": "client-docs/utils/db/index.html",
@@ -727,12 +727,12 @@
   "client-docs/utils/time/functions/formatTime.html": {
     "href": "client-docs/utils/time/functions/formatTime.html",
     "title": "Function: formatTime() | LineUp",
-    "summary": "lineup-client lineup-client / utils/time / formatTime Function: formatTime() formatTime(time): string Defined in: utils/time.ts:27 Formats a Time object into 12H format with AM/PM. Parameters time Time Returns string The formatted time string. Example formatTime({ hour: 9, minute: 15 }) // Returns \"09:15 AM\""
+    "summary": "lineup-client lineup-client / utils/time / formatTime Function: formatTime() formatTime(time): string Defined in: utils/time.ts:27 Formats a Time object into 12H format with AM/PM. Parameters time Time Returns string The formatted time string. Example formatTime({ hour: 9, minute: 15 }); // Returns \"09:15 AM\""
   },
   "client-docs/utils/time/functions/formatTime24Hour.html": {
     "href": "client-docs/utils/time/functions/formatTime24Hour.html",
     "title": "Function: formatTime24Hour() | LineUp",
-    "summary": "lineup-client lineup-client / utils/time / formatTime24Hour Function: formatTime24Hour() formatTime24Hour(time): string Defined in: utils/time.ts:98 Formats a Time object into 24H format without AM/PM. Parameters time Time Returns string The formatted time string. Example formatTime({ hour: 17, minute: 15 }) // Returns \"17:15\""
+    "summary": "lineup-client lineup-client / utils/time / formatTime24Hour Function: formatTime24Hour() formatTime24Hour(time): string Defined in: utils/time.ts:98 Formats a Time object into 24H format without AM/PM. Parameters time Time Returns string The formatted time string. Example formatTime({ hour: 17, minute: 15 }); // Returns \"17:15\""
   },
   "client-docs/utils/time/functions/getTimeIncrementLabel.html": {
     "href": "client-docs/utils/time/functions/getTimeIncrementLabel.html",
@@ -767,7 +767,7 @@
   "client-docs/utils/time/functions/toMinutes.html": {
     "href": "client-docs/utils/time/functions/toMinutes.html",
     "title": "Function: toMinutes() | LineUp",
-    "summary": "lineup-client lineup-client / utils/time / toMinutes Function: toMinutes() toMinutes(time, isEnd?): number Defined in: utils/time.ts:125 Converts a time to just how many minutes that time is past midnight. Parameters time Time isEnd? boolean = false If the time is the end of the range. Returns number The number of minutes past midnight or 1440 if the time represents 24 hours. Remarks Used in validating start and end times on submission. Example toMinutes({ hour: 1, minute: 30 }) // returns 90"
+    "summary": "lineup-client lineup-client / utils/time / toMinutes Function: toMinutes() toMinutes(time, isEnd?): number Defined in: utils/time.ts:125 Converts a time to just how many minutes that time is past midnight. Parameters time Time isEnd? boolean = false If the time is the end of the range. Returns number The number of minutes past midnight or 1440 if the time represents 24 hours. Remarks Used in validating start and end times on submission. Example toMinutes({ hour: 1, minute: 30 }); // returns 90"
   },
   "client-docs/utils/time/functions/weekdayToNum.html": {
     "href": "client-docs/utils/time/functions/weekdayToNum.html",
